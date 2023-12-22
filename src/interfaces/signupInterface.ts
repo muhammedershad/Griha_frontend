@@ -3,7 +3,7 @@ interface FormData {
     firstName: string;
     lastName: string;
     username: string;
-    phoneNumber: string;
+    phone: string;
     password: string;
     confirmPassword: string;
     otp?: number

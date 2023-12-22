@@ -6,8 +6,10 @@ import FormData from "../../interfaces/signupInterface";
 import errorObject from "../../interfaces/error";
 import response from "../../interfaces/apiResponce";
 import api from "../../Services/api";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm<FormData>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState('');
@@ -38,8 +40,24 @@ const Signup = () => {
       toast.error(res.message,{ style: { background: '#2c3142', color: 'white'}})
     }
 
+    const otpSend = await api.signup(data)
+    if ( otpSend.success ){
+      toast.success(otpSend.message)
+    }
     setSubmitted(true);
+    
+  }
 
+  const verify_otp = async ( data: FormData) => {
+    console.log(data);
+    const verifyOtp = await api.verify_otp(data)
+    if ( verifyOtp?.success)  {
+      toast.success(verifyOtp?.message)
+      navigate('/login')
+    } else {
+      toast.error(verifyOtp.message)
+    }
+    
   }
 
 
@@ -58,7 +76,7 @@ const Signup = () => {
               className="space-y-4 md:space-y-6"
               onSubmit={handleSubmit((data) =>{
                 setData(JSON.parse(JSON.stringify(data)))
-                formSubmit(data)
+                submitted ? verify_otp(data) : formSubmit(data)
               })}
             >
               <div className="flex flex-row justify-between">
@@ -127,6 +145,22 @@ const Signup = () => {
                   required
                 />
               </div>
+              <div>
+                  <label
+                    htmlFor="phone"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Your phone number
+                  </label>
+                  <input
+                    type="phone"
+                    id="phone"
+                    {...register("phone")}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="9752356985"
+                    required
+                  />
+                </div>
               <div>
                 <label
                   htmlFor="password"
