@@ -9,6 +9,7 @@ import api from "../../Services/api";
 const Login = () => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<LoginFormData>();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [data, setData] = useState("");
 
     const submitForm = async (data: LoginFormData) => {
@@ -21,6 +22,7 @@ const Login = () => {
         }
 
         const login = await api.login( data )
+        console.log(login, 'status')
         if ( login.success ) {
           toast.success('Login successful' )
           navigate('/')

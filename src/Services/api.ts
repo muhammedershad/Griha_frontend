@@ -39,6 +39,7 @@ const verify_otp = async (data: FormData) => {
 const login = async ( data: LoginFormData ) => {
     try {
         const response = await axios.post( '/user/login', data);
+        console.log(response,'response')
         return response.data;
     } catch (error) {
         console.log(error)
