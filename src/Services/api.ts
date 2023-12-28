@@ -46,9 +46,30 @@ const login = async ( data: LoginFormData ) => {
     }
 }
 
+const check_email = async ( email: string ) => {
+    try {
+        const response = await axios.get(`/user/check-email?email=${email}`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const check_username = async ( username: string ) => {
+    try {
+        const response = await axios.get(`/user/check-username?username=${username}`)
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.log( error )
+    }
+}
+
 export default {
     userExistsCheck,
     signup,
     verify_otp,
-    login
+    login,
+    check_email,
+    check_username
 };

@@ -17,17 +17,17 @@ const Login = () => {
             toast.error("Enter a valid email");
         }
 
-        if ( data.password.trim() === '' ) {
-          toast.error("Please a valid password");
+        if (data.password.trim() === "") {
+            toast.error("Please a valid password");
         }
 
-        const login = await api.login( data )
-        console.log(login, 'status')
-        if ( login.success ) {
-          toast.success('Login successful' )
-          navigate('/')
+        const login = await api.login(data);
+        console.log(login, "status");
+        if (login.success) {
+            toast.success("Login successful", { duration: 6000 });
+            navigate("/dash");
         } else {
-          toast.error( login.message )
+            toast.error(login.message);
         }
     };
 

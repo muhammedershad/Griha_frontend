@@ -1,8 +1,14 @@
 import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import UserManagement from '../Pages/adminPages/UserManagement'
 
 const AdminRoutes = () => {
   return (
-    <div>AdminRoutes</div>
+    <>
+      <Routes>
+        <Route path='/users' element={<UserManagement />} />
+      </Routes>
+    </>
   )
 }
 
