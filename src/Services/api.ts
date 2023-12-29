@@ -65,11 +65,36 @@ const check_username = async ( username: string ) => {
     }
 }
 
+const googleAuth = async () => {
+    try {
+        axios.get('/auth')
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+const resend_OTP = async ( email: string )  => {
+    try {
+        const response = await axios.post('/user/resend-otp', {
+            email: email
+        })
+        console.log(response);
+        
+        return response.data
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 export default {
     userExistsCheck,
     signup,
     verify_otp,
     login,
     check_email,
-    check_username
+    check_username,
+    googleAuth,
+    resend_OTP
 };

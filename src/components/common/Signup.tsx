@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { validations } from "../../Services/validations";
 import toast, { Toaster } from "react-hot-toast";
 import FormData from "../../interfaces/signupInterface";
@@ -16,6 +16,34 @@ const Signup = () => {
     const [submitted, setSubmitted] = useState(false);
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
+    const [timer, setTimer] = useState<number>(30); // 300 seconds = 5 minutes
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [isButtonDisabled, setButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+
+        if ( timer === 1) {
+            setButtonDisabled(false)
+        }
+
+        if (isActive && timer > 0) {
+            interval = setInterval(() => {
+                setTimer((prevTimer) => prevTimer - 1);
+            }, 1000);
+        }
+
+        return () => clearInterval(interval); // Cleanup interval on component unmount or timer reset
+    }, [isActive, timer]);
+
+    const startTimer = () => {
+        setIsActive(true);
+    };
+
+    const resetTimer = () => {
+        setIsActive(false);
+        setTimer(300);
+    };
 
     const checkEmail = async () => {
         console.log(email);
@@ -88,19 +116,36 @@ const Signup = () => {
             toast.success(otpSend.message);
         }
         setSubmitted(true);
+        startTimer();
     };
 
     const verify_otp = async (data: FormData) => {
         data.email = email;
         data.username = username;
         const verifyOtp = await api.verify_otp(data);
-        console.log(verifyOtp)
+        console.log(verifyOtp);
         if (verifyOtp?.success) {
             toast.success(verifyOtp?.message, { duration: 6000 });
             navigate("/login");
         } else {
             toast.error(verifyOtp.message);
         }
+    };
+
+    const handleResendClick = async () => {
+        const response = await api.resend_OTP( email )
+
+        if ( response?.success ) {
+            toast.success(response.message)
+            resetTimer()
+            setButtonDisabled(true)
+        } else {
+            toast.error( "Error in sending OTP")
+        }
+    }
+
+    const googleAuth = async () => {
+        api.googleAuth();
     };
 
     return (
@@ -214,46 +259,72 @@ const Signup = () => {
                                     </label>
                                 </div>
                                 {submitted && (
-                                <div>
-                                    <div className="relative h-10 w-full min-w-[200px]">
-                                        <input
-                                            className="peer h-full w-full rounded-[7px] border border-white border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-white placeholder-shown:border-t-white focus:border-2 focus:border-white focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                            placeholder=" "
-                                            {...register("otp")}
-                                            type="text"
-                                            required
-                                        />
-                                        <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-white transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-red-white before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-white after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-white peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-white peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-white peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-white peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-white">
-                                            OTP
-                                        </label>
+                                    <div>
+                                        <div className="relative h-10 w-full min-w-[200px]">
+                                            <input
+                                                className="peer h-full w-full rounded-[7px] border border-white border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-white placeholder-shown:border-t-white focus:border-2 focus:border-white focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                                placeholder=" "
+                                                {...register("otp")}
+                                                type="text"
+                                                required
+                                            />
+                                            <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-white transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-red-white before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-white after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-white peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-white peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-white peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-white peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-white">
+                                                OTP
+                                            </label>
+                                        </div>
+                                        <small className="text-green-800 mt-4">
+                                            OTP successfully sent on your
+                                            verified email id. This OTP is valid
+                                            for 5 minute only.
+                                        </small>
+                                        <div className="flex flex-row justify-between align-middle">
+                                            <div className="text-white font-bold">
+                                                {Math.floor(timer / 60)
+                                                    .toString()
+                                                    .padStart(2, "0")}
+                                                :
+                                                {(timer % 60)
+                                                    .toString()
+                                                    .padStart(2, "0")}
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleResendClick}
+                                                disabled={isButtonDisabled}
+                                             className={`bg-gradient-to-r from-[#2d63d8] to-[#02155c] text-white text-xs px-2 py-1 rounded-md hover:bg-blue-600${
+                                                isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+                                              }`}>
+                                                Resend OTP
+                                            </button>
+                                        </div>
                                     </div>
-                                    <small className="text-green-800 mt-4">
-                                        OTP successfully sent on your verified
-                                        email id. This OTP is valid for 5 minute
-                                        only.
-                                    </small>
-                                </div>
-                            )}
+                                )}
                             </div>
 
-                            
                             <button
                                 type="submit"
                                 className="w-full text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                             >
                                 {submitted ? "Verify otp" : "Create an account"}
                             </button>
+                        </form>
+                        <div className="space-y-4 md:space-y-6 flex flex-col justify-self-center justify-center justify-items-center">
+                            <button
+                                onClick={googleAuth}
+                                className="w-full text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            >
+                                Login with Google
+                            </button>
+
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Already have an account?{" "}
-                                <Link to='/login'>
-                                <a
-                                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                >
-                                    Login here
-                                </a>
+                                <Link to="/login">
+                                    <a className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                        Login here
+                                    </a>
                                 </Link>
                             </p>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
