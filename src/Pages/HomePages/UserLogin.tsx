@@ -7,7 +7,7 @@ const UserLogin = () => {
     <div className="relative h-screen overflow-hidden">
       <Body />
       <div className="absolute inset-0 items-center justify-center">
-        <Login />
+        <Login title='User'/>
       </div>
       <Navbar />
     </div>

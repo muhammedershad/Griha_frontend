@@ -1,6 +1,14 @@
 import React from "react";
+import axios from '../../Services/axios'
 
 const UserDash = () => {
+    const testCall = async () => {
+        console.log('hiii');
+        
+        const res = await axios.get('/user/test')
+        console.log(res);
+        
+    }
     return (
         <>
             <div>
@@ -94,7 +102,7 @@ const UserDash = () => {
                         {/* Content */}
                         <div className="flex-1 px-2 sm:px-0">
                             <div className="flex justify-between items-center">
-                                <h3 className="text-3xl font-extralight text-white/50">
+                                <h3 onClick={testCall} className="text-3xl font-extralight text-white/50">
                                     User Dash
                                 </h3>
                                 <div className="inline-flex items-center space-x-2">

@@ -5,8 +5,15 @@ import { validations } from "../../Services/validations";
 import { Toaster, toast } from "react-hot-toast";
 import LoginFormData from "../../interfaces/login";
 import api from "../../Services/api";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../Services/redux/slices/userSlice";
 
-const Login = () => {
+interface LoginProps {
+    title: string;
+}
+
+const Login: React.FC<LoginProps> = ({ title }) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<LoginFormData>();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,6 +31,10 @@ const Login = () => {
         const login = await api.login(data);
         console.log(login, "status");
         if (login.success) {
+            const token = login.token;
+            const user = login?.user;
+            dispatch(loginSuccess({ user, token, error: false }))
+            localStorage.setItem(`${title}_token`, token);
             toast.success("Login successful", { duration: 6000 });
             navigate("/dash");
         } else {
@@ -41,7 +52,7 @@ const Login = () => {
                     <div className="w-full z-10 rounded-lg shadow bg-transparent backdrop-blur-[300px] border-2 border-white border-opacity-10 md:mt-0 sm:max-w-md xl:p-0 ">
                         <div className=" p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-center first-letter: text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                User Login
+                                {`${title} Login `}
                             </h1>
                             <form
                                 className="space-y-4 md:space-y-6"
