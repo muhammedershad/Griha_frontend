@@ -97,16 +97,6 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
                                         required
                                     />
                                 </div>
-                                {/* <div>
-                  {Error() && (
-                    <label
-                      htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-red-500"
-                    >
-                      Incorrect email or password
-                    </label>
-                  )}
-                </div> */}
                                 <button
                                     type="submit"
                                     className="w-full text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "

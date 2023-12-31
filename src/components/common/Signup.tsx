@@ -309,12 +309,12 @@ const Signup = () => {
                             </button>
                         </form>
                         <div className="space-y-4 md:space-y-6 flex flex-col justify-self-center justify-center justify-items-center">
-                            <button
+                            {/* <button
                                 onClick={googleAuth}
                                 className="w-full text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                             >
                                 Login with Google
-                            </button>
+                            </button> */}
 
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Already have an account?{" "}
