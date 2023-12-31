@@ -4,15 +4,18 @@ import { useState } from "react";
 import { validations } from "../../Services/validations";
 import { Toaster, toast } from "react-hot-toast";
 import LoginFormData from "../../interfaces/login";
-import api from "../../Services/api";
+// import api from "../../Services/api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../Services/redux/slices/userSlice";
+import User from "../../interfaces/user";
 
-interface LoginProps {
+interface UserLoginProps {
+    navigateTo: string
     title: string;
-}
+    loginFn: (data: LoginFormData) => Promise<{ success: boolean; message: string; token: string; user: User }>;
+  }
 
-const Login: React.FC<LoginProps> = ({ title }) => {
+const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<LoginFormData>();
@@ -28,15 +31,15 @@ const Login: React.FC<LoginProps> = ({ title }) => {
             toast.error("Please a valid password");
         }
 
-        const login = await api.login(data);
+        const login = await loginFn(data);
         console.log(login, "status");
-        if (login.success) {
+        if (( login).success) {
             const token = login.token;
             const user = login?.user;
             dispatch(loginSuccess({ user, token, error: false }))
             localStorage.setItem(`${title}_token`, token);
             toast.success("Login successful", { duration: 6000 });
-            navigate("/dash");
+            navigate(navigateTo);
         } else {
             toast.error(login.message);
         }

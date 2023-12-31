@@ -5,3 +5,7 @@
 body {
   background-color: rgb(9, 10, 19);
 }
+
+.swal-text-white {
+  color: white !important;
+}

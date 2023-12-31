@@ -88,6 +88,53 @@ const resend_OTP = async ( email: string )  => {
     }
 }
 
+const adminLogin = async ( data: LoginFormData ) => {
+    try {
+        const response = await axios.post( '/admin/login', data);
+        console.log(response,'response')
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const employeeLogin = async ( data: LoginFormData ) => {
+    try {
+        const response = await axios.post( '/employee/login', data);
+        console.log(response,'response')
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const users = async () => {
+    try {
+        const response = await axios.get( '/user/users' )
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const blockUser = async ( userId: string ) => {
+    try {
+        const response = await axios.patch( `/user/block-user?userId=${userId}` )
+        return response.data
+    } catch (error) {
+        console.log(error);   
+    }
+}
+
+const userRoleChange = async ( userId: string ) => {
+    try {
+        const response = await axios.patch( `/user/change-user-role?userId=${userId}`)
+        return response.data
+    } catch (error) {
+        console.log(error); 
+    }
+}
+
 export default {
     userExistsCheck,
     signup,
@@ -96,5 +143,10 @@ export default {
     check_email,
     check_username,
     googleAuth,
-    resend_OTP
+    resend_OTP,
+    adminLogin,
+    employeeLogin,
+    users,
+    blockUser,
+    userRoleChange
 };
