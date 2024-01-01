@@ -1,23 +1,6 @@
 import React from "react";
-import axios from '../../Services/axios'
-import { useNavigate } from "react-router-dom";
-import api from "../../Services/api";
 
-const UserDash = () => {
-    const navigate = useNavigate()
-    const testCall = async () => {
-        console.log('hiii');
-        
-        const res = await axios.get('/user/test')
-        console.log(res);
-        
-    }
-
-    const logout = async () => {
-        api.userLogout()
-        localStorage.removeItem('User_token');
-        navigate('/login')
-    }
+const EmployeeProfile = () => {
     return (
         <>
             <div>
@@ -26,10 +9,7 @@ const UserDash = () => {
                         {/* Navigation */}
                         <div className="bg-gray-900 px-2 lg:px-4 py-2 lg:py-10 sm:rounded-xl flex lg:flex-col justify-between">
                             <nav className="flex items-center flex-row space-x-2 lg:space-x-0 lg:flex-col lg:space-y-2">
-                                <a
-                                    className="text-white/50 p-4 inline-flex justify-center rounded-md hover:bg-gray-800 hover:text-white smooth-hover"
-                                   
-                                >
+                                <a className="text-white/50 p-4 inline-flex justify-center rounded-md hover:bg-gray-800 hover:text-white smooth-hover">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-5 w-5 sm:h-6 sm:w-6"
@@ -89,10 +69,7 @@ const UserDash = () => {
                                         />
                                     </svg>
                                 </a>
-                                <a
-                                    className="text-white/50 p-4 inline-flex justify-center rounded-md hover:bg-gray-800 hover:text-white smooth-hover"
-                                    onClick={logout}
-                                >
+                                <a className="text-white/50 p-4 inline-flex justify-center rounded-md hover:bg-gray-800 hover:text-white smooth-hover">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-5 w-5 sm:h-6 sm:w-6"
@@ -110,11 +87,75 @@ const UserDash = () => {
                         </div>
                         {/* Content */}
                         <div className="flex-1 px-2 sm:px-0">
-                            <div className="flex justify-between items-center">
-                                <h3 onClick={testCall} className="text-3xl font-extralight text-white/50">
-                                    User Dash
-                                </h3>
-                                <div className="inline-flex items-center space-x-2">
+                            <div className="">
+                                <div>
+                                    <div className="p-3 max-w-lg mx-auto">
+                                        <h1 className="text-3xl font-semibold text-white text-center mt-5 my-7">
+                                            Profile
+                                        </h1>
+                                        <form className="flex flex-col gap-4">
+                                            <input
+                                                type="file"
+                                                hidden
+                                                accept="image/*"
+                                            />
+                                            <img
+                                                src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEJ6aCBAcZ4ldYdG3do9HOShAndpdghkiL74xysu9a-JezzYY-LK3nkp62Z8RPcHsZQAY&usqp=CAU`}
+                                                alt="profile"
+                                                className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2"
+                                            />
+                                            {/* <p className="text-sm self-center">
+            {imageError ? (
+              <span className="text-red-700">
+                Error uploading image (file size must be less than 2 MB)
+              </span>
+            ) : imagePercent > 0 && imagePercent < 100 ? (
+              <span className="text-slate-700">{`Uploading: ${imagePercent} %`}</span>
+            ) : imagePercent === 100 ? (
+              <span className="text-green-700">
+                Image uploaded successfully
+              </span>
+            ) : (
+              ""
+            )}
+          </p> */}
+                                            <input
+                                                type="text"
+                                                id="username"
+                                                placeholder="Username"
+                                                className="bg-gray-950 rounded-lg p-3"
+                                            />
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                placeholder="Email"
+                                                className="bg-gray-950 rounded-lg p-3"
+                                            />
+                                            <input
+                                                type="password"
+                                                id="password"
+                                                placeholder="Password"
+                                                className="bg-gray-950 rounded-lg p-3"
+                                            />
+                                            <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+                                                {"Update"}
+                                            </button>
+                                        </form>
+                                        <div className="flex justify-between mt-5">
+                                            <span className="text-red-700 cursor-pointer">
+                                                Delete Account
+                                            </span>
+                                            <span className="text-red-700 cursor-pointer">
+                                                Logout
+                                            </span>
+                                        </div>
+                                        {/* <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
+        <p className="text-green-700 mt-5">
+          {updateSuccess && "User is updated successfully!"}
+        </p> */}
+                                    </div>
+                                </div>
+                                {/* <div className="inline-flex items-center space-x-2">
                                     <a
                                         className="bg-gray-900 text-white/50 p-2 rounded-md hover:text-white smooth-hover"
                                         href="#"
@@ -134,10 +175,7 @@ const UserDash = () => {
                                             />
                                         </svg>
                                     </a>
-                                    <a
-                                        className="bg-gray-900 text-white/50 p-2 rounded-md hover:text-white smooth-hover"
-                                        
-                                    >
+                                    <a className="bg-gray-900 text-white/50 p-2 rounded-md hover:text-white smooth-hover">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="h-6 w-6"
@@ -153,12 +191,9 @@ const UserDash = () => {
                                             />
                                         </svg>
                                     </a>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                
-                                
-                            </div>
+                            <div className="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
                         </div>
                     </div>
                 </div>
@@ -167,4 +202,4 @@ const UserDash = () => {
     );
 };
 
-export default UserDash;
+export default EmployeeProfile;

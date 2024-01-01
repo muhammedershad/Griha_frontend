@@ -2,7 +2,7 @@ import Login from '../../components/common/Login'
 import Navbar from '../../components/Home/Navbar'
 import Body from '../../components/common/Body'
 import api from '../../Services/api';
-const login = api.login
+const login = api.employeeLogin
 
 const EmployeeLogin = () => {
   return (

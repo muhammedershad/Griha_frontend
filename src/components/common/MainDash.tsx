@@ -1,11 +1,21 @@
 import React, { ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
+import api from '../../Services/api';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface ResponsiveLayoutProps {
   children: ReactNode;
 }
 
 const MainDash: React.FC<ResponsiveLayoutProps> = ({ children }) => {
+
+    const navigate = useNavigate()
+
+    const logout = async () => {
+        api.adminLogout()
+        localStorage.removeItem('Admin_token');
+        navigate('/admin/login')
+    }
     return (
         <div className="flex bg-[#131417]">
             <div>
@@ -167,9 +177,9 @@ const MainDash: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                                 </span>
                             </a>
                         </li>
+                        <Link to='/admin/users'>
                         <li>
                             <a
-                                href="#"
                                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
@@ -196,6 +206,37 @@ const MainDash: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                                 </span>
                             </a>
                         </li>
+                        </Link>
+                        <Link to='/admin/employee'>
+                        <li>
+                            <a
+                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                            >
+                                <span className="inline-flex justify-center items-center ml-4">
+                                    <svg
+                                        className="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                                        />
+                                    </svg>
+                                </span>
+                                <span className="ml-2 text-sm tracking-wide truncate">
+                                    Employees
+                                </span>
+                                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
+                                    15
+                                </span>
+                            </a>
+                        </li>
+                        </Link>
                         <li className="px-5">
                             <div className="flex flex-row items-center h-8">
                                 <div className="text-sm font-light tracking-wide text-gray-500">
@@ -263,7 +304,7 @@ const MainDash: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                         </li>
                         <li>
                             <a
-                                href="#"
+                                onClick={logout}
                                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                             >
                                 <span className="inline-flex justify-center items-center ml-4">

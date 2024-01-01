@@ -1,14 +1,14 @@
 export interface Employees extends Document {
+    jobRole: string;
+    joinedDate: Date;
+    lastName: string;
+    firstName: string;
     _id: string;
     name: string;
     password: string;
     phone: number;
-    job: {
-       department: string;
-       experience: number;
-       jobRole: string;
-       joinDate: Date;
-    };
+    department: string;
+    experience: number;
     // bankDetails: {
     //    accountNumber: number;
     //    BankName: string;
@@ -21,12 +21,12 @@ export interface Employees extends Document {
     teamLead: boolean;
     isBlocked: boolean;
     isSenior: boolean;
-  }
+}
 
-  export interface EmployeesForm {
-    name: string;
+export interface EmployeesForm {
+    firstName: string;
     email: string;
     password: string;
     department: string;
     jobRole: string;
-  }
+}

@@ -16,7 +16,7 @@ const Signup = () => {
     const [submitted, setSubmitted] = useState(false);
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
-    const [timer, setTimer] = useState<number>(30); // 300 seconds = 5 minutes
+    const [timer, setTimer] = useState<number>(300); // 300 seconds = 5 minutes
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isButtonDisabled, setButtonDisabled] = useState(true);
 

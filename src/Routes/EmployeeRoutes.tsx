@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import EmployeePrivateRoutes, { EmployeeLoggedInRoutes } from "./EmployeePrivateRoutes";
 import EmployeeLogin from "../Pages/employeePages/EmployeeLogin";
 import EmployeeDash from "../Pages/employeePages/EmployeeDash";
+import EmployeeProfile from "../Pages/employeePages/EmployeeProfile";
 
 const EmployeeRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const EmployeeRoutes = () => {
             </Route>
             <Route element={<EmployeePrivateRoutes />}>
                 <Route path="/dash" element={<EmployeeDash />} />
+                <Route path="/profile" element={<EmployeeProfile />} />
             </Route>
         </Routes>
     </>
