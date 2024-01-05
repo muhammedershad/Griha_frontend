@@ -5,18 +5,17 @@ import { validations } from "../../Services/validations";
 import { Toaster, toast } from "react-hot-toast";
 import LoginFormData from "../../interfaces/login";
 // import api from "../../Services/api";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../Services/redux/slices/userSlice";
 import User from "../../interfaces/user";
+// import { UserSlice } from "../../Services/redux/slices/userSlice";
 
 interface UserLoginProps {
     navigateTo: string
     title: string;
-    loginFn: (data: LoginFormData) => Promise<{ success: boolean; message: string; token: string; user: User }>;
+    loginFn: (data: LoginFormData) => Promise<{ success: boolean; message: string; token: string; user: User }>
   }
 
-const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
-    const dispatch = useDispatch()
+const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo, }) => {
+    // const dispatch = useDispatch()
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<LoginFormData>();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,9 +33,10 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
         const login = await loginFn(data);
         console.log(login, "status");
         if (( login).success) {
+            // const titleSmall:string = title.toLowerCase()
             const token = login.token;
-            const user = login?.user;
-            dispatch(loginSuccess({ user, token, error: false }))
+            // const user = login?.user;
+            // dispatch(loginSuccess({ titleSmall: user, token: token, error: false }))
             localStorage.setItem(`${title}_token`, token);
             toast.success("Login successful", { duration: 6000 });
             navigate(navigateTo);

@@ -334,7 +334,7 @@ const EmployeeSideBar: React.FC<ResponsiveLayoutProps> = ({ children }) => {
             </div>
 
             {/* Main section */}
-            <div className="w-full flex-grow overflow-y-auto p-8 m-5 ml-0 rounded-lg bg-[#2c303a] text-white">
+            <div className="w-full flex-grow overflow-y-auto md:p-8 md:m-5 m-3 md:ml-0 rounded-lg bg-[#2c303a] text-white">
                 {/* Main content goes here */}
                 { children }
             </div>

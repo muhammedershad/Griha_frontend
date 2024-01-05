@@ -30,11 +30,18 @@ const validatePassword = (password: string, confirmPass: string):errorObject  =>
     return password.trim().length < 6 ? { error: true, message: 'Password must be at least 6 characters' } : { error: false, message: '' }
 }
 
+const isValidImageType = (fileName: string): boolean => {
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    const extension = fileName.split('.').pop()?.toLowerCase();
+    return !!extension && allowedExtensions.includes(extension);
+  };
+
 
 export const validations = {
     validateEmail,
     validateFirstNameAndSecondName,
     validateUsername,
     validatePhoneNumber,
-    validatePassword
+    validatePassword,
+    isValidImageType
 }

@@ -1,9 +1,19 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { employeeApi } from "../Services/employeeApi";
 
-function EmployeePrivateRoutes() {
+const EmployeePrivateRoutes = () => {
     const token = localStorage.getItem('Employee_token')
     const auth = token ? true : false;
     
+    console.log('calling private routes');
+    
+    if ( token ) {
+        console.log('here');
+        
+        const employee = employeeApi.employeeDetails()
+        console.log('there')
+        console.log(employee,'employee');  
+    }
     return auth ? <Outlet /> : <Navigate to="/employee/login" />;
 }
 

@@ -1,25 +1,157 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
+import {
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+} from "firebase/storage";
+import { storage } from "../../Services/firebase";
+import toast from "react-hot-toast";
+import { validations } from "../../Services/validations";
+// import { employeeApi } from "../../Services/employeeApi";
+
 
 const EmployeeProfile = () => {
+    const [image, setImage] = useState<File | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [progress, setProgress] = useState<number>(0);
+    const [imageUrl, setImageUrl] = useState<string>('')
+
     useEffect(() => {
-        console.log("Hello world!!!");
-    });
+        handleUpload()
+    },[image])
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            if ( !validations.isValidImageType(e.target.files[0].name) ) {
+                return toast.error('Only images are allowed')
+            } else {
+                setImage(e.target.files[0])                
+            }
+        }
+    };
+
+    const handleUpload = () => {
+        console.log("handle upload");
+        if ( image ) {
+            console.log('here');
+            
+            const metadata = {
+                contentType: "image/jpeg",
+            };
+
+            const storageRef = ref(storage, "employee_profile_pictures/" + image.name);
+            const uploadTask = uploadBytesResumable(
+                storageRef,
+                image,
+                metadata
+            );
+
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log("Upload is " + progress + "% done");
+                    switch (snapshot.state) {
+                        case "paused":
+                            console.log("Upload is paused");
+                            break;
+                        case "running":
+                            console.log("Upload is running");
+                            break;
+                    }
+                },
+                (error) => {
+                    switch (error.code) {
+                        case "storage/unauthorized":
+                            toast.error('Unauthorized access to firebase')
+                            break;
+                        case "storage/canceled":
+                            toast.error('Profile uploading failed')
+                            break;
+                        case "storage/unknown":
+                            toast.error('Profile uploading failed, Error in firebase')
+                            break;
+                    }
+                    toast.error('Error in uploading profile photo')
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then(
+                        (downloadURL: string) => {
+                            console.log("File available at", downloadURL);
+                            setImageUrl(downloadURL)
+                            // const saved = employeeApi.updateProfilePhoto(downloadURL)
+                        }
+                    )
+                }
+            );
+        }
+    };
 
     return (
         <>
             <EmployeeSideBar>
-                <div className="container mx-auto p-4 bg-slate-950 mb-3 rounded">
+                <div className="container mx-auto p-4 bg-slate-950 mb-3 rounded-lg">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
-                            <img
-                                src="https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg"
-                                alt="Profile Picture"
-                                className="w-16 h-16 rounded-full mr-4"
-                            />
+                            <label
+                                htmlFor="profilePicture"
+                                className="relative cursor-pointer"
+                            >
+                                <input
+                                    type="file"
+                                    id="profilePicture"
+                                    name="profilePicture"
+                                    accept="image/*"
+                                    style={{ display: "none" }}
+                                    className="hidden"
+                                    onChange={handleChange}
+                                />
+                                <img
+                                    src={`${imageUrl}` || "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg"}
+                                    alt="Profile Picture"
+                                    className="w-20 h-20 rounded-full mr-4 cursor-pointer"
+                                />
+                                <div className="absolute bottom-0 right-0 text-black rounded-full p-2">
+                                    <label
+                                        htmlFor="profilePicture"
+                                        className="cursor-pointer"
+                                    >
+                                        <svg
+                                            className="w-[24px] h-[24px] text-gray-800 bg-slate-500 rounded-full p-1 dark:text-white"
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 20 18"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="0.9"
+                                                d="M10 12.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                                            />
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="0.9"
+                                                d="M17 3h-2l-.447-.894A2 2 0 0 0 12.764 1H7.236a2 2 0 0 0-1.789 1.106L5 3H3a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V5a2 2 0 0 0-2-2Z"
+                                            />
+                                        </svg>
+                                        {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 14a6 6 0 01-6 6m6-6a6 6 0 000-12 6 6 0 000 12z" />
+            </svg> */}
+                                    </label>
+                                </div>
+                            </label>
                             <div>
-                            <h2 className="text-2xl font-bold">Luke Short</h2>
-                            <p className="text-gray-500">Web Designer</p>
+                                <h2 className="text-2xl font-bold">
+                                    Luke Short
+                                </h2>
+                                <p className="text-gray-500">Web Designer</p>
                             </div>
                         </div>
                         <div className="flex items-center">
@@ -28,14 +160,8 @@ const EmployeeProfile = () => {
                             </p>
                         </div>
                     </div>
-                    <p className="mb-4">
-                        The purpose of lorem ipsum is to create a natural
-                        looking block of text (sentence, paragraph, page, etc.)
-                        that doesn't distract from the layout. A practice not
-                        without controversy.
-                    </p>
                     <div className="flex flex-wrap -mx-2">
-                        <div className="w-1/2 px-2">
+                        <div className="lg:w-1/2 px-2">
                             <h4 className="font-semibold mb-2">
                                 Contact Information
                             </h4>
@@ -48,7 +174,7 @@ const EmployeeProfile = () => {
                                 LukeShortn@gmail.com
                             </p>
                         </div>
-                        <div className="w-1/2 px-2">
+                        <div className="lg:w-1/2 px-2">
                             <h4 className="font-semibold mb-2">
                                 Personal Information
                             </h4>
@@ -70,7 +196,7 @@ const EmployeeProfile = () => {
                     <div className="lg:w-1/2 bg-slate-900 rounded-lg">
                         <div className="p-3 max-w-lg mx-auto">
                             <h1 className="text-3xl font-semibold text-white text-center mt-5 my-7">
-                                Profile
+                                Job Details
                             </h1>
                             <form
                                 // onSubmit={handleSubmit}
@@ -187,3 +313,5 @@ const EmployeeProfile = () => {
 };
 
 export default EmployeeProfile;
+
+
