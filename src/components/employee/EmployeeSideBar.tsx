@@ -17,12 +17,12 @@ const EmployeeSideBar: React.FC<ResponsiveLayoutProps> = ({ children }) => {
         navigate('/employee/login')
     }
     return (
-        <div className="flex bg-[#131417]">
+        <div className="flex h-screen bg-[#131417]">
             <div>
                 <Toaster />
             </div>
             {/* Sidebar (hidden on medium screens and below) */}
-            <div className="hidden min-h-screen md:flex md:w-1/4 m-5 rounded-lg bg-[#2c303a] text-white p-2 pr-0">
+            <div className="hidden md:flex md:w-1/4 m-5 rounded-lg bg-[#2c303a] text-white p-2 pr-0">
                 {/* Sidebar content goes here */}
 
                 <div className="overflow-y-auto overflow-x-hidden flex-grow">
@@ -334,7 +334,7 @@ const EmployeeSideBar: React.FC<ResponsiveLayoutProps> = ({ children }) => {
             </div>
 
             {/* Main section */}
-            <div className="w-full flex-grow overflow-y-auto md:p-8 md:m-5 m-3 md:ml-0 rounded-lg bg-[#2c303a] text-white">
+            <div className="w-full flex-grow overflow-y-auto overflow-hidden md:m-5 m-3 md:ml-0 rounded-lg bg-[#2c303a] text-white">
                 {/* Main content goes here */}
                 { children }
             </div>
