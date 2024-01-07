@@ -1,7 +1,7 @@
 import { Button } from "flowbite-react";
 import MainDash from "../../components/common/MainDash";
 import { Modal } from "../../components/common/Modal";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Employees, EmployeesForm } from "../../interfaces/employee";
 import toast from "react-hot-toast";
@@ -11,11 +11,15 @@ import Swal from "sweetalert2";
 
 const AdminEmployeeManagement = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [data, setData] = useState('')
+    const [data, setData] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, handleSubmit } = useForm<EmployeesForm>();
     const [employees, setEmployees] = useState<Employees[]>([]);
-    const [change, setChange] = useState(true)
+    const [change, setChange] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -30,6 +34,20 @@ const AdminEmployeeManagement = () => {
         fetchUsers();
     }, [change]);
 
+    const filteredEmployees = employees.filter((employee) =>
+        employee.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredEmployees.slice(
+        indexOfFirstItem,
+        indexOfLastItem
+    );
+
+    // Change page
+    const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
+
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -38,7 +56,7 @@ const AdminEmployeeManagement = () => {
         setIsModalOpen(false);
     };
 
-    const handleChangeEmployeeBlock = ( employeeId: string ) => {
+    const handleChangeEmployeeBlock = (employeeId: string) => {
         Swal.fire({
             title: "Are you sure?",
             icon: "warning",
@@ -52,17 +70,17 @@ const AdminEmployeeManagement = () => {
             },
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const response = await api.blockEmployee( employeeId );
+                const response = await api.blockEmployee(employeeId);
                 // console.log(response);
-                if ( response?.success) {
-                    toast.success(response.message)
-                    setChange(!change)
+                if (response?.success) {
+                    toast.success(response.message);
+                    setChange(!change);
                 } else {
-                    toast.error("Error in employee role change")
+                    toast.error("Error in employee role change");
                 }
             } else return;
         });
-    }
+    };
 
     const handleChangeEmployeeRole = (employeeId: string) => {
         Swal.fire({
@@ -80,42 +98,51 @@ const AdminEmployeeManagement = () => {
             if (result.isConfirmed) {
                 const response = await api.employeeRoleChange(employeeId);
                 console.log(response);
-                if ( response?.success) {
-                    toast.success("Employee role changed")
-                    setChange(!change)
+                if (response?.success) {
+                    toast.success("Employee role changed");
+                    setChange(!change);
                 } else {
-                    toast.error("Error in employee role change")
+                    toast.error("Error in employee role change");
                 }
             } else return;
         });
     };
 
-    const submitForm = async (data: EmployeesForm ) => {
-        if ( !data.department.trim() ) {
-            toast.error("Enter valid deparment")
+    const submitForm = async (data: EmployeesForm) => {
+        if (!data.department.trim()) {
+            toast.error("Enter valid deparment");
         }
-        if ( !data.email.trim() || validations.validateEmail(data.email) ) {
-            toast.error('Enter valid email')
+        if (!data.email.trim() || validations.validateEmail(data.email)) {
+            toast.error("Enter valid email");
         }
-        if ( !data.jobRole.trim() ) {
-            toast.error("Enter valid job role")
+        if (!data.jobRole.trim()) {
+            toast.error("Enter valid job role");
         }
-        if ( !data.firstName.trim() ) {
-            toast.error("Enter valid name")
+        if (!data.firstName.trim()) {
+            toast.error("Enter valid name");
         }
-        if ( data.password.trim().length < 6 ) {
-            toast.error("Enter valid password")
+        if (data.password.trim().length < 6) {
+            toast.error("Enter valid password");
         }
-        if ( !data.department.trim() || !data.email.trim() || validations.validateEmail(data.email) || !data.jobRole.trim() || !data.jobRole.trim() || !data.firstName.trim() || data.password.trim().length < 6  ) return
-        
-        const response = await api.addEmployee( data )
-        if ( response?.success ) {
-            toast.success( response?.message )
-            closeModal()
+        if (
+            !data.department.trim() ||
+            !data.email.trim() ||
+            validations.validateEmail(data.email) ||
+            !data.jobRole.trim() ||
+            !data.jobRole.trim() ||
+            !data.firstName.trim() ||
+            data.password.trim().length < 6
+        )
+            return;
+
+        const response = await api.addEmployee(data);
+        if (response?.success) {
+            toast.success(response?.message);
+            closeModal();
         } else {
-            toast.error( response?.message )
+            toast.error(response?.message);
         }
-    }
+    };
 
     return (
         <>
@@ -195,13 +222,21 @@ const AdminEmployeeManagement = () => {
                 </div>
             </Modal>
             <MainDash>
-                <div className="flex flex-row justify-between">
-                    <h3 className="font-semibold font-sans tracking-wider m-5 text-lg">
+                <div className="flex flex-row justify-between align-middle items-center">
+                    <h3 className="font-semibold align-middle font-sans tracking-wider m-5 text-lg">
                         Employees
                     </h3>
+                    <input
+                        type="text"
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                        className="bg-gray-50 border w-2/6 h-10 border-gray-300 text-gray-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search by name..."
+                        required
+                    />
                     <Button onClick={openModal}> Add Employee </Button>
                 </div>
-                <table className="min-w-full divide-y divide-gray-800 overflow-x-auto rounded-3xl border-collapse">
+                <table className="min-w-full divide-y mb-8 divide-gray-800 overflow-x-auto rounded-3xl border-collapse">
                     <thead className="bg-gray-900 rounded-lg">
                         <tr>
                             <th
@@ -248,8 +283,11 @@ const AdminEmployeeManagement = () => {
                             </th>
                         </tr>
                     </thead>
-                    {employees.map((employee) => (
-                        <tbody key={ employee._id } className="bg-gray-800 divide-y divide-gray-200">
+                    {currentItems.map((employee) => (
+                        <tbody
+                            key={employee._id}
+                            className="bg-gray-800 divide-y divide-gray-200"
+                        >
                             <tr>
                                 <td className="px-2 py-4 whitespace-nowrap">
                                     <div className="flex items-center">
@@ -261,10 +299,10 @@ const AdminEmployeeManagement = () => {
                                         </div>
                                         <div className="ml-4">
                                             <div className="text-sm font-medium text-gray-200">
-                                                {employee?.firstName +
-                                                    " "
+                                                {
+                                                    employee?.firstName + " "
                                                     // employee.lastName
-                                                    }
+                                                }
                                             </div>
                                             <div className="text-sm text-gray-400">
                                                 {employee.username}
@@ -302,7 +340,9 @@ const AdminEmployeeManagement = () => {
                                         href="#"
                                         className="text-indigo-600 hover:text-indigo-900"
                                         onClick={() =>
-                                            handleChangeEmployeeRole(employee._id)
+                                            handleChangeEmployeeRole(
+                                                employee._id
+                                            )
                                         }
                                     >
                                         {employee.isSenior
@@ -311,12 +351,16 @@ const AdminEmployeeManagement = () => {
                                     </a>
                                     <a
                                         onClick={() =>
-                                            handleChangeEmployeeBlock(employee._id)
+                                            handleChangeEmployeeBlock(
+                                                employee._id
+                                            )
                                         }
                                         href="#"
                                         className="ml-2 text-red-600 hover:text-red-900"
                                     >
-                                        {employee.isBlocked ? "Unblock" : "Block"}
+                                        {employee.isBlocked
+                                            ? "Unblock"
+                                            : "Block"}
                                     </a>
                                 </td>
                             </tr>
@@ -325,6 +369,27 @@ const AdminEmployeeManagement = () => {
                         </tbody>
                     ))}
                 </table>
+                <div className="pagination">
+                    {Array.from({
+                        length: Math.ceil(filteredEmployees.length / itemsPerPage),
+                    }).map((_, index) => (
+                        <>
+                            {/* <button
+                                        key={index + 1}
+                                        onClick={() => paginate(index + 1)}
+                                    >
+                                        {index + 1}
+                                    </button> */}
+                            <a
+                                onClick={() => paginate(index + 1)}
+                                key={index + 1}
+                                className="items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            >
+                                {index + 1}
+                            </a>
+                        </>
+                    ))}
+                </div>
             </MainDash>
         </>
     );

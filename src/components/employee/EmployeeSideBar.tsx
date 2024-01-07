@@ -1,19 +1,42 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import api from '../../Services/api';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../Services/redux/hooks'
+import { employeeApi } from '../../Services/employeeApi';
+import { employeeloginSuccess, employeelogout } from '../../Services/redux/slices/employeeSlice';
 
 interface ResponsiveLayoutProps {
   children: ReactNode;
 }
 
 const EmployeeSideBar: React.FC<ResponsiveLayoutProps> = ({ children }) => {
+    const employee = useAppSelector((state) => state.employee.employee)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        const savedToken = localStorage.getItem('Employee_token');
+        // console.log(savedToken,'savedToken');
+        // console.log(employee,)
+        if ( savedToken && !employee ) {
+            const updateSlice = async () => {
+                const response = await employeeApi.UpdateSlice( savedToken )
+                 console.log(response );
+                 if ( response?.success ) {
+                    dispatch(employeeloginSuccess({employee: response.employee, token: savedToken, error: false}))
+                 } else {
+                    logout()
+                 }
+            }
+            updateSlice()
+        }
+    })
 
     const navigate = useNavigate()
 
     const logout = async () => {
         api.adminLogout()
         localStorage.removeItem('Employee_token');
+        dispatch(employeelogout())
         navigate('/employee/login')
     }
     return (

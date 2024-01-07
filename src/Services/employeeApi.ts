@@ -11,12 +11,21 @@ const employeeDetails = async () => {
     }
 }
 
-const updateProfilePhoto = async (employeeId: string, imageUrl: string) => {
+const updateProfilePhoto = async ( employeeId: string | null | undefined, imageUrl: string) => {
     try {
         const response = await axios.patch(`/employee/update-profile-photo`, {
-            employeeId: employeeId,
-            imageUrl: imageUrl
+            imageUrl: imageUrl,
+            employeeId
         })
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const UpdateSlice = async ( token: string) => {
+    try {
+        const response = await axios.post('/employee/employee', { token: token })
         return response.data
     } catch (error) {
         console.log(error);
@@ -25,5 +34,6 @@ const updateProfilePhoto = async (employeeId: string, imageUrl: string) => {
 
 export const employeeApi = {
     updateProfilePhoto,
-    employeeDetails
+    employeeDetails,
+    UpdateSlice
 }

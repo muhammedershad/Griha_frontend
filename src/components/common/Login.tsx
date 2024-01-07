@@ -6,16 +6,26 @@ import { Toaster, toast } from "react-hot-toast";
 import LoginFormData from "../../interfaces/login";
 // import api from "../../Services/api";
 import User from "../../interfaces/user";
-// import { UserSlice } from "../../Services/redux/slices/userSlice";
+import { userloginSuccess } from "../../Services/redux/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { employeeloginSuccess } from "../../Services/redux/slices/employeeSlice";
+import { adminloginSuccess } from "../../Services/redux/slices/adminSlice";
 
 interface UserLoginProps {
-    navigateTo: string
+    navigateTo: string;
     title: string;
-    loginFn: (data: LoginFormData) => Promise<{ success: boolean; message: string; token: string; user: User }>
-  }
+    loginFn: (
+        data: LoginFormData
+    ) => Promise<{
+        success: boolean;
+        message: string;
+        token: string;
+        user: User;
+    }>;
+}
 
-const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo, }) => {
-    // const dispatch = useDispatch()
+const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<LoginFormData>();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,12 +41,32 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo, }) => {
         }
 
         const login = await loginFn(data);
-        console.log(login, "status");
-        if (( login).success) {
-            // const titleSmall:string = title.toLowerCase()
+        // console.log(login, "status");
+        if (login.success) {
             const token = login.token;
-            // const user = login?.user;
-            // dispatch(loginSuccess({ titleSmall: user, token: token, error: false }))
+            const user = login?.user;
+            if (title === "User") {
+                dispatch(
+                    userloginSuccess({ user: user, token: token, error: false })
+                );
+            } else if (title === "Employee") {
+                dispatch(
+                    employeeloginSuccess({
+                        employee: user,
+                        token: token,
+                        error: false,
+                    })
+                );
+            } else if (title === "Admin") {
+                dispatch(
+                    adminloginSuccess({
+                        admin: user,
+                        token: token,
+                        error: false,
+                    })
+                );
+            }
+
             localStorage.setItem(`${title}_token`, token);
             toast.success("Login successful", { duration: 6000 });
             navigate(navigateTo);

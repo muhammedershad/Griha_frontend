@@ -18,15 +18,15 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginSuccess: (state = initialState, action: PayloadAction<UserSlice>) => {
+    userloginSuccess: (state = initialState, action: PayloadAction<UserSlice>) => {
         state.user = action.payload.user
         state.token = action.payload.token
         state.error = false
     },
-    loginFailed: (state,) => {
+    userloginFailed: (state,) => {
         state.error = true
     },  
-    logout: (state,) => {
+    userlogout: (state,) => {
         state.user = null
         state.error = false
         state.token = null
@@ -35,6 +35,6 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSuccess, loginFailed, logout } = userSlice.actions
+export const { userloginSuccess, userloginFailed, userlogout } = userSlice.actions
 
 export default userSlice.reducer

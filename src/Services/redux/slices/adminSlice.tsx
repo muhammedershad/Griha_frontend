@@ -10,15 +10,15 @@ export const adminSlice = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    loginSuccess: (state, action) => {
+    adminloginSuccess: (state, action) => {
         state.admin = action.payload.admin
         state.error = false
         state.token = action.payload.token
     },
-    loginFailed: (state,) => {
+    adminloginFailed: (state,) => {
         state.error = true
     },
-    logout: (state,) => {
+    adminlogout: (state,) => {
         state.admin = null
         state.error = false
         state.token = null
@@ -27,6 +27,6 @@ export const adminSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSuccess, loginFailed, logout } = adminSlice.actions
+export const { adminloginSuccess, adminloginFailed, adminlogout } = adminSlice.actions
 
 export default adminSlice.reducer
