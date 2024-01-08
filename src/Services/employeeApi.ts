@@ -1,4 +1,6 @@
+import toast from 'react-hot-toast';
 import axios from '../Services/axios'
+import { Employees } from '../interfaces/employee';
 
 const employeeDetails = async () => {
     try {
@@ -23,6 +25,16 @@ const updateProfilePhoto = async ( employeeId: string | null | undefined, imageU
     }
 }
 
+const updateProfile = async ( data: Employees ) => {
+    try {
+        const response = await axios.patch( '/employee/profile', data ) 
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error((error as Error)?.message)
+    }
+}
+
 const UpdateSlice = async ( token: string) => {
     try {
         const response = await axios.post('/employee/employee', { token: token })
@@ -35,5 +47,6 @@ const UpdateSlice = async ( token: string) => {
 export const employeeApi = {
     updateProfilePhoto,
     employeeDetails,
-    UpdateSlice
+    UpdateSlice,
+    updateProfile
 }

@@ -8,6 +8,7 @@ import { Employees } from "../../interfaces/employee";
 import { employeeApi } from "../../Services/employeeApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import SmallButton from "../../components/common/SmallButton";
+import PersonalInformation from "../../components/employee/PersonalInformation";
 
 const EmployeeProfile = () => {
     const [image, setImage] = useState<File | null>(null);
@@ -34,7 +35,7 @@ const EmployeeProfile = () => {
     };
 
     const handleUpload = () => {
-        console.log("handle upload");
+        // console.log("handle upload");
         if (image) {
             console.log("here");
 
@@ -126,7 +127,8 @@ const EmployeeProfile = () => {
                                 />
                                 <img
                                     src={
-                                        `${imageUrl}` || employee?.image ||
+                                        `${imageUrl}` ||
+                                        employee?.image ||
                                         "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg"
                                     }
                                     alt="Profile Picture"
@@ -164,9 +166,13 @@ const EmployeeProfile = () => {
                             </label>
                             <div>
                                 <h2 className="text-2xl font-bold">
-                                    {`${employee?.firstName ?? ''} ${employee?.lastName ?? ''}`}
+                                    {`${employee?.firstName ?? ""} ${
+                                        employee?.lastName ?? ""
+                                    }`}
                                 </h2>
-                                <p className="text-gray-500">{employee?.jobRole}</p>
+                                <p className="text-gray-500">
+                                    {employee?.jobRole}
+                                </p>
                             </div>
                         </div>
                         <div className="flex items-center">
@@ -179,12 +185,16 @@ const EmployeeProfile = () => {
                                 Contact Information
                             </h4>
                             <p className="mb-2">
-                                <span className="font-bold text-slate-400">Phone:</span>{" "}
-                                {employee?.phone ?? ''}
+                                <span className="font-bold text-slate-400">
+                                    Phone:
+                                </span>{" "}
+                                {employee?.phone ?? ""}
                             </p>
                             <p className="mb-2 text-slate-400">
-                                <span className="font-bold text-slate-400">Email:</span>{" "}
-                                {employee?.email ?? ''}
+                                <span className="font-bold text-slate-400">
+                                    Email:
+                                </span>{" "}
+                                {employee?.email ?? ""}
                             </p>
                         </div>
                         <div className="lg:w-1/2 px-2">
@@ -193,13 +203,15 @@ const EmployeeProfile = () => {
                             </h4>
                             <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">
-                                    Date of Join: 
+                                    Date of Join:
                                 </span>{" "}
-                                { employee?.joinedDate.split("T")[0] ?? ''}
+                                {employee?.joinedDate.split("T")[0] ?? ""}
                             </p>
                             <p className="mb-2 text-slate-400">
-                                <span className="font-bold text-slate-400">Department: </span>
-                                 {' ' + employee?.department}
+                                <span className="font-bold text-slate-400">
+                                    Department:{" "}
+                                </span>
+                                {" " + employee?.department}
                             </p>
                         </div>
                     </div>
@@ -207,84 +219,7 @@ const EmployeeProfile = () => {
 
                 <div className="flex flex-col lg:flex-row gap-4 bg-zinc-800">
                     <div className="lg:w-1/2 bg-slate-900 rounded-lg">
-                        <div className="p-3 max-w-lg mx-auto">
-                            <h1 className="text-3xl font-semibold text-slate-400 text-white text-center mt-5 my-7">
-                                Personal Information
-                            </h1>
-                            <form
-                                // onSubmit={handleSubmit}
-                                className="flex flex-col gap-4"
-                            >
-                                <input
-                                    type="file"
-                                    // ref={fileRef}
-                                    hidden
-                                    accept="image/*"
-                                    // onChange={(e) => setImage(e.target.files[0])}
-                                />
-
-                                <div className="flex flex-col lg:flex-row w-auto gap-2">
-                                    <input
-                                        type="text"
-                                        id="username1"
-                                        placeholder="Username"
-                                        className="bg-slate-100 rounded-lg p-3 w-full"
-                                    />
-
-                                    <input
-                                        type="text"
-                                        id="username2"
-                                        placeholder="Username"
-                                        className="bg-slate-100 rounded-lg p-3 w-full"
-                                    />
-                                </div>
-                                <input
-                                    // defaultValue={user.username}
-                                    type="text"
-                                    id="username"
-                                    placeholder="Username"
-                                    className="bg-slate-100 rounded-lg p-3"
-                                    // onChange={handleChange}
-                                />
-                                <input
-                                    // defaultValue={user.username}
-                                    type="text"
-                                    id="username"
-                                    placeholder="Username"
-                                    className="bg-slate-100 rounded-lg p-3"
-                                    // onChange={handleChange}
-                                />
-                                <input
-                                    // defaultValue={user.email}
-                                    type="email"
-                                    id="email"
-                                    placeholder="Email"
-                                    className="bg-slate-100 rounded-lg p-3"
-                                    // onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    id="password"
-                                    placeholder="Password"
-                                    className="bg-slate-100 rounded-lg p-3"
-                                    // onChange={handleChange}
-                                />
-                                <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-                                    {"Update"}
-                                </button>
-                            </form>
-                            <div className="flex justify-between mt-5">
-                                <span
-                                    // onClick={() => handleDeleteAccount(user._id)}
-                                    className="text-red-700 cursor-pointer"
-                                >
-                                    Delete Account
-                                </span>
-                                <span className="text-red-700 cursor-pointer">
-                                    Logout
-                                </span>
-                            </div>
-                        </div>
+                        <PersonalInformation />
                     </div>
 
                     <div className="lg:w-1/2 bg-amber-400">

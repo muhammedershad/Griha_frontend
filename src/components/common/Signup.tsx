@@ -144,9 +144,9 @@ const Signup = () => {
         }
     }
 
-    const googleAuth = async () => {
-        api.googleAuth();
-    };
+    // const googleAuth = async () => {
+    //     api.googleAuth();
+    // };
 
     return (
         <div>
