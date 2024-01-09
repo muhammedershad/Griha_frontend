@@ -8,7 +8,8 @@ import { Employees } from "../../interfaces/employee";
 import { employeeApi } from "../../Services/employeeApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import SmallButton from "../../components/common/SmallButton";
-import PersonalInformation from "../../components/employee/PersonalInformation";
+import PersonalInformation from "../../components/employee/EmployeePersonalInformation";
+import BankDetails from "../../components/employee/BankDetails";
 
 const EmployeeProfile = () => {
     const [image, setImage] = useState<File | null>(null);
@@ -175,9 +176,6 @@ const EmployeeProfile = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center">
-                            <SmallButton title="Edit" />
-                        </div>
                     </div>
                     <div className="flex flex-wrap mx-24">
                         <div className="lg:w-1/2 px-2">
@@ -222,12 +220,8 @@ const EmployeeProfile = () => {
                         <PersonalInformation />
                     </div>
 
-                    <div className="lg:w-1/2 bg-amber-400">
-                        <div className="p-3 max-w-lg mx-auto">
-                            <h1 className="text-3xl font-semibold text-white text-center mt-5 my-7">
-                                Profile
-                            </h1>
-                        </div>
+                    <div className="lg:w-1/2 bg-slate-900 rounded-lg">
+                        <BankDetails employees={employee} />
                     </div>
                 </div>
             </EmployeeSideBar>
