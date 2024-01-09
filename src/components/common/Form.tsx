@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useForm, } from "react-hook-form";
 
 export interface FormField {
@@ -12,9 +12,10 @@ export interface FormField {
 interface FormProps {
     obj: FormField[];
     setData: React.Dispatch<React.SetStateAction<FormData | undefined>>;
+    children?: ReactNode
 }
 
-const Form: React.FC<FormProps> = ({ obj, setData }) => {
+const Form: React.FC<FormProps> = ({ obj, setData, children }) => {
     const { register, handleSubmit } = useForm();
 
     return (
@@ -27,7 +28,7 @@ const Form: React.FC<FormProps> = ({ obj, setData }) => {
                     <div key={index}>
                         <label
                             htmlFor={field.placeholder}
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                            className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                         >
                             {field.placeholder}
                         </label>
@@ -43,6 +44,9 @@ const Form: React.FC<FormProps> = ({ obj, setData }) => {
                         />
                     </div>
                 ))}
+                {
+                    children
+                }
                 <button
                  className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
                     {"Update"}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Services/firebase";
@@ -7,7 +7,6 @@ import { validations } from "../../Services/validations";
 import { Employees } from "../../interfaces/employee";
 import { employeeApi } from "../../Services/employeeApi";
 import { useAppSelector } from "../../Services/redux/hooks";
-import SmallButton from "../../components/common/SmallButton";
 import PersonalInformation from "../../components/employee/EmployeePersonalInformation";
 import BankDetails from "../../components/employee/BankDetails";
 
