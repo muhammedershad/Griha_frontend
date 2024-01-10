@@ -204,6 +204,15 @@ const employeeLogout = async () => {
     }
 }
 
+const allClients = async () => {
+    try {
+        const response = await axios.get('/user/all-clients')
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default {
     userExistsCheck,
     signup,
@@ -224,5 +233,6 @@ export default {
     employeeRoleChange,
     adminLogout,
     userLogout,
-    employeeLogout
+    employeeLogout,
+    allClients
 };

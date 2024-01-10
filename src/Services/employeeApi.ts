@@ -78,6 +78,15 @@ const getBankDetails = async (userId: string) => {
     }
 }
 
+const allEmployees = async () => {
+    try {
+        const response = await axios.get( '/employee/allEmployees' )
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const employeeApi = {
     updateProfilePhoto,
     employeeDetails,
@@ -85,5 +94,6 @@ export const employeeApi = {
     updateProfile,
     changePassword,
     updateBankDetails,
-    getBankDetails
+    getBankDetails,
+    allEmployees
 }

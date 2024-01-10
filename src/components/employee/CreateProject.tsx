@@ -1,23 +1,32 @@
 import { useEffect, useState } from "react";
 import { Modal } from "../common/Modal";
 import Form from "../common/Form";
-import UsersProfileCard from "../common/UsersProfileCard";
 import MembersList from "../common/MembersList";
+import { employeeApi } from "../../Services/employeeApi";
+import api from "../../Services/api";
+import User from "../../interfaces/user";
+import { Employees } from "../../interfaces/employee";
 
 const CreateProject = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [fromData, setFormData] = useState();
+    const [allEmployees, setAllEmployees] = useState<Employees[]>();
+    const [clients, setClients] = useState<User[]>();
 
-    const [users, setUsers] = useState([
-        { id: 1, name: "User 1" },
-        { id: 2, name: "User 2" },
-        { id: 3, name: "User 3" },
-        // Add more users as needed
-    ]);
+    useEffect(() => {
+        (async () => {
+            const response = await employeeApi.allEmployees();
+            if (response?.success) setAllEmployees(response.allEmployees);
+        })();
+        (async () => {
+            const response = await api.allClients();
+            if (response?.success) setClients(response.allClients);
+        })();
+    }, []);
 
-    const [selectedUsers, setSelectedUsers] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-    const handleUserSelect = (userId) => {
+    const handleUserSelect = (userId: string) => {
         if (selectedUsers.includes(userId)) {
             setSelectedUsers(selectedUsers.filter((id) => id !== userId));
         } else {
@@ -25,9 +34,19 @@ const CreateProject = () => {
         }
     };
 
+    const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
+
+    const handleEmployeeSelect = (userId: string) => {
+        if (selectedEmployees.includes(userId)) {
+            setSelectedEmployees(selectedEmployees.filter((id) => id !== userId));
+        } else {
+            setSelectedEmployees([...selectedEmployees, userId]);
+        }
+    };
+
     useEffect(() => {
-        console.log(fromData, selectedUsers);
-    }, [fromData, selectedUsers]);
+        console.log(fromData,'formdata', selectedUsers,'selected users', selectedEmployees, 'selected employees');
+    }, [fromData, selectedUsers, selectedEmployees]);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -35,6 +54,8 @@ const CreateProject = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
+        setSelectedEmployees([])
+        setSelectedEmployees([])
     };
 
     const formFields = [
@@ -86,7 +107,16 @@ const CreateProject = () => {
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <div className=" space-y-1 md:space-y-4 sm:p-3">
                     <Form obj={formFields} setData={setFormData}>
-                        <MembersList />
+                        <MembersList
+                            users={allEmployees}
+                            selectedUsers={selectedEmployees}
+                            onUserSelect={handleEmployeeSelect}
+                        />
+                        <MembersList
+                            users={clients}
+                            selectedUsers={selectedUsers}
+                            onUserSelect={handleUserSelect}
+                        />
                     </Form>
                     <button
                         onClick={closeModal}
@@ -107,62 +137,4 @@ const CreateProject = () => {
     );
 };
 
-const UserList = ({ users, selectedUsers, onUserSelect }) => {
-    return (
-        <div>
-            <h2>User List</h2>
-            <ul>
-                {users.map((user) => (
-                    <li key={user.id}>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value={user.id}
-                                checked={selectedUsers.includes(user.id)}
-                                onChange={() => onUserSelect(user.id)}
-                            />
-                            {user.name}
-                        </label>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
-
-const App = () => {
-    const [users, setUsers] = useState([
-        { id: 1, name: "User 1" },
-        { id: 2, name: "User 2" },
-        { id: 3, name: "User 3" },
-        // Add more users as needed
-    ]);
-
-    const [selectedUsers, setSelectedUsers] = useState([]);
-
-    const handleUserSelect = (userId) => {
-        if (selectedUsers.includes(userId)) {
-            setSelectedUsers(selectedUsers.filter((id) => id !== userId));
-        } else {
-            setSelectedUsers([...selectedUsers, userId]);
-        }
-    };
-
-    return (
-        <div>
-            <h1>Create Group</h1>
-            <UserList
-                users={users}
-                selectedUsers={selectedUsers}
-                onUserSelect={handleUserSelect}
-            />
-            <button
-                onClick={() => console.log("Selected Users:", selectedUsers)}
-            >
-                Create Group
-            </button>
-        </div>
-    );
-};
-
-export default CreateProject;
+export default CreateProject    
