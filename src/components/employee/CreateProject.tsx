@@ -6,6 +6,7 @@ import { employeeApi } from "../../Services/employeeApi";
 import api from "../../Services/api";
 import User from "../../interfaces/user";
 import { Employees } from "../../interfaces/employee";
+import projectApi from "../../Services/apis/projectApi";
 
 const CreateProject = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -46,7 +47,14 @@ const CreateProject = () => {
 
     useEffect(() => {
         console.log(fromData,'formdata', selectedUsers,'selected users', selectedEmployees, 'selected employees');
-    }, [fromData, selectedUsers, selectedEmployees]);
+        CreateProject()
+    }, [fromData]);
+
+    const CreateProject = async () => {
+        const response = await projectApi.createProject()
+        console.log(response.data);
+        
+    }
 
     const openModal = () => {
         setIsModalOpen(true);
