@@ -7,12 +7,18 @@ import api from "../../Services/api";
 import User from "../../interfaces/user";
 import { Employees } from "../../interfaces/employee";
 import projectApi from "../../Services/apis/projectApi";
+import { ProjectForm, project } from "../../interfaces/project";
+import toast from "react-hot-toast";
+import { trimProjectFormData } from "../../Services/trim";
+import { validations } from "../../Services/validations";
+import { useAppSelector } from "../../Services/redux/hooks";
 
 const CreateProject = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [fromData, setFormData] = useState();
+    const [formData, setFormData] = useState<ProjectForm>();
     const [allEmployees, setAllEmployees] = useState<Employees[]>();
     const [clients, setClients] = useState<User[]>();
+    const employee = useAppSelector((state) => state.employee.employee);
 
     useEffect(() => {
         (async () => {
@@ -46,14 +52,61 @@ const CreateProject = () => {
     };
 
     useEffect(() => {
-        console.log(fromData,'formdata', selectedUsers,'selected users', selectedEmployees, 'selected employees');
-        CreateProject()
-    }, [fromData]);
+        console.log(formData,'formdata', selectedUsers,'selected users', selectedEmployees, 'selected employees');
+        if (formData) {
+            CreateProject()
+        }
+    }, [formData]);
 
     const CreateProject = async () => {
-        const response = await projectApi.createProject()
-        console.log(response.data);
-        
+        let err = false;
+        if (formData) setFormData(trimProjectFormData(formData))
+        if (!formData?.address || !validations.validateAddress(formData.address)) {
+            toast.error('Enter valid address')
+            err = true
+        }
+        if (!formData?.district) {
+            toast.error('Enter valid district')
+            err = true
+        }
+        if (!formData?.longitudeAndLatitude) {
+            toast.error('Enter valid Longitude and Latitude')   
+            err = true
+        }
+        if (!formData?.pincode || !validations.validatePINCode(formData.pincode)) {
+            toast.error('Enter valid Pincode')
+            err = true
+        }
+        if (!formData?.state) {
+            toast.error('Enter Valid State')
+            err = true
+        }
+        if ( err ) return
+
+        if ( formData && employee ) {
+            const data: project = {
+                projectName: formData?.projectName,
+                postedBy: employee?._id,
+                clients: selectedUsers,
+                details: formData.district,
+                location: formData.longitudeAndLatitude,
+                team : {
+                    members: selectedEmployees,
+                    teamLead: employee?._id
+                },
+                address: {
+                    address: formData.address,
+                    district: formData.district,
+                    state: formData.state,
+                    pincode: formData.pincode
+                },
+            }
+            const response = await projectApi.createProject( data )
+            if ( response.success ) {
+                toast.success('Project created')
+                closeModal()
+            }   
+        }
     }
 
     const openModal = () => {
@@ -75,7 +128,7 @@ const CreateProject = () => {
             data: "projectName",
         },
         {
-            placeholder: "Site Location Address",
+            placeholder: "Site Address",
             type: "text",
             defaultValue: "",
             isRequired: true,
@@ -100,7 +153,7 @@ const CreateProject = () => {
             type: "number",
             defaultValue: "",
             isRequired: true,
-            data: "pinCode",
+            data: "pincode",
         },
         {
             placeholder: "Location Longitude and Latitude",
@@ -115,11 +168,17 @@ const CreateProject = () => {
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <div className=" space-y-1 md:space-y-4 sm:p-3">
                     <Form obj={formFields} setData={setFormData}>
+                        <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
+                            Select Team Members
+                        </label>
                         <MembersList
                             users={allEmployees}
                             selectedUsers={selectedEmployees}
                             onUserSelect={handleEmployeeSelect}
                         />
+                        <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
+                            Select Clients
+                        </label>
                         <MembersList
                             users={clients}
                             selectedUsers={selectedUsers}

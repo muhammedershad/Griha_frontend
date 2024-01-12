@@ -1,6 +1,7 @@
 import { BankDetailsInterface } from "../interfaces/bankDetails"
 import { ChangePasswordInterface } from "../interfaces/changePassword"
 import { Employees } from "../interfaces/employee"
+import { ProjectForm } from "../interfaces/project"
 
 const trimVariables = ( data: Employees ) => {
     if ( data.email ) data.email = data.email.trim()
@@ -25,6 +26,16 @@ export const trimBankDetails = ( data: BankDetailsInterface ) => {
     if (data.PANNumber ) data.PANNumber = data.PANNumber.trim()
     if (data.UPIId) data.UPIId = data.UPIId.trim()
     return data
+}
+
+export const trimProjectFormData = ( data: ProjectForm ): ProjectForm => {
+    if (data.address) data.address = data.address.trim()
+    if (data.district) data.district = data.district.trim()
+    if (data.longitudeAndLatitude) data.longitudeAndLatitude = data.longitudeAndLatitude.trim()
+    if (data.projectName) data.projectName = data.projectName.trim()
+    if (data.state) data.state = data.state.trim()
+    if (data.pincode) data.pincode = data.pincode.trim()
+    return data;
 }
 
 export default trimVariables

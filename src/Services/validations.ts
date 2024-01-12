@@ -51,6 +51,20 @@ const isValidImageType = (fileName: string): boolean => {
     return !!extension && allowedExtensions.includes(extension);
 };
 
+function validateAddress(address: string): boolean {
+    const addressRegex = /^[a-zA-Z0-9\s,.'-]*$/;
+
+    return addressRegex.test(address);
+}
+
+function validatePINCode(pinCode: string): boolean {
+    // Regular expression for a 6-digit Indian PIN code
+    const pinCodeRegex = /^[1-9][0-9]{5}$/;
+  
+    // Validate against the regular expression
+    return pinCodeRegex.test(pinCode);
+  }
+
 export const validations = {
     validateEmail,
     validateFirstNameAndSecondName,
@@ -58,4 +72,6 @@ export const validations = {
     validatePhoneNumber,
     validatePassword,
     isValidImageType,
+    validateAddress,
+    validatePINCode
 };

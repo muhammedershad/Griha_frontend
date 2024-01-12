@@ -1,7 +1,21 @@
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import CreateProject from "../../components/employee/CreateProject";
+import { useEffect, useState } from "react";
+import projectApi from "../../Services/apis/projectApi";
+import { useAppSelector } from "../../Services/redux/hooks";
+import { project } from "../../interfaces/project";
 
 const EmployeeProjects = () => {
+    const [projects, setProjects] = useState<project[]>()
+    const employee = useAppSelector((state) => state.employee.employee)
+    useEffect(() => {
+        (
+            async () => {
+                const response = await projectApi.employeeProjects( employee?._id )
+                setProjects(response.projects)
+            }
+        )()
+    })
     
     return (
         <>
