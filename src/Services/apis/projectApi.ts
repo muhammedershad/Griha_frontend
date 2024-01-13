@@ -23,7 +23,17 @@ const employeeProjects = async ( employeeId: string ) => {
     }
 }
 
+const projectDetails = async (projectId: string) => {
+    try {
+        const response = await axios.get(`/project/project-details/${projectId}`)
+        return response.data
+    } catch (error) {
+        toast.error((error as Error).message)
+    }
+}
+
 export default {
     createProject,
-    employeeProjects
+    employeeProjects,
+    projectDetails
 }
