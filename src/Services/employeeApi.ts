@@ -87,6 +87,15 @@ const allEmployees = async () => {
     }
 }
 
+const allSeniorEmployees = async () => {
+    try {
+        const response = await axios.get('/employee/all-seniors')
+        return response.data
+    } catch (error) {
+        (error as Error)?.message
+    }
+}
+
 export const employeeApi = {
     updateProfilePhoto,
     employeeDetails,
@@ -95,5 +104,6 @@ export const employeeApi = {
     changePassword,
     updateBankDetails,
     getBankDetails,
-    allEmployees
+    allEmployees,
+    allSeniorEmployees
 }

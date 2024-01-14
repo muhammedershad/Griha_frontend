@@ -22,7 +22,7 @@ const ProjectDetails = () => {
     return (
         <>
             <EmployeeSideBar>
-                <ProjectHeader project={projectDetails} />
+                <ProjectHeader project={projectDetails} setProject={setProjectDetails} />
 
             </EmployeeSideBar>
         </>

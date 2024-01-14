@@ -65,6 +65,10 @@ const CreateProject = () => {
             toast.error('Enter valid address')
             err = true
         }
+        if (!formData?.projectName) {
+            toast.error('Enter valid project name')
+            err = true
+        }
         if (!formData?.district) {
             toast.error('Enter valid district')
             err = true
@@ -165,7 +169,7 @@ const CreateProject = () => {
     ];
     return (
         <>
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <Modal isOpen={isModalOpen} onClose={closeModal} mainHeading={"Create Project"}>
                 <div className=" space-y-1 md:space-y-4 sm:p-3">
                     <Form obj={formFields} setData={setFormData}>
                         <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >

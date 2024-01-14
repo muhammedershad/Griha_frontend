@@ -26,17 +26,29 @@ export interface project {
         title: string;
         comments: {
             comment: string;
-            user: string
-            time: Date
+            user: string;
+            time: Date;
         }[];
     };
 }
 
 export interface ProjectForm {
-    projectName: string,
-    address: string,
-    district: string,
-    state: string,
-    pincode: string,
-    longitudeAndLatitude: string
+    projectName: string;
+    address: string;
+    district: string;
+    state: string;
+    pincode: string;
+    longitudeAndLatitude: string;
+}
+
+export interface EditProjectDetails {
+    projectName: string;
+    location: string
+    teamLead: string
+    address: {
+        address: string
+        district: string
+        state: string
+        pincode: string
+    };
 }

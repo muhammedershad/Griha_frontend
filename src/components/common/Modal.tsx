@@ -1,12 +1,13 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 interface DarkThemedModalProps {
     isOpen: boolean;
     onClose: () => void;
-    children: ReactNode
+    children: ReactNode;
+    mainHeading: string
   }
 
-export const Modal: React.FC<DarkThemedModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal: React.FC<DarkThemedModalProps> = ({ isOpen, onClose, mainHeading, children }) => {
   const handleDeactivate = () => {
     // Handle the deactivate logic
     console.log('Deactivating account...');
@@ -35,7 +36,7 @@ export const Modal: React.FC<DarkThemedModalProps> = ({ isOpen, onClose, childre
                       </svg>
                     </div> */}
                     <div className="mt-3 text-center sm:mt-0">
-                      <h3 className="text-base mt-2 font-semibold leading-6 text-gray-100 text-center" id="modal-title">Add Employee</h3>
+                      <h3 className="text-base mt-2 font-semibold leading-6 text-gray-100 text-center" id="modal-title">{mainHeading || 'Add Employee'}</h3>
                       <div className=" flex flex-col justify-center">
                         {children}
                       </div>
@@ -81,7 +82,7 @@ const InteractiveModalExample = () => {
   return (
     <div>
       <button onClick={openModal}>Open Modal</button>
-      <Modal isOpen={isModalOpen} onClose={closeModal} children={undefined} />
+      <Modal isOpen={isModalOpen} mainHeading='Heading' onClose={closeModal} children={undefined} />
     </div>
   );
 };

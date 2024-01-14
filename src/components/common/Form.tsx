@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { useForm, } from "react-hook-form";
+import { ProjectForm } from "../../interfaces/project";
 
 export interface FormField {
     placeholder: string;
@@ -11,7 +12,7 @@ export interface FormField {
 
 interface FormProps {
     obj: FormField[];
-    setData: React.Dispatch<React.SetStateAction<FormData | undefined>>;
+    setData: (something: FormData | ProjectForm) => void;
     children?: ReactNode
 }
 
