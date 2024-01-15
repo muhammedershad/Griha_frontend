@@ -14,6 +14,8 @@ import MembersList from "./MembersList";
 import { Employees } from "../../interfaces/employee";
 import { employeeApi } from "../../Services/employeeApi";
 import { useAppSelector } from "../../Services/redux/hooks";
+import User from "../../interfaces/user";
+import api from "../../Services/api";
 
 interface Props {
     project: project | null;
@@ -24,19 +26,54 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<ProjectForm>();
     const [allSeniors, setAllSeniors] = useState<Employees[]>([]);
+    const [allClients, setAllClients] = useState<User[]>([]);
+    const [allEmployees, setAllEmployees] = useState<Employees[]>([]);
     const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
+    const [selectedClients, setSelectedClients] = useState<string[]>([]);
+    const [selectedTeamLead, setSelectedTeamLead] = useState<string[]>([]);
     const employee = useAppSelector((state) => state.employee.employee);
 
     useEffect(() => {
         (async () => {
             const response = await employeeApi.allSeniorEmployees();
             if (response) setAllSeniors(response?.allSeniors);
-            // Check if project.team.lead is available before setting selectedEmployees
+
+            const allEmployeeResponse = await employeeApi.allEmployees()
+            if (allEmployeeResponse) setAllEmployees(allEmployeeResponse?.allEmployees)
+
+            const allClientsResponse = await api.allClients() 
+            if (allClientsResponse) setAllClients(allClientsResponse.allClients)
         })();
         if (project?.team?.teamLead) {
-            setSelectedEmployees([project?.team?.teamLead]);
+            setSelectedTeamLead([project?.team?.teamLead?._id]);
+        }
+        if (project?.clients) {
+            const clintsId: React.SetStateAction<string[]> = []
+            project.clients.forEach((client: User) => clintsId.push(client._id))
+            setSelectedClients(clintsId);
+        }
+        if (project?.team?.members) {
+            const emplyeesId: string[] = []
+            project.team.members.forEach((employee: Employees) => emplyeesId.push(employee?._id))
+            setSelectedEmployees(emplyeesId);
         }
     }, [project]);
+
+    const handleTeamLeadSelect = (userId: string) => {
+        if (selectedTeamLead.includes(userId)) {
+            setSelectedTeamLead(selectedTeamLead.filter((id) => id !== userId));
+        } else {
+            setSelectedTeamLead([userId]);
+        }
+    };
+
+    const handleClientsSelect = (userId: string) => {
+        if (selectedClients.includes(userId)) {
+            setSelectedClients(selectedClients.filter((id) => id !== userId));
+        } else {
+            setSelectedClients([...selectedClients, userId]);
+        }
+    };
 
     const handleEmployeeSelect = (userId: string) => {
         if (selectedEmployees.includes(userId)) {
@@ -44,12 +81,12 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                 selectedEmployees.filter((id) => id !== userId)
             );
         } else {
-            setSelectedEmployees([userId]);
+            setSelectedEmployees([...selectedEmployees, userId]);
         }
     };
 
     useEffect(() => {
-        console.log(formData, "formdata", selectedEmployees);
+        console.log(formData, "formdata", selectedTeamLead);
         if (formData) {
             editProject();
         }
@@ -95,7 +132,9 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
             const data: EditProjectDetails = {
                 projectName: formData?.projectName,
                 location: formData.longitudeAndLatitude,
-                teamLead: selectedEmployees[0],
+                teamLead: selectedTeamLead[0],
+                teamMembers: selectedEmployees,
+                clients: selectedClients,
                 address: {
                     address: formData.address,
                     district: formData.district,
@@ -123,8 +162,6 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
 
     const closeModal = () => {
         setIsModalOpen(false);
-        // setSelectedEmployees([])
-        // setSelectedEmployees([])
     };
 
     const formFields = [
@@ -189,9 +226,30 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                         </label>
                         <MembersList
                             users={allSeniors}
+                            selectedUsers={selectedTeamLead}
+                            onUserSelect={handleTeamLeadSelect}
+                        />
+                        <label
+                            htmlFor=""
+                            className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                        >
+                            Edit Team Members
+                        </label>
+                        <MembersList
+                            users={allEmployees}
                             selectedUsers={selectedEmployees}
                             onUserSelect={handleEmployeeSelect}
                         />
+                        <label
+                            htmlFor=""
+                            className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                        >
+                            Edit Clients
+                        </label>
+                        <MembersList
+                            users={allClients}
+                            selectedUsers={selectedClients}
+                            onUserSelect={handleClientsSelect} heading={undefined}                        />
                     </Form>
                     <button
                         onClick={closeModal}
@@ -208,7 +266,9 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                         {project?.projectName}
                     </h2>
                     {/* <SmallButton  title="Create Project" /> */}
-                    {employee?._id === project?.team?.teamLead && <p onClick={openModal}>edit project</p>}
+                    {employee?._id === project?.team?.teamLead?._id && (
+                        <p onClick={openModal}>edit project</p>
+                    )}
                 </div>
                 <div className="pl-5 pt-2">
                     <div className="flex items-center max-w-1/2 my-2">
@@ -221,7 +281,7 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
 
                     <div className="flex items-center max-w-1/2 my-2">
                         <div className="flex items-center w-32">
-                            <p className="text-md">Project Name</p>
+                            <p className="text-md">Address</p>
                             <span className="text-md mx-1">{": "}</span>
                         </div>
                         <p className="text-md">{`${project?.address?.address}, ${project?.address?.district}, ${project?.address?.state}, ${project?.address?.pincode}`}</p>

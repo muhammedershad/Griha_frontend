@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 import axios from '../axios'
-import { EditProjectDetails, project } from '../../interfaces/project';
+import { EditProjectDetails, ProjectProgress, project } from '../../interfaces/project';
 
 
 const createProject = async ( data: project ) => {
@@ -42,9 +42,21 @@ const editProject = async (projectId: string, data: EditProjectDetails) => {
     }
 }
 
+const addProgress = async (data: ProjectProgress, projectId: string) => {
+    try {
+        const response = await axios.post(`/project/post-progress/${projectId}`, data)
+        return response.data
+    } catch (error) {
+        toast.error((error as Error).message)
+        console.log(error);
+        
+    }
+}
+
 export default {
     createProject,
     employeeProjects,
     projectDetails,
-    editProject
+    editProject,
+    addProgress
 }

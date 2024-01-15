@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import projectApi from "../../Services/apis/projectApi";
 import { project } from "../../interfaces/project";
 import ProjectHeader from "../../components/common/ProjectHeader";
+import ProjectBody from "../../components/common/ProjectBody";
+import ProjectProgress from "../../components/employee/ProjectProgress";
 
 const ProjectDetails = () => {
     const [projectDetails, setProjectDetails] = useState<project | null>(null);
@@ -14,6 +16,7 @@ const ProjectDetails = () => {
                 const response = await projectApi.projectDetails(id);
                 if (response.success) {
                     setProjectDetails(response.project);
+                    // console.log(projectDetails);
                 }
             }
         })();
@@ -23,7 +26,8 @@ const ProjectDetails = () => {
         <>
             <EmployeeSideBar>
                 <ProjectHeader project={projectDetails} setProject={setProjectDetails} />
-
+                <ProjectBody project={projectDetails} />
+                <ProjectProgress project={projectDetails} />
             </EmployeeSideBar>
         </>
     );

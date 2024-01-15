@@ -17,13 +17,14 @@ export interface project {
         pincode: string;
     } | null;
     progress?: {
-        _id: string | null;
-        attachments: string[] | null;
-        date: Date;
-        details: string;
-        shortDiscription: string;
-        submittedBy: string;
         title: string;
+        shortDiscription: string;
+        details: string;
+        imageUrls: string[];
+        videoUrls: string[];
+        otherFileUrls: string[];
+        postedBy: string;
+        date: Date
         comments: {
             comment: string;
             user: string;
@@ -43,12 +44,24 @@ export interface ProjectForm {
 
 export interface EditProjectDetails {
     projectName: string;
-    location: string
-    teamLead: string
+    location: string;
+    teamLead: string;
+    clients: string[];
+    teamMembers: string[];
     address: {
-        address: string
-        district: string
-        state: string
-        pincode: string
+        address: string;
+        district: string;
+        state: string;
+        pincode: string;
     };
+}
+
+export interface ProjectProgress {
+    title: string;
+    shortDiscription: string;
+    details: string;
+    imageUrls: string[];
+    videoUrls: string[];
+    otherFileUrls: string[];
+    postedBy: string;
 }
