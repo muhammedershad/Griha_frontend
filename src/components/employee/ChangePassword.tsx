@@ -6,9 +6,10 @@ import { trimPasswords } from "../../Services/trim";
 import toast from "react-hot-toast";
 import { employeeApi } from "../../Services/employeeApi";
 import { Employees } from "../../interfaces/employee";
+import User from "../../interfaces/user";
 
 interface Props {
-    employee: Employees | null | undefined;
+    employee: Employees| User | null | undefined;
 }
 
 const ChangePassword: React.FC<Props> = ({ employee }) => {

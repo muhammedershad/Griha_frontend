@@ -1,24 +1,27 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../../Services/firebase";
-import toast from "react-hot-toast";
-import { validations } from "../../Services/validations";
-import { Employees } from "../../interfaces/employee";
-import { employeeApi } from "../../Services/employeeApi";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import UserSideBar from "../../components/user/UserSideBar";
+import User from "../../interfaces/user";
 import { useAppSelector } from "../../Services/redux/hooks";
-import PersonalInformation from "../../components/employee/EmployeePersonalInformation";
-import BankDetails from "../../components/employee/BankDetails";
+import { validations } from "../../Services/validations";
+import toast from "react-hot-toast";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../Services/firebase";
+import api from "../../Services/api";
+import PersonalInfomations from "../../components/employee/PersonalInfomations";
+import ChangePassword from "../../components/employee/ChangePassword";
 
-const EmployeeProfile = () => {
+const Profile = () => {
     const [image, setImage] = useState<File | null>(null);
-    // const [progress, setProgress] = useState<number>(0);
     const [imageUrl, setImageUrl] = useState<string>("");
-    const [employee, setEmployees] = useState<Employees | null>();
-    const employeeData = useAppSelector((state) => state.employee.employee);
+    const [user, setUser] = useState<User | null>();
+    const userData: User | null = useAppSelector((state) => state.user.user);
+    const [info, setInfo] = useState<string>("info");
+
     useEffect(() => {
-        setEmployees(employeeData);
-    });
+        setUser(userData);
+        console.log(userData);
+        
+    },[userData]);
 
     useEffect(() => {
         handleUpload();
@@ -45,7 +48,7 @@ const EmployeeProfile = () => {
 
             const storageRef = ref(
                 storage,
-                "employee_profile_pictures/" + image.name
+                "user_profile_pictures/" + image.name
             );
             const uploadTask = uploadBytesResumable(
                 storageRef,
@@ -87,8 +90,8 @@ const EmployeeProfile = () => {
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
                         async (downloadURL: string) => {
-                            const saved = await employeeApi.updateProfilePhoto(
-                                employee?._id,
+                            const saved = await api.userProfilePhotoUpdate(
+                                user?._id,
                                 downloadURL
                             );
                             if (saved?.success) {
@@ -105,10 +108,9 @@ const EmployeeProfile = () => {
             );
         }
     };
-
     return (
         <>
-            <EmployeeSideBar>
+            <UserSideBar>
                 <div className="container mx-auto p-4 bg-slate-950 mb-3 rounded-lg">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
@@ -128,7 +130,7 @@ const EmployeeProfile = () => {
                                 <img
                                     src={
                                         `${imageUrl}` ||
-                                        employee?.image ||
+                                        user?.image ||
                                         "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg"
                                     }
                                     alt="Profile Picture"
@@ -166,66 +168,79 @@ const EmployeeProfile = () => {
                             </label>
                             <div>
                                 <h2 className="text-2xl font-bold">
-                                    {`${employee?.firstName ?? ""} ${
-                                        employee?.lastName ?? ""
+                                    {`${user?.FirstName ?? ""} ${
+                                        user?.LastName ?? ""
                                     }`}
                                 </h2>
                                 <p className="text-gray-500">
-                                    {employee?.jobRole}
+                                    {user?.Username}
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-wrap mx-24">
                         <div className="lg:w-1/2 px-2">
-                            <h4 className="font-semibold text-slate-300 mb-2">
+                            <h4 className="font-semibold text-slate-400 mb-2">
                                 Contact Information
                             </h4>
+                            <div className="flex flex-row justify-between">
                             <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">
                                     Phone:
                                 </span>{" "}
-                                {employee?.phone ?? ""}
+                                {user?.Phone ?? ""}
                             </p>
                             <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">
                                     Email:
                                 </span>{" "}
-                                {employee?.email ?? ""}
+                                {user?.Email ?? ""}
                             </p>
+                            </div>
                         </div>
                         <div className="lg:w-1/2 px-2">
-                            <h4 className="font-semibold text-slate-300 mb-2">
+                            {/* <h4 className="font-semibold text-slate-300 mb-2">
                                 Professional Information
-                            </h4>
-                            <p className="mb-2 text-slate-400">
+                            </h4> */}
+                            {/* <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">
                                     Date of Join:
                                 </span>{" "}
-                                {employee?.joinedDate.split("T")[0] ?? ""}
-                            </p>
-                            <p className="mb-2 text-slate-400">
+                                {user?.joinedDate.split("T")[0] ?? ""}
+                            </p> */}
+                            {/* <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">
                                     Department:{" "}
                                 </span>
                                 {" " + employee?.department}
-                            </p>
+                            </p> */}
                         </div>
                     </div>
                 </div>
-
-                <div className="flex flex-col lg:flex-row gap-4 bg-zinc-800">
-                    <div className="lg:w-1/2 bg-slate-900 rounded-lg">
-                        <PersonalInformation />
-                    </div>
-
-                    <div className="lg:w-1/2 bg-slate-900 rounded-lg">
-                        <BankDetails employees={employee} />
-                    </div>
+                <div className="p-3 max-w-lg mx-auto">
+                {info === "info" ? (
+                    <PersonalInfomations employee={user} />
+                ) : (
+                    <ChangePassword employee={user} />
+                )}
+                <div className="flex justify-between mt-5">
+                    <span
+                        onClick={() => setInfo("info")}
+                        className="text-stone-300 cursor-pointer"
+                    >
+                        Edit Informations
+                    </span>
+                    <span
+                        onClick={() => setInfo("changePass")}
+                        className="text-stone-300 cursor-pointer"
+                    >
+                        Change Password
+                    </span>
                 </div>
-            </EmployeeSideBar>
+            </div>
+            </UserSideBar>
         </>
     );
 };
 
-export default EmployeeProfile;
+export default Profile;

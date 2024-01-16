@@ -14,12 +14,14 @@ interface FormData {
 }
 
 interface Props {
-    project: project
+    project: project;
+    setProject: (project: project) => void;
+    user: boolean;
 }
-const ProjectProgressHeader: React.FC<Props> = ({project}) => {
+const ProjectProgressHeader: React.FC<Props> = ({ project, setProject, user }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<FormData>();
-    const [details, setDetails] = useState<string>('');
+    const [details, setDetails] = useState<string>("");
     const [files, setFiles] = useState<File[]>([]);
     const [images, setImages] = useState<File[]>([]);
     const [videos, setVideos] = useState<File[]>([]);
@@ -27,7 +29,7 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
     const [imageUrl, setImageUrl] = useState<string[]>([]);
     const [videoUrl, setVideoUrl] = useState<string[]>([]);
     const [otherFilesUrl, setOtherFilesUrl] = useState<string[]>([]);
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false);
     const employee = useAppSelector((state) => state.employee.employee);
 
     const openModal = () => {
@@ -37,44 +39,46 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
     const closeModal = () => {
         setIsModalOpen(false);
         setFiles([]);
-        setImages([])
-        setVideos([])
-        setOtherFiles([])
+        setImages([]);
+        setVideos([]);
+        setOtherFiles([]);
     };
 
     useEffect(() => {
-        console.log(formData, files, details,'formdata');
-        console.log(images, 'image', videos, 'video', otherFiles);
+        console.log(formData, files, details, "formdata");
+        console.log(images, "image", videos, "video", otherFiles);
         console.log(imageUrl);
-        
 
         handleCreateProgress();
     }, [formData]);
 
     const handleCreateProgress = async () => {
-        setError(false)
+        setError(false);
+        setImageUrl([]);
+        setVideoUrl([]);
+        setOtherFilesUrl([]);
         if (formData) {
             if (!formData.shortDiscription.trim()) {
-                toast.error('Enter a valid short discription')
-                setError(true)
+                toast.error("Enter a valid short discription");
+                setError(true);
             }
             if (!formData.title.trim()) {
-                toast.error('Enter valid task name')
-                setError(true)
+                toast.error("Enter valid task name");
+                setError(true);
             }
             if (!details?.trim()) {
-                toast.error('Enter the details of the task')
-                setError(true)
+                toast.error("Enter the details of the task");
+                setError(true);
             }
-            if (error) return
+            if (error) return;
 
-            if (images) {
+            if (images.length > 0) {
                 console.log("here");
-    
+
                 const metadata = {
                     contentType: "image/jpeg",
                 };
-    
+
                 images.forEach((image) => {
                     const storageRef = ref(
                         storage,
@@ -85,12 +89,14 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                         image,
                         metadata
                     );
-        
+
                     uploadTask.on(
                         "state_changed",
                         (snapshot) => {
                             const progress =
-                                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                (snapshot.bytesTransferred /
+                                    snapshot.totalBytes) *
+                                100;
                             console.log("Upload is " + progress + "% done");
                             switch (snapshot.state) {
                                 case "paused":
@@ -104,7 +110,9 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                         (error) => {
                             switch (error.code) {
                                 case "storage/unauthorized":
-                                    toast.error("Unauthorized access to firebase");
+                                    toast.error(
+                                        "Unauthorized access to firebase"
+                                    );
                                     break;
                                 case "storage/canceled":
                                     toast.error("Profile uploading failed");
@@ -115,27 +123,28 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                                     );
                                     break;
                             }
-                            return toast.error("Error in uploading profile photo");
+                            return toast.error(
+                                "Error in uploading profile photo"
+                            );
                         },
                         () => {
                             getDownloadURL(uploadTask.snapshot.ref).then(
                                 async (downloadURL: string) => {
-                                   setImageUrl([...imageUrl, downloadURL])
-                                   console.log(imageUrl,'here');
-                                   
+                                    setImageUrl([...imageUrl, downloadURL]);
+                                    console.log(imageUrl, "here");
                                 }
                             );
                         }
                     );
-                })
+                });
             }
-            if (videos) {
+            if (videos.length > 0) {
                 console.log("here video");
-    
+
                 const metadata = {
                     contentType: "video/mp4",
                 };
-    
+
                 images.forEach((video) => {
                     const storageRef = ref(
                         storage,
@@ -146,12 +155,14 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                         video,
                         metadata
                     );
-        
+
                     uploadTask.on(
                         "state_changed",
                         (snapshot) => {
                             const progress =
-                                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                (snapshot.bytesTransferred /
+                                    snapshot.totalBytes) *
+                                100;
                             console.log("Upload is " + progress + "% done");
                             switch (snapshot.state) {
                                 case "paused":
@@ -165,7 +176,9 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                         (error) => {
                             switch (error.code) {
                                 case "storage/unauthorized":
-                                    toast.error("Unauthorized access to firebase");
+                                    toast.error(
+                                        "Unauthorized access to firebase"
+                                    );
                                     break;
                                 case "storage/canceled":
                                     toast.error("Profile uploading failed");
@@ -181,22 +194,21 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                         () => {
                             getDownloadURL(uploadTask.snapshot.ref).then(
                                 async (downloadURL: string) => {
-                                   setVideoUrl([...videoUrl, downloadURL])
-                                   console.log(videoUrl,'here');
-                                   
+                                    setVideoUrl([...videoUrl, downloadURL]);
+                                    console.log(videoUrl, "here");
                                 }
                             );
                         }
                     );
-                })
+                });
             }
-            if (otherFiles) {
+            if (otherFiles.length > 0) {
                 console.log("here, other files");
-    
+
                 // const metadata = {
                 //     contentType: "image/jpeg",
                 // };
-    
+
                 images.forEach((file) => {
                     const storageRef = ref(
                         storage,
@@ -204,15 +216,17 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                     );
                     const uploadTask = uploadBytesResumable(
                         storageRef,
-                        file,
+                        file
                         // metadata
                     );
-        
+
                     uploadTask.on(
                         "state_changed",
                         (snapshot) => {
                             const progress =
-                                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                (snapshot.bytesTransferred /
+                                    snapshot.totalBytes) *
+                                100;
                             console.log("Upload is " + progress + "% done");
                             switch (snapshot.state) {
                                 case "paused":
@@ -226,7 +240,9 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                         (error) => {
                             switch (error.code) {
                                 case "storage/unauthorized":
-                                    toast.error("Unauthorized access to firebase");
+                                    toast.error(
+                                        "Unauthorized access to firebase"
+                                    );
                                     break;
                                 case "storage/canceled":
                                     toast.error("Profile uploading failed");
@@ -237,42 +253,51 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
                                     );
                                     break;
                             }
+                            closeModal();
                             return toast.error("Error in uploading files");
                         },
                         () => {
                             getDownloadURL(uploadTask.snapshot.ref).then(
                                 async (downloadURL: string) => {
-                                    setOtherFilesUrl([...otherFilesUrl, downloadURL])
-                                   console.log(otherFilesUrl,'here');
-                                   
+                                    setOtherFilesUrl([
+                                        ...otherFilesUrl,
+                                        downloadURL,
+                                    ]);
+                                    console.log(otherFilesUrl, "here");
                                 }
                             );
                         }
                     );
-                })
+                });
             }
 
-            const data: ProjectProgress = {
-                title: formData.title,
-                shortDiscription: formData.shortDiscription,
-                details: details,
-                imageUrls: imageUrl,
-                videoUrls: videoUrl,
-                otherFileUrls: otherFilesUrl,
-                postedBy: employee?._id
-            }
+            addPost();
+        }
+    };
 
-            const response = await projectApi.addProgress(data, project?._id )
-            if (response.success) {
-                toast.success('Progress Posted')
-            }
+    const addPost = async () => {
+        const data: ProjectProgress = {
+            title: formData.title,
+            shortDiscription: formData.shortDiscription,
+            details: details,
+            imageUrls: imageUrl,
+            videoUrls: videoUrl,
+            otherFileUrls: otherFilesUrl,
+            postedBy: employee?._id,
+        };
+
+        const response = await projectApi.addProgress(data, project?._id);
+        if (response?.success) {
+            toast.success("Progress Posted");
+            setProject(response?.project);
+            closeModal();
         }
     };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setImages([])
-        setVideos([])
-        setOtherFiles([])
+        setImages([]);
+        setVideos([]);
+        setOtherFiles([]);
         if (e.target.files) {
             const selectedFiles = Array.from(e.target.files);
 
@@ -366,12 +391,14 @@ const ProjectProgressHeader: React.FC<Props> = ({project}) => {
             </Modal>
             <div className="flex justify-between mb-2 items-center h-fit w-full">
                 <h3 className="font-semibold text-lg mb-3">Project Progress</h3>
-                <p
-                    onClick={openModal}
-                    className="text-sm p-2 rounded-lg border-[1px]"
-                >
-                    Add Progress
-                </p>
+                {!user && (
+                    <p
+                        onClick={openModal}
+                        className="text-sm p-2 rounded-lg border-[1px]"
+                    >
+                        Add Progress
+                    </p>
+                )}
             </div>
         </>
     );

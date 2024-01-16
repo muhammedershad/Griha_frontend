@@ -16,7 +16,7 @@ export interface project {
         state: string;
         pincode: string;
     } | null;
-    progress?: {
+    progress?: [{
         title: string;
         shortDiscription: string;
         details: string;
@@ -30,7 +30,7 @@ export interface project {
             user: string;
             time: Date;
         }[];
-    };
+    }];
 }
 
 export interface ProjectForm {

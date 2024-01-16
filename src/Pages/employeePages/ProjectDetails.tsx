@@ -27,7 +27,7 @@ const ProjectDetails = () => {
             <EmployeeSideBar>
                 <ProjectHeader project={projectDetails} setProject={setProjectDetails} />
                 <ProjectBody project={projectDetails} />
-                <ProjectProgress project={projectDetails} />
+                <ProjectProgress project={projectDetails} setProject={setProjectDetails} />
             </EmployeeSideBar>
         </>
     );

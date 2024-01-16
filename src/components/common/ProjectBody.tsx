@@ -27,14 +27,14 @@ const ProjectBody: React.FC<Props> = ({ project }) => {
                                 users={project?.clients}
                                 selectedUsers={project?.clients}
                                 onUserSelect={undefined}
-                                edit={false} heading={'Team Members'}                        />
+                                edit={false} heading={'Clients'}                        />
                     </div>
                     <div className="sm:w-full md:w-1/2">
                         <MembersList
                                 users={project?.team?.members}
                                 selectedUsers={project?.team?.members}
                                 onUserSelect={undefined}
-                                edit={false} heading={'Clients'}                        />
+                                edit={false} heading={'Team Members'}                        />
                     </div>
                 </div>
             )}

@@ -53,10 +53,32 @@ const addProgress = async (data: ProjectProgress, projectId: string) => {
     }
 }
 
+const userProjects = async ( userId: string) => {
+    try {
+        const response = await axios.get(`/project/user-project/${userId}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error((error as Error)?.message)
+    }
+}
+
+const allPorjects = async () => {
+    try {
+        const response = await axios.get('/project/all-projects')
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error((error as Error)?.message)
+    }
+}
+
 export default {
     createProject,
     employeeProjects,
     projectDetails,
     editProject,
-    addProgress
+    addProgress,
+    userProjects,
+    allPorjects
 }

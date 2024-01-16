@@ -201,7 +201,7 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
             data: "pincode",
         },
         {
-            placeholder: "Location Longitude and Latitude",
+            placeholder: "Project Deails",
             type: "string",
             defaultValue: project?.location,
             isRequired: true,
@@ -267,7 +267,12 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                     </h2>
                     {/* <SmallButton  title="Create Project" /> */}
                     {employee?._id === project?.team?.teamLead?._id && (
-                        <p onClick={openModal}>edit project</p>
+                        <p
+                        onClick={openModal}
+                        className="text-sm p-2 rounded-lg border-[1px]"
+                    >
+                        Edit Project
+                    </p>
                     )}
                 </div>
                 <div className="pl-5 pt-2">

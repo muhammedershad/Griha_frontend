@@ -20,6 +20,7 @@ const AdminRoutes = () => {
                     <Route path="/users" element={<AdminUserManagement />} />
                     <Route path="/employee" element={<AdminEmployeeManagement />} />
                     <Route path="/test" element={<InteractiveModalExample />} />
+                    {/* <Route path="/projects" element={<ManagePorject />} /> */}
                 </Route>
             </Routes>
         </>

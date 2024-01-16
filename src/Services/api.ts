@@ -3,6 +3,7 @@ import response from "../interfaces/apiResponce";
 import FormData from "../interfaces/signupInterface";
 import LoginFormData from "../interfaces/login";
 import { EmployeesForm } from "../interfaces/employee";
+import toast from "react-hot-toast";
 
 const userExistsCheck = async (email: string): Promise<response> => {
     try {
@@ -213,6 +214,24 @@ const allClients = async () => {
     }
 }
 
+const UpdateSlice = async ( token: string) => {
+    try {
+        const response = await axios.post('/user/user', { token: token })
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const userProfilePhotoUpdate = async (userId: string, imageUrl: string) => {
+    try {
+        const response = await axios.patch('/user/update-user-profile-photo',{ userId, imageUrl })
+        return response.data
+    } catch (error) {
+        toast.error((error as Error).message)
+    }
+}
+
 export default {
     userExistsCheck,
     signup,
@@ -234,5 +253,7 @@ export default {
     adminLogout,
     userLogout,
     employeeLogout,
-    allClients
+    allClients,
+    UpdateSlice,
+    userProfilePhotoUpdate
 };
