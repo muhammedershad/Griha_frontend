@@ -1,6 +1,7 @@
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Sidebar from "../Home/SideBar";
 
 const Line = () => (
     <div className="w-[1px] h-[15px] flex align-middle mr-2 bg-orange-400"></div>
@@ -30,104 +31,105 @@ function Navbar() {
     }, []);
 
     return (
-        <div>
-            <nav
-                className={`${
-                    scrolled
+        <>
+            <div>
+                <nav
+                    className={`${
+                        scrolled
                         ? "bg-black bg-opacity-70 backdrop-blur-md"
                         : "bg-transparent"
-                }  fixed w-full z-20 top-0 start-0 border-b md:border-0`}
-            >
-                <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <a className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <img src={logo} className="h-8" alt="Griha Logo" />
-                        {/* <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Flowbite
-            </span> */}
-                    </a>
-                    <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                        <Link to='/login'>
+                    }  fixed w-full z-20 top-0 start-0 border-b md:border-0`}
+                >
+                    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                        <a className="flex items-center space-x-3 rtl:space-x-reverse">
+                            <img src={logo} className="h-8" alt="Griha Logo" />
+                        </a>
+                        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                            <Link to="/login">
+                                <button
+                                    type="button"
+                                    className="text-white bg-transparent  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center   dark:focus:ring-blue-800"
+                                >
+                                    Login
+                                </button>
+                            </Link>
                             <button
+                                data-collapse-toggle="navbar-sticky"
                                 type="button"
-                                className="text-white bg-transparent  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center   dark:focus:ring-blue-800"
+                                className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                aria-controls="navbar-sticky"
+                                aria-expanded="false"
                             >
-                                Login
+                                <span className="sr-only">Open main menu</span>
+                                <svg
+                                    className="w-5 h-5"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 17 14"
+                                >
+                                    <path
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M1 1h15M1 7h15M1 13h15"
+                                    />
+                                </svg>
                             </button>
-                        </Link>
-                        <button
-                            data-collapse-toggle="navbar-sticky"
-                            type="button"
-                            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            aria-controls="navbar-sticky"
-                            aria-expanded="false"
+                        
+                        </div>
+                        <div
+                            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+                            id="navbar-sticky"
                         >
-                            <span className="sr-only">Open main menu</span>
-                            <svg
-                                className="w-5 h-5"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 17 14"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M1 1h15M1 7h15M1 13h15"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                    <div
-                        className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-                        id="navbar-sticky"
-                    >
-                        <ul className="flex flex-col align-middle p-0 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-36 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-transparent md:dark:bg-transparent dark:border-transparent bg-opacity-0">
-                            <li>
-                                <Link to="/">
+                            <ul className="flex flex-col align-middle p-0 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-36 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-transparent md:dark:bg-transparent dark:border-transparent bg-opacity-0">
+                                <li>
+                                    <Link to="/">
+                                        <a
+                                            href="#"
+                                            className="flex flex-row align-middle items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                                            aria-current="page"
+                                        >
+                                            <Line />
+                                            Home
+                                        </a>
+                                    </Link>
+                                </li>
+                                <li>
                                     <a
                                         href="#"
-                                        className="flex flex-row align-middle items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                                        aria-current="page"
+                                        className="flex flex-row items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                                     >
                                         <Line />
-                                        Home
+                                        About
                                     </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex flex-row items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                                >
-                                    <Line />
-                                    About
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex flex-row items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                                >
-                                    <Line />
-                                    Services
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex flex-row items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                                >
-                                    <Line />
-                                    Contact
-                                </a>
-                            </li>
-                        </ul>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        className="flex flex-row items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                    >
+                                        <Line />
+                                        Services
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        className="flex flex-row items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                    >
+                                        <Line />
+                                        Contact
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </div>
+                </nav>
+            <Sidebar />
+            </div>
+        </>
     );
 }
 

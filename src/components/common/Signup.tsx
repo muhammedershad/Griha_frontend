@@ -153,7 +153,7 @@ const Signup = () => {
             <div>
                 <Toaster />
             </div>
-            <div className="flex flex-col items-center justify-center md:mt-20 px-6 py-8 mb-8 mx-auto lg:py-0">
+            <div className="flex flex-col -z-10 items-center justify-center md:mt-20 px-6 py-8 mb-8 mx-auto lg:py-0">
                 <div className="w-auto md:mt-0 sm:max-w-md xl:p-0 rounded-lg shadow bg-transparent backdrop-blur-[300px] border-2 border-white border-opacity-10 flex flex-col justify-center justify-items-center">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8 flex flex-col justify-center justify-items-center">
                         <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">

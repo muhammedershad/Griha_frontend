@@ -80,8 +80,8 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
             <div>
                 <Toaster />
             </div>
-            <section className=" z-10 ">
-                <div className="flex flex-col z-10 items-center justify-center  px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <section className=" z-0 ">
+                <div className="flex flex-col z-0 items-center justify-center align-super px-6 py-8 mx-auto h-screen lg:py-0">
                     <div className="w-full z-10 rounded-lg shadow bg-transparent backdrop-blur-[300px] border-2 border-white border-opacity-10 md:mt-0 sm:max-w-md xl:p-0 ">
                         <div className=" p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-center first-letter: text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
