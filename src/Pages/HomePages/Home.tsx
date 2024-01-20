@@ -1,54 +1,68 @@
-// import Carousel from "../../components/Home/Carousel";
-// import Navbar from "../../components/Home/Navbar";
-// import Body from "../../components/common/Body";
-
-// const Home = () => {
-//   return (
-//     <>
-//       <Body />
-//       <Navbar />
-//           <div className="container z-10 max-h-11 p-24">
-//             <Carousel
-//               slides={[
-//                 "https://www.bhg.com/thmb/H9VV9JNnKl-H1faFXnPlQfNprYw=/1799x0/filters:no_upscale():strip_icc()/white-modern-house-curved-patio-archway-c0a4a3b3-aa51b24d14d0464ea15d36e05aa85ac9.jpg",
-//                 "https://www.buildofy.com/blog/content/images/2022/06/_DSC9610-Edited_-min.jpg",
-//               ]}
-//             />
-//           </div>
-//     </>
-//   );
-// };
-
-// export default Home;
-
-// components/pages/Home.js
-
-
-import Body from '../../components/common/Body';
-import Navbar from '../../components/Home/Navbar';
-import Carousel from '../../components/Home/Carousel';
-
+import Body from "../../components/common/Body";
+import Navbar from "../../components/Home/Navbar";
+import Carousel1 from "../../components/Home/Carousel1";
+import house_top_cut from "../../../public/images/house_top_cut-removebg-preview.png";
 
 const Home = () => {
-  return (
-    <>
-      <Body />
-      <div className="absolute inset-0 flex justify-center">
-        <Navbar />
-        <div className="mx-16 mt-20">
-          <Carousel
+    return (
+        <>
+            <Body />
+            <div className="absolute inset-0 flex justify-center">
+                <Navbar />
+                <div className="md:mx-28 mt-20">
+                    {/* <Carousel
             slides={[
-              'https://www.bhg.com/thmb/H9VV9JNnKl-H1faFXnPlQfNprYw=/1799x0/filters:no_upscale():strip_icc()/white-modern-house-curved-patio-archway-c0a4a3b3-aa51b24d14d0464ea15d36e05aa85ac9.jpg',
-              'https://www.buildofy.com/blog/content/images/2022/06/_DSC9610-Edited_-min.jpg',
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF2K1JouhV-0mVGnd-UvRJQKis-vPYzp0927YAq2s_5J5fw49oYBDx_GUoYarkjis9hIs&usqp=CAU',
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnPvkS8O6WD9x5k3J8NjnGE-K97OIDE90yH6R1051HnZtswgRos8CvL0Bc4eKWBjfD2mg&usqp=CAU'
+              'https://i.pinimg.com/736x/ec/a6/9b/eca69bd2d24dd4c1d9d296b365c14de2.jpg',
+              'https://i.pinimg.com/736x/bf/2a/e9/bf2ae9181bc7a073b11d15da607208c8.jpg',
+              'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyamin-mellish-106399.jpg&fm=jpg',
+              'https://i.pinimg.com/736x/08/21/1e/08211ec43a3988ff31f704a872d60447.jpg'
             ]}
-          />
-        </div>
-      </div>
-      
-    </>
-  );
+          /> */}
+                    <Carousel1
+                        images={[
+                            "https://i.pinimg.com/736x/ec/a6/9b/eca69bd2d24dd4c1d9d296b365c14de2.jpg",
+                            "https://i.pinimg.com/736x/bf/2a/e9/bf2ae9181bc7a073b11d15da607208c8.jpg",
+                            "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyamin-mellish-106399.jpg&fm=jpg",
+                            "https://i.pinimg.com/736x/08/21/1e/08211ec43a3988ff31f704a872d60447.jpg",
+                            "https://i.pinimg.com/736x/55/f8/f4/55f8f41f8e8161e7384372f14ca2f906.jpg",
+                        ]}
+                    />
+
+                    <div className="flex flex-col md:flex-row">
+                        <div className="col-span-12 md:col-span-6 w-full">
+                            <img
+                                className="z-10"
+                                src={house_top_cut}
+                                alt="Example"
+                            />
+                        </div>
+                        <div className="flex w-full text-white text-center items-center col-span-12 md:col-span-6">
+                            <div>
+                                <p className="align-middle font-bold text-4xl">
+                                    The Home That Your Heart Chooses
+                                </p>
+                                <p className="mt-3">
+                                    Schedule Your{" "}
+                                    <span className="text-yellow-700">
+                                        Free
+                                    </span>{" "}
+                                    Consultation Today!
+                                </p>
+                                <button className="mt-5 text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    Schedule Meeting..
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                      <div>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default Home;

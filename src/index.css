@@ -23,13 +23,15 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #140854; /* Change this color to your desired thumb color */
+  background-color: #140854;
+  /* Change this color to your desired thumb color */
   border-radius: 6px;
 }
 
 /* Firefox */
 * {
-  scrollbar-color: #0a052e #011347; /* Change these colors to your desired thumb and track colors */
+  scrollbar-color: #0a052e #011347;
+  /* Change these colors to your desired thumb and track colors */
   scrollbar-width: thin;
 }
 
@@ -49,9 +51,10 @@ body {
   box-sizing: border-box;
   animation: animloader 2s ease infinite;
 }
+
 .loader::after,
 .loader::before {
-  content: '';  
+  content: '';
   box-sizing: border-box;
   width: 16px;
   height: 16px;
@@ -64,6 +67,7 @@ body {
   top: 0;
   animation: animloader 2s 0.2s ease infinite;
 }
+
 .loader::before {
   animation-delay: 0.4s;
   left: 60px;
@@ -74,13 +78,19 @@ body {
     top: 0;
     color: white;
   }
+
   50% {
     top: 30px;
     color: rgba(255, 255, 255, 0.2);
   }
+
   100% {
     top: 0;
     color: white;
   }
 }
-    
+
+.gradientBlur {
+  background: rgb(199, 198, 84);
+  background: radial-gradient(circle, rgba(199, 198, 84, 0.7372198879551821) 0%, rgba(252, 70, 107, 0) 100%);
+}

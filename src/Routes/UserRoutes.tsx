@@ -7,6 +7,8 @@ import UserPrivateRoutes, { UserLoggedInRoutes } from "./UserPrivateRoutes";
 import Profile from "../Pages/userPages/Profile";
 import UserProjects from "../Pages/userPages/UserProjects";
 import ProjectDetails from "../Pages/userPages/ProjectDetails";
+import Projects from "../Pages/HomePages/Projects";
+import UserProjectDetails from "../Pages/HomePages/ProjectDetails";
 
 const UserRoutes = () => {
     return (
@@ -16,9 +18,11 @@ const UserRoutes = () => {
                 <Route element={<UserLoggedInRoutes />}>
                     <Route path="/login" element={<UserLogin />} />
                     <Route path="/signup" element={<UserSignup />} />
+                    <Route path="/project" element={<Projects />} />
+                    <Route path="/project/:id" element={<UserProjectDetails />} />
                 </Route>
                 <Route element={<UserPrivateRoutes />}>
-                    <Route path="/project/:id" element={<ProjectDetails />} />
+                    <Route path="/client-project/:id" element={<ProjectDetails />} />
                     <Route path="/projects" element={<UserProjects />} />
                     <Route path="/dash" element={<UserDash />} />
                     <Route path="/profile" element={<Profile />} />

@@ -5,6 +5,7 @@ import AdminDash from "../Pages/adminPages/AdminDash";
 import AdminUserManagement from "../Pages/adminPages/AdminUserManagement";
 import AdminEmployeeManagement from "../Pages/adminPages/AdminEmployeeManagement";
 import InteractiveModalExample from "../components/common/Modal";
+import AddProjects from "../Pages/adminPages/AddProjects";
 
 
 
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
                     <Route path="/employee" element={<AdminEmployeeManagement />} />
                     <Route path="/test" element={<InteractiveModalExample />} />
                     {/* <Route path="/projects" element={<ManagePorject />} /> */}
+                    <Route path="/add-project" element={<AddProjects />} />
                 </Route>
             </Routes>
         </>

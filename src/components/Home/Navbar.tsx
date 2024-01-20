@@ -9,12 +9,13 @@ const Line = () => (
 
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const [close, setClose] = useState(true);
 
     useEffect(() => {
         // Function to handle scroll event
         const handleScroll = () => {
             // Check the scroll position and update the state accordingly
-            if (window.scrollY > 100) {
+            if (window.scrollY > 80) {
                 setScrolled(true);
             } else {
                 setScrolled(false);
@@ -36,9 +37,9 @@ function Navbar() {
                 <nav
                     className={`${
                         scrolled
-                        ? "bg-black bg-opacity-70 backdrop-blur-md"
-                        : "bg-transparent"
-                    }  fixed w-full z-20 top-0 start-0 border-b md:border-0`}
+                            ? "bg-black bg-opacity-70 backdrop-blur-md"
+                            : " bg-black bg-opacity-70 backdrop-blur-md md:bg-transparent"
+                    }  fixed w-full z-20 top-0 start-0 border-b-2 border-gray-800 md:border-0 transform translate-x-0 transition-transform duration-300 ease-in-out`}
                 >
                     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                         <a className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -56,6 +57,7 @@ function Navbar() {
                             <button
                                 data-collapse-toggle="navbar-sticky"
                                 type="button"
+                                onClick={() => setClose(false)}
                                 className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                                 aria-controls="navbar-sticky"
                                 aria-expanded="false"
@@ -77,7 +79,6 @@ function Navbar() {
                                     />
                                 </svg>
                             </button>
-                        
                         </div>
                         <div
                             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
@@ -127,8 +128,8 @@ function Navbar() {
                         </div>
                     </div>
                 </nav>
-            <Sidebar />
             </div>
+            <Sidebar close={close} setClose={setClose} />
         </>
     );
 }
