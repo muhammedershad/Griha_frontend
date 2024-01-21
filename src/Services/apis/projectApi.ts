@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 import axios from '../axios'
 import { EditProjectDetails, ProjectProgress, project } from '../../interfaces/project';
+import { featuredProjects } from '../../interfaces/featuredProject';
 
 
 const createProject = async ( data: project ) => {
@@ -73,6 +74,26 @@ const allPorjects = async () => {
     }
 }
 
+const addFeatruedProjects = async (data: featuredProjects) => {
+    try {
+        const response = await axios.post('/project/featured-projects', data)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
+const allFeaturedPorjects = async () => {
+    try {
+        const response = await axios.get('/project/featured-projects')
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
 export default {
     createProject,
     employeeProjects,
@@ -80,5 +101,7 @@ export default {
     editProject,
     addProgress,
     userProjects,
-    allPorjects
+    allPorjects,
+    addFeatruedProjects,
+    allFeaturedPorjects
 }
