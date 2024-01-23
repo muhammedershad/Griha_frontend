@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import User from '../../../interfaces/user'
-import { RootState } from '../store'
 
 export interface UserSlice {
   user: User | null
@@ -18,7 +17,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    userloginSuccess: (state = initialState, action) => {
+    userloginSuccess: (state, action) => {
         state.user = action.payload.user
         state.token = action.payload.token
         state.error = false
@@ -34,7 +33,6 @@ export const userSlice = createSlice({
   },
 })
 
-export const selectCount = (state: RootState) => state.employee.employee
 // Action creators are generated for each case reducer function
 export const { userloginSuccess, userloginFailed, userlogout } = userSlice.actions
 

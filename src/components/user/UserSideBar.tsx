@@ -13,8 +13,6 @@ const UserSideBar: React.FC<Props> = ({children}) => {
     const dispatch = useAppDispatch();
     useEffect(() => {
         const savedToken = localStorage.getItem("User_token");
-        // console.log(savedToken,'savedToken');
-        // console.log(user)
         if (savedToken && !user) {
             const updateSlice = async () => {
                 const response = await api.UpdateSlice(savedToken);

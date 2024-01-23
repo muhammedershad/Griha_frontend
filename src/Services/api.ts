@@ -232,6 +232,15 @@ const userProfilePhotoUpdate = async (userId: string, imageUrl: string) => {
     }
 }
 
+const userDetails = async (userId: string) => {
+    try {
+        const response = await axios.get(`/user/${userId}`)
+        return response.data
+    } catch (error) {
+        toast.error((error as Error).message)
+    }
+}
+
 export default {
     userExistsCheck,
     signup,
@@ -255,5 +264,6 @@ export default {
     employeeLogout,
     allClients,
     UpdateSlice,
-    userProfilePhotoUpdate
+    userProfilePhotoUpdate,
+    userDetails
 };

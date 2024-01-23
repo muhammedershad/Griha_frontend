@@ -11,7 +11,7 @@ const Projects = () => {
     useEffect(() => {
         (async () => {
             const response = await projectApi.allFeaturedPorjects();
-            console.log(response);
+            console.log(response, 'response');
             
             setAllProjects(response.allFeaturedProjects);
             setLoading(false)

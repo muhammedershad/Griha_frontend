@@ -9,6 +9,7 @@ import UserProjects from "../Pages/userPages/UserProjects";
 import ProjectDetails from "../Pages/userPages/ProjectDetails";
 import Projects from "../Pages/HomePages/Projects";
 import UserProjectDetails from "../Pages/HomePages/ProjectDetails";
+import UserMessenger from "../Pages/userPages/UserMessenger";
 
 const UserRoutes = () => {
     return (
@@ -26,6 +27,7 @@ const UserRoutes = () => {
                     <Route path="/projects" element={<UserProjects />} />
                     <Route path="/dash" element={<UserDash />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/messages" element={<UserMessenger />} />
                 </Route>
             </Routes>
         </>
