@@ -10,6 +10,8 @@ import ProjectDetails from "../Pages/userPages/ProjectDetails";
 import Projects from "../Pages/HomePages/Projects";
 import UserProjectDetails from "../Pages/HomePages/ProjectDetails";
 import UserMessenger from "../Pages/userPages/UserMessenger";
+import VideoCall from "../Pages/userPages/VideoCall";
+import Room from "../components/common/videoCall/Room";
 
 const UserRoutes = () => {
     return (
@@ -21,6 +23,8 @@ const UserRoutes = () => {
                     <Route path="/signup" element={<UserSignup />} />
                     <Route path="/project" element={<Projects />} />
                     <Route path="/project/:id" element={<UserProjectDetails />} />
+                    <Route path='/videoCall' element={<VideoCall />} />
+                    <Route path='/room/:id' element={<Room />} />
                 </Route>
                 <Route element={<UserPrivateRoutes />}>
                     <Route path="/client-project/:id" element={<ProjectDetails />} />
