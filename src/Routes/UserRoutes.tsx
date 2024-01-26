@@ -12,6 +12,7 @@ import UserProjectDetails from "../Pages/HomePages/ProjectDetails";
 import UserMessenger from "../Pages/userPages/UserMessenger";
 import VideoCall from "../Pages/userPages/VideoCall";
 import Room from "../components/common/videoCall/Room";
+import NotFound from "../components/common/404";
 
 const UserRoutes = () => {
     return (
@@ -33,6 +34,7 @@ const UserRoutes = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/messages" element={<UserMessenger />} />
                 </Route>
+                <Route path='*' element={<NotFound />} />
             </Routes>
         </>
     );

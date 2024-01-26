@@ -10,6 +10,8 @@ import api from "../../Services/api";
 import { userloginSuccess, userlogout } from "../../Services/redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import Message from "../common/messenger/Message";
+import { io } from "socket.io-client";
+import { useSocket } from "../../Services/context/SocketProvider";
 
 function UserMessenger() {
     const [conversations, setConversation] = useState([]);
@@ -20,6 +22,15 @@ function UserMessenger() {
     const [messages, setMessages] = useState()
     const [newMessage, setNewMessage] = useState('')
     const scrollRef = useRef();
+    const socket = useSocket()
+    console.log(socket);
+
+    useEffect(() => {
+        console.log('object')
+        socket?.on('welcome', (data) => {
+            console.log(data)
+        })
+    },[socket])
 
     useEffect(() => {
         const savedToken = localStorage.getItem("User_token");
@@ -53,11 +64,11 @@ function UserMessenger() {
     },[]);
 
     useEffect(() => {
-        console.log(currentChat);
+        // console.log(currentChat);
         (async () => {
             const response = await messageApi.chat(currentChat?._id)
             if(response) {
-                console.log(response);
+                // console.log(response);
                 setMessages(response)
             }
         })()
@@ -85,7 +96,7 @@ function UserMessenger() {
         }
 
         const response = await messageApi.sendMessage(message)
-        console.log(response);
+        // console.log(response);
         
         setMessages([...messages, response])
         setNewMessage('')

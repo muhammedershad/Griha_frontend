@@ -3,10 +3,10 @@ import api from "../../Services/api";
 
 function UserCard({conversation, userId}) {
     const [friend, setFriend] = useState()
-    console.log(conversation, userId,'userid');
+    // console.log(conversation, userId,'userid');
     useEffect(() => {
-        const friendId = conversation.members.find((m) => m != userId )
-        console.log(friendId);
+        const friendId = conversation.members.find((m) => m != userId );
+        // console.log(friendId);
         (async () => {
             const response = await api.userDetails(friendId)
             if(response) {
