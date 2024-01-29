@@ -23,14 +23,15 @@ function UserMessenger() {
     const [newMessage, setNewMessage] = useState('')
     const scrollRef = useRef();
     const socket = useSocket()
-    console.log(socket);
+    const [arrivalMessage, setArrivalMessage] = useState(null)
+    // console.log(socket);
 
-    useEffect(() => {
-        console.log('object')
-        socket?.on('welcome', (data) => {
-            console.log(data)
-        })
-    },[socket])
+    useEffect(() => { 
+        socket?.emit('addUser', user?._id); 
+        socket?.on('getUsers', users => {
+            console.log(users, 'userss');
+        });
+    }, [user, socket]);
 
     useEffect(() => {
         const savedToken = localStorage.getItem("User_token");
@@ -64,7 +65,7 @@ function UserMessenger() {
     },[]);
 
     useEffect(() => {
-        // console.log(currentChat);
+        console.log(user?._id);
         (async () => {
             const response = await messageApi.chat(currentChat?._id)
             if(response) {
@@ -72,6 +73,8 @@ function UserMessenger() {
                 setMessages(response)
             }
         })()
+        console.log(currentChat);
+        
     },[currentChat])
 
     useEffect(() => {
@@ -95,12 +98,35 @@ function UserMessenger() {
             conversationId: currentChat?._id
         }
 
+        const receiverId = currentChat.members.find(member => member !== user?._id)
+
+        socket?.emit('sendMessage', {
+            senderId: user?._id,
+            receiverId,
+            text: newMessage
+        });
+
         const response = await messageApi.sendMessage(message)
         // console.log(response);
         
         setMessages([...messages, response])
         setNewMessage('')
     }
+
+    useEffect(() => {
+        socket.on('getMessage', data => {
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now(),
+            })
+        } )
+    },[])
+
+    useEffect(() => {
+        arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) && 
+        setMessages((prev) => [...prev, arrivalMessage])
+    },[arrivalMessage, currentChat])
 
     return (
         <>
@@ -140,9 +166,9 @@ function UserMessenger() {
                             <div className="flex-grow w-full overflow-y-scroll ">
                                 
                                 {
-                                    messages?.map((m) => (
+                                    messages?.map((m, i) => (
                                         <div ref={scrollRef} >
-                                            <Message message={m} own={m?.sender === user?._id} />
+                                            <Message key={i} message={m} own={m?.sender === user?._id} />
                                         </div>
                                      ) )
                                 }
