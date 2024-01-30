@@ -26,7 +26,7 @@ const ImagePreviewList = ({ files, setFiles }) => {
             {previews.map((pic, index) => (
                 <div key={index} className="relative inline-block">
                     <img
-                        className="w-20 h-20 mx-2"
+                        className="w-20 h-20 mx-2 object-contain border border-gray-900"
                         src={pic}
                         alt={`Preview ${index + 1}`}
                     />

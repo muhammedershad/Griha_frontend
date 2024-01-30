@@ -6,6 +6,8 @@ import EmployeeProfile from "../Pages/employeePages/EmployeeProfile";
 import EmployeeAvilableSlots from '../Pages/employeePages/EmployeeAvilableSlots'
 import EmployeeProjects from "../Pages/employeePages/EmployeeProjects";
 import ProjectDetails from "../Pages/employeePages/ProjectDetails";
+import ProjectProgress from "../components/employee/ProjectProgress";
+import EmployeeProjectProgress from "../Pages/employeePages/EmployeeProjectProgress";
 const EmployeeRoutes = () => {
   return (
     <>
@@ -19,6 +21,7 @@ const EmployeeRoutes = () => {
                 <Route path="/time-slots" element={<EmployeeAvilableSlots />} />
                 <Route path="/projects" element={<EmployeeProjects />} />
                 <Route path="/project/:id" element={<ProjectDetails />} />
+                {/* <Route path="/project/progress/:id" element={<EmployeeProjectProgress />} /> */}
             </Route>
         </Routes>
     </>

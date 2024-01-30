@@ -4,6 +4,7 @@ import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import { project } from "../../interfaces/project";
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
     progress: project['progress']
@@ -12,6 +13,7 @@ interface Props {
 const ProjectProgressCard: React.FC<Props> = ({ progress }) => {
     return (
         <>
+            <Link to={`/employee/project/progress/${progress?._id}`}>
             <div className="flex w-full max-w-lg sm:my-2 md:my-0 bg-slate-800 justify-between rounded-md p-5">
                 <div className="">
                     <h3 className="text-white mb-2 text-left font-semibold text-lg">
@@ -43,6 +45,7 @@ const ProjectProgressCard: React.FC<Props> = ({ progress }) => {
                     />
                 </div>
             </div>
+            </Link>
         </>
     );
 };

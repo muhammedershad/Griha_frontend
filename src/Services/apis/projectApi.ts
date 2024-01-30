@@ -84,10 +84,30 @@ const addFeatruedProjects = async (data: featuredProjects) => {
     }
 }
 
-const allFeaturedPorjects = async () => {
+const updateFeatruedProjects = async (data: featuredProjects) => {
     try {
-        const response = await axios.get('/project/featured-projects')
+        const response = await axios.put('/project/featured-projects', data)
         return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
+const allFeaturedPorjects = async (category: string, query: string, page: number) => {
+    try {
+        const response = await axios.get(`/project/featured-projects/${category}?search=${query}&page=${page}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
+const featuredProjectDetails = async (projectId: string) => {
+    try {
+        const response = await axios.get(`/project/featured-project-details/${projectId}`)
+        return response
     } catch (error) {
         console.log(error);
         toast.error(error?.response?.data?.message || (error as Error)?.message)
@@ -103,5 +123,7 @@ export default {
     userProjects,
     allPorjects,
     addFeatruedProjects,
-    allFeaturedPorjects
+    allFeaturedPorjects,
+    featuredProjectDetails,
+    updateFeatruedProjects
 }

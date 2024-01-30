@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
 import api from "../../Services/api";
-import User from "../../interfaces/user";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { project } from "../../interfaces/project";

@@ -23,7 +23,7 @@ const UserRoutes = () => {
                     <Route path="/login" element={<UserLogin />} />
                     <Route path="/signup" element={<UserSignup />} />
                     <Route path="/project" element={<Projects />} />
-                    <Route path="/project/:id" element={<UserProjectDetails />} />
+                    <Route path="/project/:projectId" element={<UserProjectDetails />} />
                     <Route path='/videoCall' element={<VideoCall />} />
                     <Route path='/room/:id' element={<Room />} />
                 </Route>

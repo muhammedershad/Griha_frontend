@@ -24,17 +24,21 @@ const ProjectBody: React.FC<Props> = ({ project }) => {
                 <div className="flex flex-col md:flex-row w-full md:p-5 gap-5">
                     <div className="sm:w-full md:w-1/2">
                         <MembersList
-                                users={project?.clients}
-                                selectedUsers={project?.clients}
-                                onUserSelect={undefined}
-                                edit={false} heading={'Clients'}                        />
+                            users={project?.clients}
+                            selectedUsers={project?.clients}
+                            onUserSelect={undefined}
+                            edit={false}
+                            heading={"Clients"}
+                        />
                     </div>
                     <div className="sm:w-full md:w-1/2">
                         <MembersList
-                                users={project?.team?.members}
-                                selectedUsers={project?.team?.members}
-                                onUserSelect={undefined}
-                                edit={false} heading={'Team Members'}                        />
+                            users={project?.team?.members}
+                            selectedUsers={project?.team?.members}
+                            onUserSelect={undefined}
+                            edit={false}
+                            heading={"Team Members"}
+                        />
                     </div>
                 </div>
             )}
