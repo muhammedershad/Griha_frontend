@@ -8,6 +8,7 @@ import EmployeeProjects from "../Pages/employeePages/EmployeeProjects";
 import ProjectDetails from "../Pages/employeePages/ProjectDetails";
 import ProjectProgress from "../components/employee/ProjectProgress";
 import EmployeeProjectProgress from "../Pages/employeePages/EmployeeProjectProgress";
+import NotFound from "../components/common/404";
 const EmployeeRoutes = () => {
   return (
     <>
@@ -21,8 +22,9 @@ const EmployeeRoutes = () => {
                 <Route path="/time-slots" element={<EmployeeAvilableSlots />} />
                 <Route path="/projects" element={<EmployeeProjects />} />
                 <Route path="/project/:id" element={<ProjectDetails />} />
-                {/* <Route path="/project/progress/:id" element={<EmployeeProjectProgress />} /> */}
+                <Route path="/project/:projectId/:progressId" element={<EmployeeProjectProgress />} />
             </Route>
+            <Route path='*' element={<NotFound />} />
         </Routes>
     </>
 );

@@ -8,12 +8,13 @@ import { Link } from "react-router-dom";
 
 interface Props {
     progress: project['progress']
+    projectId: string | undefined
 }
 
-const ProjectProgressCard: React.FC<Props> = ({ progress }) => {
+const ProjectProgressCard: React.FC<Props> = ({ progress, projectId }) => {
     return (
         <>
-            <Link to={`/employee/project/progress/${progress?._id}`}>
+            <Link to={`/employee/project/${projectId}/${progress?._id}`}>
             <div className="flex w-full max-w-lg sm:my-2 md:my-0 bg-slate-800 justify-between rounded-md p-5">
                 <div className="">
                     <h3 className="text-white mb-2 text-left font-semibold text-lg">

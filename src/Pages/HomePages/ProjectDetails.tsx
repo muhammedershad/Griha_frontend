@@ -44,16 +44,16 @@ const UserProjectDetails = () => {
                 <h3 className="text-2xl font-bold">{project?.projectName}</h3>
 
                 <div className=" mt-8 h-[450px] w-full flex flex-col md:flex-row">
-                    <div className=" col-span-12 md:col-span-6 w-full text-justify overflow-hidden overflow-scroll p-4">
+                    <div className=" col-span-12 md:col-span-6 w-full text-justify overflow-scroll p-4">
                         <div className="flex p-4">
-                            <div>
+                            <div className="flex flex-col">
                                 <p>Project name</p>
                                 <p>Client</p>
                                 <p>Site Area</p>
                                 <p>Location</p>
                                 <p>Builtup Area</p>
                             </div>
-                            <div className="ml-10">
+                            <div className="ml-10 flex flex-col">
                                 <p>- {project?.projectName}</p>
                                 <p>- {project?.client}</p>
                                 <p>- {project?.siteArea}</p>
@@ -67,11 +67,13 @@ const UserProjectDetails = () => {
                     </div>
                     <div className="flex justify-center items-center col-span-12 md:col-span-6 w-full p-2 ">
                         {video ? (
-                            <ReactPlayer
+                            <div className="">
+                                <ReactPlayer
                                 url={project?.youtubeLink}
                                 controls={true}
                                 pip={true}
                             />
+                            </div>
                         ) : (
                             <div>
                                 {/* Image Display */}

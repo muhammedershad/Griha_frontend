@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import axios from '../axios'
 import { EditProjectDetails, ProjectProgress, project } from '../../interfaces/project';
 import { featuredProjects } from '../../interfaces/featuredProject';
+import { progress } from '@material-tailwind/react';
 
 
 const createProject = async ( data: project ) => {
@@ -114,6 +115,26 @@ const featuredProjectDetails = async (projectId: string) => {
     }
 }
 
+const projectProgress = async (projectId: string, progressId: string) => {
+    try {
+        const response = await axios.get(`project/${projectId}/${progressId}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
+const addComment = async (data) => {
+    try {
+        const response = await axios.post('/project/comment', data )
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
 export default {
     createProject,
     employeeProjects,
@@ -125,5 +146,7 @@ export default {
     addFeatruedProjects,
     allFeaturedPorjects,
     featuredProjectDetails,
-    updateFeatruedProjects
+    updateFeatruedProjects,
+    projectProgress,
+    addComment
 }

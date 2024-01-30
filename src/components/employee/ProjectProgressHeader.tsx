@@ -7,6 +7,9 @@ import { storage } from "../../Services/firebase";
 import { ProjectProgress, project } from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
 import { useAppSelector } from "../../Services/redux/hooks";
+import uploadImageToFirebase from "../../Services/firebase/imageUploader";
+import uploadVideosToFirebase from "../../Services/firebase/videoUpload";
+import uploadOtherFilesToFirebase from "../../Services/firebase/otherFiles";
 
 interface FormData {
     title: string;
@@ -18,7 +21,11 @@ interface Props {
     setProject: (project: project) => void;
     user: boolean;
 }
-const ProjectProgressHeader: React.FC<Props> = ({ project, setProject, user }) => {
+const ProjectProgressHeader: React.FC<Props> = ({
+    project,
+    setProject,
+    user,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState<FormData>();
     const [details, setDetails] = useState<string>("");
@@ -54,9 +61,9 @@ const ProjectProgressHeader: React.FC<Props> = ({ project, setProject, user }) =
 
     const handleCreateProgress = async () => {
         setError(false);
-        setImageUrl([]);
-        setVideoUrl([]);
-        setOtherFilesUrl([]);
+        let imageUrls = []
+        let videoUrls = []
+        let fileUrls = []
         if (formData) {
             if (!formData.shortDiscription.trim()) {
                 toast.error("Enter a valid short discription");
@@ -73,216 +80,44 @@ const ProjectProgressHeader: React.FC<Props> = ({ project, setProject, user }) =
             if (error) return;
 
             if (images.length > 0) {
-                console.log("here");
-
-                const metadata = {
-                    contentType: "image/jpeg",
-                };
-
-                images.forEach((image) => {
-                    const storageRef = ref(
-                        storage,
-                        "project_progress_images/" + image.name
-                    );
-                    const uploadTask = uploadBytesResumable(
-                        storageRef,
-                        image,
-                        metadata
-                    );
-
-                    uploadTask.on(
-                        "state_changed",
-                        (snapshot) => {
-                            const progress =
-                                (snapshot.bytesTransferred /
-                                    snapshot.totalBytes) *
-                                100;
-                            console.log("Upload is " + progress + "% done");
-                            switch (snapshot.state) {
-                                case "paused":
-                                    console.log("Upload is paused");
-                                    break;
-                                case "running":
-                                    console.log("Upload is running");
-                                    break;
-                            }
-                        },
-                        (error) => {
-                            switch (error.code) {
-                                case "storage/unauthorized":
-                                    toast.error(
-                                        "Unauthorized access to firebase"
-                                    );
-                                    break;
-                                case "storage/canceled":
-                                    toast.error("Profile uploading failed");
-                                    break;
-                                case "storage/unknown":
-                                    toast.error(
-                                        "Profile uploading failed, Error in firebase"
-                                    );
-                                    break;
-                            }
-                            return toast.error(
-                                "Error in uploading profile photo"
-                            );
-                        },
-                        () => {
-                            getDownloadURL(uploadTask.snapshot.ref).then(
-                                async (downloadURL: string) => {
-                                    setImageUrl([...imageUrl, downloadURL]);
-                                    console.log(imageUrl, "here");
-                                }
-                            );
-                        }
-                    );
-                });
+                imageUrls = await uploadImageToFirebase(
+                    images,
+                    "project_progress_images/"
+                );
+                console.log(imageUrls)
+                if (!imageUrls) return toast.error("Error in uploadin images")
             }
             if (videos.length > 0) {
                 console.log("here video");
 
-                const metadata = {
-                    contentType: "video/mp4",
-                };
-
-                images.forEach((video) => {
-                    const storageRef = ref(
-                        storage,
-                        "project_progress_video/" + video.name
-                    );
-                    const uploadTask = uploadBytesResumable(
-                        storageRef,
-                        video,
-                        metadata
-                    );
-
-                    uploadTask.on(
-                        "state_changed",
-                        (snapshot) => {
-                            const progress =
-                                (snapshot.bytesTransferred /
-                                    snapshot.totalBytes) *
-                                100;
-                            console.log("Upload is " + progress + "% done");
-                            switch (snapshot.state) {
-                                case "paused":
-                                    console.log("Upload is paused");
-                                    break;
-                                case "running":
-                                    console.log("Upload is running");
-                                    break;
-                            }
-                        },
-                        (error) => {
-                            switch (error.code) {
-                                case "storage/unauthorized":
-                                    toast.error(
-                                        "Unauthorized access to firebase"
-                                    );
-                                    break;
-                                case "storage/canceled":
-                                    toast.error("Profile uploading failed");
-                                    break;
-                                case "storage/unknown":
-                                    toast.error(
-                                        "Uploading failed, Error in firebase"
-                                    );
-                                    break;
-                            }
-                            return toast.error("Error in uploading video");
-                        },
-                        () => {
-                            getDownloadURL(uploadTask.snapshot.ref).then(
-                                async (downloadURL: string) => {
-                                    setVideoUrl([...videoUrl, downloadURL]);
-                                    console.log(videoUrl, "here");
-                                }
-                            );
-                        }
-                    );
-                });
+                videoUrls = await uploadVideosToFirebase(
+                    videos,
+                    "project_progress_video/"
+                )
+                if (!videoUrls) return toast.error("Error in uploadin images") 
             }
             if (otherFiles.length > 0) {
                 console.log("here, other files");
 
-                // const metadata = {
-                //     contentType: "image/jpeg",
-                // };
-
-                images.forEach((file) => {
-                    const storageRef = ref(
-                        storage,
-                        "project_progress_file/" + file.name
-                    );
-                    const uploadTask = uploadBytesResumable(
-                        storageRef,
-                        file
-                        // metadata
-                    );
-
-                    uploadTask.on(
-                        "state_changed",
-                        (snapshot) => {
-                            const progress =
-                                (snapshot.bytesTransferred /
-                                    snapshot.totalBytes) *
-                                100;
-                            console.log("Upload is " + progress + "% done");
-                            switch (snapshot.state) {
-                                case "paused":
-                                    console.log("Upload is paused");
-                                    break;
-                                case "running":
-                                    console.log("Upload is running");
-                                    break;
-                            }
-                        },
-                        (error) => {
-                            switch (error.code) {
-                                case "storage/unauthorized":
-                                    toast.error(
-                                        "Unauthorized access to firebase"
-                                    );
-                                    break;
-                                case "storage/canceled":
-                                    toast.error("Profile uploading failed");
-                                    break;
-                                case "storage/unknown":
-                                    toast.error(
-                                        "Profile uploading failed, Error in firebase"
-                                    );
-                                    break;
-                            }
-                            closeModal();
-                            return toast.error("Error in uploading files");
-                        },
-                        () => {
-                            getDownloadURL(uploadTask.snapshot.ref).then(
-                                async (downloadURL: string) => {
-                                    setOtherFilesUrl([
-                                        ...otherFilesUrl,
-                                        downloadURL,
-                                    ]);
-                                    console.log(otherFilesUrl, "here");
-                                }
-                            );
-                        }
-                    );
-                });
+                fileUrls = await uploadOtherFilesToFirebase(
+                    otherFiles,
+                    "project_progress_file/"
+                )
+                if (!fileUrls) return toast.error("Error in uploadin images")
             }
 
-            addPost();
+            await addPost(imageUrls, videoUrls, fileUrls);
         }
     };
 
-    const addPost = async () => {
+    const addPost = async (imageUrls, videoUrls, fileUrls) => {
         const data: ProjectProgress = {
             title: formData.title,
             shortDiscription: formData.shortDiscription,
             details: details,
-            imageUrls: imageUrl,
-            videoUrls: videoUrl,
-            otherFileUrls: otherFilesUrl,
+            imageUrls,
+            videoUrls,
+            otherFileUrls: fileUrls,
             postedBy: employee?._id,
         };
 

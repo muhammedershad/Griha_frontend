@@ -4,7 +4,9 @@
 
 body {
   background-color: rgb(9, 10, 19);
+  overflow-x: hidden;
 }
+
 
 .swal-text-white {
   color: white !important;
@@ -17,22 +19,24 @@ body {
 
 /* custom-scrollbar.css */
 
-/* Webkit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 3px;
+  border-radius: 3px;
+  width: 4px;
 }
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #031229;
+}
+
+/* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: #140854;
-  /* Change this color to your desired thumb color */
-  border-radius: 6px;
+  background: #01265d;
 }
 
-/* Firefox */
-* {
-  scrollbar-color: #0a052e #011347;
-  /* Change these colors to your desired thumb and track colors */
-  scrollbar-width: thin;
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #010630;
 }
 
 

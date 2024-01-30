@@ -8,6 +8,7 @@ import InteractiveModalExample from "../components/common/Modal";
 import AddProjects from "../Pages/adminPages/AddProjects";
 import FeaturedProjects from "../Pages/adminPages/FeaturedProjects";
 import EditFeaturedProject from "../Pages/adminPages/EditFeaturedProject";
+import NotFound from "../components/common/404";
 
 
 
@@ -28,6 +29,7 @@ const AdminRoutes = () => {
                     <Route path="/featured-projects" element={<FeaturedProjects />} />
                     <Route path="/edit-featured-project/:projectId" element={<EditFeaturedProject />} />
                 </Route>
+                <Route path='*' element={<NotFound />} />
             </Routes>
         </>
     );
