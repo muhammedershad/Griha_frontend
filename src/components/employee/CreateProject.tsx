@@ -12,21 +12,28 @@ import toast from "react-hot-toast";
 import { trimProjectFormData } from "../../Services/trim";
 import { validations } from "../../Services/validations";
 import { useAppSelector } from "../../Services/redux/hooks";
+import EmployeeSideBar from "./EmployeeSideBar";
+import SideHeading from "../common/SideHeading";
+import Spinner from "../common/Spinner";
 
 const CreateProject = () => {
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    
     const [formData, setFormData] = useState<ProjectForm>();
     const [allEmployees, setAllEmployees] = useState<Employees[]>();
     const [clients, setClients] = useState<User[]>();
     const employee = useAppSelector((state) => state.employee.employee);
+    console.log('object')
 
     useEffect(() => {
+        console.log('here');
         (async () => {
             const response = await employeeApi.allEmployees();
+            console.log(response)
             if (response?.success) setAllEmployees(response.allEmployees);
         })();
         (async () => {
             const response = await api.allClients();
+            console.log(response)
             if (response?.success) setClients(response.allClients);
         })();
     }, []);
@@ -108,20 +115,20 @@ const CreateProject = () => {
             const response = await projectApi.createProject( data )
             if ( response.success ) {
                 toast.success('Project created')
-                closeModal()
+                // closeModal()
             }   
         }
     }
 
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
+    // const openModal = () => {
+    //     setIsModalOpen(true);
+    // };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setSelectedEmployees([])
-        setSelectedEmployees([])
-    };
+    // const closeModal = () => {
+    //     setIsModalOpen(false);
+    //     setSelectedEmployees([])
+    //     setSelectedEmployees([])
+    // };
 
     const formFields = [
         {
@@ -169,41 +176,43 @@ const CreateProject = () => {
     ];
     return (
         <>
-            <Modal isOpen={isModalOpen} onClose={closeModal} mainHeading={"Create Project"}>
-                <div className=" space-y-1 md:space-y-4 sm:p-3">
-                    <Form obj={formFields} setData={setFormData}>
-                        <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
-                            Select Team Members
-                        </label>
-                        <MembersList
-                            users={allEmployees}
-                            selectedUsers={selectedEmployees}
-                            onUserSelect={handleEmployeeSelect}
-                        />
-                        <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
-                            Select Clients
-                        </label>
-                        <MembersList
-                            users={clients}
-                            selectedUsers={selectedUsers}
-                            onUserSelect={handleUserSelect}
-                        />
-                    </Form>
-                    <button
-                        onClick={closeModal}
-                        type="submit"
-                        className="w-full text-white bg-gradient-to-r from-[#8e1c1c] to-[#422c34] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-                    >
-                        cancel
-                    </button>
-                </div>
-            </Modal>
-            <button
-                onClick={openModal}
-                className="bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-blue-700 text-white font-normal py-1 px-4 rounded-full"
-            >
-                Create Project
-            </button>
+            {/* <Modal isOpen={isModalOpen} onClose={closeModal} mainHeading={"Create Project"}>
+                fdsfs
+            </Modal> */}
+           <EmployeeSideBar>
+           {
+            allEmployees ? (<div className="w-full flex items-center justify-center">
+            <div className="space-y-1 w-[500px] md:space-y-4 sm:p-3">
+                     <div className="text-center">
+                     <SideHeading title={"Create New Project"}/>
+                     </div>
+                     <Form obj={formFields} setData={setFormData}>
+                         <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
+                             Select Team Members
+                         </label>
+                         <MembersList
+                                 users={allEmployees}
+                                 selectedUsers={selectedEmployees}
+                                 onUserSelect={handleEmployeeSelect} heading={undefined}                        />
+                         <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
+                             Select Clients
+                         </label>
+                         <MembersList
+                                 users={clients}
+                                 selectedUsers={selectedUsers}
+                                 onUserSelect={handleUserSelect} heading={undefined}                        />
+                     </Form>
+                     {/* <button
+                         onClick={closeModal}
+                         type="submit"
+                         className="w-full text-white bg-gradient-to-r from-[#8e1c1c] to-[#422c34] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                     >
+                         cancel
+                     </button> */}
+                 </div>
+            </div>) : (<Spinner />)
+           }
+           </EmployeeSideBar>
         </>
     );
 };

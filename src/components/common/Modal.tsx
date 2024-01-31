@@ -25,7 +25,7 @@ export const Modal: React.FC<DarkThemedModalProps> = ({ isOpen, onClose, mainHea
     <div>
       {isOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 transition-opacity">
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="fixed inset-0 w-screen overflow-y-auto">
             <div className="flex min-h-full y-overflow-hidden y-overflow-y-scroll items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform max-h-96 overflow-hidden overflow-scroll rounded-lg bg-gray-900 text-left shadow-xl transition-all sm:my-2 sm:w-full sm:max-w-lg">
                 <div className="bg-gray-900 p-5">

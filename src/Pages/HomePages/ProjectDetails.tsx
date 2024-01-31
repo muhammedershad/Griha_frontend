@@ -44,7 +44,7 @@ const UserProjectDetails = () => {
                 <h3 className="text-2xl font-bold">{project?.projectName}</h3>
 
                 <div className=" mt-8 h-[450px] w-full flex flex-col md:flex-row">
-                    <div className=" col-span-12 md:col-span-6 w-full text-justify overflow-scroll p-4">
+                    <div className=" col-span-12 md:col-span-6 w-full text-justify overflow-y-scroll p-4">
                         <div className="flex p-4">
                             <div className="flex flex-col">
                                 <p>Project name</p>

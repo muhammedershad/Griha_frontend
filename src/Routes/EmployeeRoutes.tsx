@@ -9,6 +9,9 @@ import ProjectDetails from "../Pages/employeePages/ProjectDetails";
 import ProjectProgress from "../components/employee/ProjectProgress";
 import EmployeeProjectProgress from "../Pages/employeePages/EmployeeProjectProgress";
 import NotFound from "../components/common/404";
+import TaskManagement from "../Pages/employeePages/TaskManagement";
+import CreateTask from "../Pages/employeePages/CreateTask";
+import CreateProject from "../components/employee/CreateProject";
 const EmployeeRoutes = () => {
   return (
     <>
@@ -23,6 +26,9 @@ const EmployeeRoutes = () => {
                 <Route path="/projects" element={<EmployeeProjects />} />
                 <Route path="/project/:id" element={<ProjectDetails />} />
                 <Route path="/project/:projectId/:progressId" element={<EmployeeProjectProgress />} />
+                <Route path="/tasks" element={<TaskManagement />} />
+                <Route path="/create-task" element={<CreateTask />} />
+                <Route path="/create-project" element={<CreateProject />} />
             </Route>
             <Route path='*' element={<NotFound />} />
         </Routes>

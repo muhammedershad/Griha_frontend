@@ -9,6 +9,7 @@ import AddProjects from "../Pages/adminPages/AddProjects";
 import FeaturedProjects from "../Pages/adminPages/FeaturedProjects";
 import EditFeaturedProject from "../Pages/adminPages/EditFeaturedProject";
 import NotFound from "../components/common/404";
+import ManagePorject from "../Pages/adminPages/ManageProject";
 
 
 
@@ -24,7 +25,7 @@ const AdminRoutes = () => {
                     <Route path="/users" element={<AdminUserManagement />} />
                     <Route path="/employee" element={<AdminEmployeeManagement />} />
                     <Route path="/test" element={<InteractiveModalExample />} />
-                    {/* <Route path="/projects" element={<ManagePorject />} /> */}
+                    <Route path="/projects" element={<ManagePorject />} />
                     <Route path="/add-project" element={<AddProjects />} />
                     <Route path="/featured-projects" element={<FeaturedProjects />} />
                     <Route path="/edit-featured-project/:projectId" element={<EditFeaturedProject />} />

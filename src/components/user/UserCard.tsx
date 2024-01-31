@@ -24,7 +24,7 @@ function UserCard({conversation, userId}) {
                 />
                 <div className="">
                     <p className="font-bold text-lg">{friend?.FirstName}</p>
-                    <p>sodfhsodfhhossoidfnfnhf</p>
+                    <p>hsfs sdfsd sdfdffddd</p>
                 </div>
                 <div className="flex fa-align-center">
                     <p>10.30</p>

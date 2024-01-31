@@ -15,7 +15,7 @@ const ProjectProgress: React.FC<Props> = ({project, setProject, user}) => {
             <div className="bg-slate-200 md:m-6 my-4 bg-gradient-to-b from-slate-500 to-slate-800 shadow-lg rounded-lg p-3">
                 <ProjectProgressHeader project={project} setProject={setProject} user={user} />
                 <div className="flex justify-center items-center w-full">
-                    <div className="w-fit flex max-h-[410px] overflow-hidden overflow-scroll flex-wrap items-center gap-4">
+                    <div className="w-fit flex max-h-[410px] overflow-y-scroll flex-wrap items-center gap-4">
                         {
                             project?.progress?.map((progress) => <ProjectProgressCard progress={progress} projectId={project?._id} />)
                         }

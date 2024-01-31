@@ -28,7 +28,7 @@ const UserRoutes = () => {
                     <Route path='/room/:id' element={<Room />} />
                 </Route>
                 <Route element={<UserPrivateRoutes />}>
-                    <Route path="/client-project/:id" element={<ProjectDetails />} />
+                    <Route path="/projects/:id" element={<ProjectDetails />} />
                     <Route path="/projects" element={<UserProjects />} />
                     <Route path="/dash" element={<UserDash />} />
                     <Route path="/profile" element={<Profile />} />

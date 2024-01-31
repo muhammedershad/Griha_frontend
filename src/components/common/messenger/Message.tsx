@@ -27,11 +27,11 @@ function Message({message, own = false}) {
     <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
       {format(message.createdAt)}
     </span>
-    {own && (
+    {/* {own && (
       <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
         Delivered
       </span>
-    )}
+    )} */}
   </div>
 </div>
 

@@ -61,6 +61,11 @@ function FeaturedProjects() {
                         placeholder="Search by name..."
                         required
                     />
+                   <Link to='/admin/add-project'>
+                   <p className="text-sm text-center p-2 w-28 rounded-lg border-[1px]">
+                            Add project
+                        </p>
+                   </Link> 
             </div>
 
             <table className="min-w-full divide-y mb-5 divide-gray-800 overflow-x-auto rounded-3xl border-collapse">

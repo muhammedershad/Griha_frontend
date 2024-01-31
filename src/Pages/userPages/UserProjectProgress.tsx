@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
-import SideHeading from "../../components/common/SideHeading";
-import { progress } from "@material-tailwind/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import ReactPlayer from "react-player";
-import { project } from "../../interfaces/project";
-import { useParams } from "react-router-dom";
-import projectApi from "../../Services/apis/projectApi";
-import toast from "react-hot-toast";
-import { useAppSelector } from "../../Services/redux/hooks";
-import Comments from "../../components/common/Comments";
+import React, { useEffect, useState } from 'react'
+import UserSideBar from '../../components/user/UserSideBar';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../Services/redux/hooks';
+import projectApi from '../../Services/apis/projectApi';
+import toast from 'react-hot-toast';
+import ReactPlayer from 'react-player';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Comments from '../../components/common/Comments';
 
-function EmployeeProjectProgress() {
+function UserProjectProgress() {
     const [project, setProject] = useState<project>();
     const [progress, setProgress] = useState();
     const [video, setVidoe] = useState<boolean>(false);
@@ -20,7 +17,7 @@ function EmployeeProjectProgress() {
     const { projectId } = useParams<{ projectId: string }>();
     const { progressId } = useParams<{ progressId: string }>();
     const [comment, setComment] = useState<string>("");
-    const userId = useAppSelector((state) => state.employee.employee?._id);
+    const userId = useAppSelector((state) => state.user.user?._id);
 
     useEffect(() => {
         (async () => {
@@ -39,6 +36,7 @@ function EmployeeProjectProgress() {
         console.log(progress, "progress", project);
     }, [projectId, progressId]);
 
+    console.log(progress.postedBy)
     const handlePrevClick = () => {};
 
     const handleNextClick = () => {};
@@ -64,10 +62,9 @@ function EmployeeProjectProgress() {
             setComment('')
         }
     };
-
-    return (
-        <>
-            <EmployeeSideBar>
+  return (
+    <>
+            <UserSideBar>
                 <div>
                     <div className="p-10 flex justify-between">
                         <p className="text-xl font-bold">
@@ -78,9 +75,9 @@ function EmployeeProjectProgress() {
                             </span>
                         </p>
                         {
-                            progress?.postedBy?._id === userId && (<p className="text-sm text-center p-2 w-24 rounded-lg border-[1px]">
+                            progress?.postedBy?._id === userId && <p className="text-sm text-center p-2 w-24 rounded-lg border-[1px]">
                             Edit Project
-                        </p>)
+                        </p>
                         }
                     </div>
                 </div>
@@ -176,9 +173,9 @@ function EmployeeProjectProgress() {
                     </div>
                     {progress?.comments && <Comments comments={progress?.comments} />}
                 </div>
-            </EmployeeSideBar>
+            </UserSideBar>
         </>
-    );
+  )
 }
 
-export default EmployeeProjectProgress;
+export default UserProjectProgress
