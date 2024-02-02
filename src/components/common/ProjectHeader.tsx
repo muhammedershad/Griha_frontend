@@ -16,6 +16,7 @@ import { employeeApi } from "../../Services/employeeApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import User from "../../interfaces/user";
 import api from "../../Services/api";
+import { Link } from "react-router-dom";
 
 interface Props {
     project: project | null;
@@ -38,23 +39,29 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
             const response = await employeeApi.allSeniorEmployees();
             if (response) setAllSeniors(response?.allSeniors);
 
-            const allEmployeeResponse = await employeeApi.allEmployees()
-            if (allEmployeeResponse) setAllEmployees(allEmployeeResponse?.allEmployees)
+            const allEmployeeResponse = await employeeApi.allEmployees();
+            if (allEmployeeResponse)
+                setAllEmployees(allEmployeeResponse?.allEmployees);
 
-            const allClientsResponse = await api.allClients() 
-            if (allClientsResponse) setAllClients(allClientsResponse.allClients)
+            const allClientsResponse = await api.allClients();
+            if (allClientsResponse)
+                setAllClients(allClientsResponse.allClients);
         })();
         if (project?.team?.teamLead) {
             setSelectedTeamLead([project?.team?.teamLead?._id]);
         }
         if (project?.clients) {
-            const clintsId: React.SetStateAction<string[]> = []
-            project.clients.forEach((client: User) => clintsId.push(client._id))
+            const clintsId: React.SetStateAction<string[]> = [];
+            project.clients.forEach((client: User) =>
+                clintsId.push(client._id)
+            );
             setSelectedClients(clintsId);
         }
         if (project?.team?.members) {
-            const emplyeesId: string[] = []
-            project.team.members.forEach((employee: Employees) => emplyeesId.push(employee?._id))
+            const emplyeesId: string[] = [];
+            project.team.members.forEach((employee: Employees) =>
+                emplyeesId.push(employee?._id)
+            );
             setSelectedEmployees(emplyeesId);
         }
     }, [project]);
@@ -249,7 +256,9 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                         <MembersList
                             users={allClients}
                             selectedUsers={selectedClients}
-                            onUserSelect={handleClientsSelect} heading={undefined}                        />
+                            onUserSelect={handleClientsSelect}
+                            heading={undefined}
+                        />
                     </Form>
                     <button
                         onClick={closeModal}
@@ -265,14 +274,24 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                     <h2 className="text-2xl font-semibold text-stone-200 pl-5 pt-5">
                         {project?.projectName}
                     </h2>
+
                     {/* <SmallButton  title="Create Project" /> */}
                     {employee?._id === project?.team?.teamLead?._id && (
-                        <p
-                        onClick={openModal}
-                        className="text-sm p-2 rounded-lg border-[1px]"
-                    >
-                        Edit Project
-                    </p>
+                        <div className="flex gap-5">
+                            <Link to={`/employee/create-task/${project?._id}`}>
+                            <p
+                                className="text-sm p-2 rounded-lg border-[1px]"
+                            >
+                                Create Task
+                            </p>
+                            </Link>
+                            <p
+                                onClick={openModal}
+                                className="text-sm p-2 rounded-lg border-[1px]"
+                            >
+                                Edit Project
+                            </p>
+                        </div>
                     )}
                 </div>
                 <div className="pl-5 pt-2">

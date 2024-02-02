@@ -27,7 +27,7 @@ const EmployeeRoutes = () => {
                 <Route path="/project/:id" element={<ProjectDetails />} />
                 <Route path="/project/:projectId/:progressId" element={<EmployeeProjectProgress />} />
                 <Route path="/tasks" element={<TaskManagement />} />
-                <Route path="/create-task" element={<CreateTask />} />
+                <Route path="/create-task/:projectId" element={<CreateTask />} />
                 <Route path="/create-project" element={<CreateProject />} />
             </Route>
             <Route path='*' element={<NotFound />} />
