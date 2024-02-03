@@ -6,7 +6,7 @@ interface Props {
   setFiles: (files: []) => void
 }
 
-const fileTypes: string[] = ["JPG", "PNG", "GIF"];
+const fileTypes: string[] = ["JPG", "PNG", "GIF", "PDF"];
 
 const DragDrop: React.FC<Props> = ({files, setFiles}) => {
 

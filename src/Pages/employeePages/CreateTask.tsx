@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import Form, { FormField } from "../../components/common/Form";
-import { ProjectForm, project } from "../../interfaces/project";
+import { project } from "../../interfaces/project";
 import uploadImageToFirebase from "../../Services/firebase/imageUploader";
 import toast from "react-hot-toast";
 import { featuredProjects } from "../../interfaces/featuredProject";
@@ -9,69 +9,119 @@ import projectApi from "../../Services/apis/projectApi";
 import ImagePreviewList from "../../components/common/ImagePreview";
 import DragAndDrop from "../../components/common/DragAndDrop";
 import { useParams } from "react-router-dom";
+import MembersList from "../../components/common/MembersList";
+import { Employees } from "../../interfaces/employee";
+import Spinner from "../../components/common/Spinner";
+import { Tasks } from "../../interfaces/taks";
+import { useAppSelector } from "../../Services/redux/hooks";
+import tasksApi from "../../Services/apis/tasks.api";
 
 function CreateTask() {
     const [formData, setFormData] = useState<featuredProjects>();
     const [details, setDetails] = useState<string>("");
-    const [category, setCategory] = useState<string>('Residential')
+    const [department, setDepartment] = useState<string>("Architecture");
+    const [priority, setPriority] = useState<string>("High");
     const [files, setFiles] = useState<[]>([]);
-    // const [imageUrls, setImageUrls] = useState<string[]>([])
+    // const [attachments, setAttachments] = useState<string[]>([])
+    const [dueDate, setDueDate] = useState();
+    const [allEmployees, setAllEmployees] = useState<Employees[] | null>(null);
+    const [selectedEmployee, setSelectedEmployee] = useState<string[]>([]);
     const { projectId } = useParams<{ projectId: string }>();
-    const [project , setProject] = useState<project>()
+    const [project, setProject] = useState<project>();
+    const today = new Date().toISOString().split("T")[0];
+    const employeeData = useAppSelector((state) => state.employee.employee);
 
     useEffect(() => {
-        (async() => {
-            if(projectId) {
-                const response = await projectApi.projectDetails(projectId)
-                console.log(response)
-                if(response.success) setProject(response?.project)
+        (async () => {
+            if (projectId) {
+                const response = await projectApi.projectDetails(projectId);
+                if (response.success) {
+                    setProject(response?.project);
+                    setAllEmployees(response?.project?.team?.members)
+                }
             }
-        })()
-    },[projectId])
+        })();
+    }, [projectId]);
 
     useEffect(() => {
-        if(formData) handleAddProject(formData)
+        if (formData) handleAddTask(formData);
     }, [formData]);
 
-    const handleAddProject = async (formData: featuredProjects) => {
+    const handleEmployeeLeadSelect = (userId: string) => {
+        if (selectedEmployee.includes(userId)) {
+            setSelectedEmployee(selectedEmployee.filter((id) => id !== userId));
+        } else {
+            setSelectedEmployee([userId]);
+        }
+    };
+
+    interface FormData {
+        taskName: string, 
+        shortDescription: string
+    }
+
+    const handleAddTask = async (formData: FormData) => {
+        console.log(formData, details, projectId, department, priority, selectedEmployee, dueDate);
+        
         let error: boolean = false;
-        if(!formData.projectName.trim()) {
-            toast.error('Invalid project name')
+        if (!formData.taskName.trim()) {
+            toast.error("Invalid task name");
             error = true;
         }
-        if(!formData.client.trim()) {
-            toast.error('Invalid Client name')
-            error = true
+        if (!formData.shortDescription.trim()) {
+            toast.error("Invalid short description");
+            error = true;
         }
-        if(!formData.location.trim()) {
-            toast.error('Invalid project location')
-            error = true
+        if (!projectId) {
+            toast.error("Project Id is not available");
+            error = true;
         }
-        if(!formData.builtupArea.trim()) {
-            toast.error('Invalid builtup area')
-            error = true
+        if (!dueDate) {
+            toast.error("Select due date");
+            error = true;
         }
-        if(!formData.siteArea.trim()) {
-            toast.error('Invalid site area')
-            error = true
+        if (!department.trim()) {
+            toast.error("Select a valid department");
+            error = true;
         }
-        if(!category.trim()) {
-            toast.error('Invalid cateogory')
-            error = true
+        if (!priority.trim()) {
+            toast.error("Select priority");
+            error = true;
         }
-        if(!details.trim()) {
-            toast.error('Enter project details')
-            error = true
+        if (!details.trim()) {
+            toast.error("Enter project details");
+            error = true;
         }
-        if(error) return
+        if (!selectedEmployee[0]) {
+            toast.error("Select the employee want to assign");
+            error = true;
+        }
+        if (error) return;
 
-        const imageUrls = await uploadImageToFirebase(files, 'featured_projects/')
-        if (!imageUrls) return toast.error('Error in uploadin images')
-        
-        const data: featuredProjects = {...formData, details: details, category: category, images: imageUrls}
-        const response = await projectApi.addFeatruedProjects(data)
-        if (response.success) toast.success('Project addition completed successfully.')
-    }
+        let fileUrls = []
+        if(files.length > 0) {
+            fileUrls = await uploadImageToFirebase(
+                files,
+                "tasks_attachments/"
+            );
+            if (!fileUrls) return toast.error("Error in uploadin files");
+        }
+
+        const data: Tasks = {
+            ...formData,
+            details: details,
+            department: department,
+            attachments: fileUrls,
+            assignedBy: employeeData?._id,
+            dueDate: dueDate,
+            assignedTo: selectedEmployee[0],
+            project: projectId,
+            priority
+        };
+        const response = await tasksApi.addTask(data);
+        if (response.success)
+            toast.success("Task added successfully");
+    };
 
     const formFields: FormField[] = [
         {
@@ -88,48 +138,21 @@ function CreateTask() {
             isRequired: true,
             data: "shortDescription",
         },
-        {
-            placeholder: "Details",
-            type: "text",
-            defaultValue: "",
-            isRequired: true,
-            data: "details",
-        },
-        {
-            placeholder: "Location",
-            type: "text",
-            defaultValue: "",
-            isRequired: true,
-            data: "location",
-        },
-        {
-            placeholder: "Builtup Area",
-            type: "text",
-            defaultValue: "",
-            isRequired: true,
-            data: "builtupArea",
-        },
-        {
-            placeholder: "YouTube Video Link",
-            type: "text",
-            defaultValue: "",
-            isRequired: false,
-            data: "youtubeLink",
-        },
     ];
-    
+
     return (
         <>
             <EmployeeSideBar>
-            <div className="flex w-full justify-center">
+                {
+                    !allEmployees ? (<Spinner />) : (
+                        <div className="flex w-full justify-center">
                     <div className="max-w-[600px] p-4 bg-slate-800 rounded-md">
                         <h3 className="font-semibold font-sans text-center tracking-wider m-5 text-lg">
                             Create New Task
                         </h3>
                         <Form obj={formFields} setData={setFormData}>
-                            
                             <div>
-                            <div className="relative h-10 w-full min-w-[200px]">
+                                <div className="relative h-10 w-full min-w-[200px]">
                                     <input
                                         className="peer h-full w-full rounded-[7px] border border-gray-600 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-600 placeholder-shown:border-t-white focus:border-2 focus:border-gray-600 focus:border-t-transparent focus:outline-0 disabled:bg-blue-gray-50"
                                         disabled
@@ -137,16 +160,17 @@ function CreateTask() {
                                         required
                                     />
                                     <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-white transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-red-white before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-gray-600 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-white peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-white peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-600 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-600 peer-disabled:peer-placeholder-shown:text-white">
-                                    {'Project Name'}
+                                        {"Project Name"}
                                     </label>
                                 </div>
                             </div>
                             <div className="relative h-10 w-full min-w-[200px]">
                                 <select
-                                onChange={(event) => {
-                                    setCategory(event.target.value);
-                                  }}
-                                className="peer h-full w-full rounded-[7px] border border-blue-gray-600 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-600 placeholder-shown:border-t-gray-600 empty:!bg-gray-600 focus:border-2 focus:border-gray-600 focus:border-t-transparent focus:outline-0 disabled:border-1 disabled:bg-gray-600">
+                                    onChange={(event) => {
+                                        setDepartment(event.target.value);
+                                    }}
+                                    className="peer h-full w-full rounded-[7px] border border-blue-gray-600 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-600 placeholder-shown:border-t-gray-600 empty:!bg-gray-600 focus:border-2 focus:border-gray-600 focus:border-t-transparent focus:outline-0 disabled:border-1 disabled:bg-gray-600"
+                                >
                                     <option
                                         className="bg-gray-500"
                                         value="Construction"
@@ -182,6 +206,45 @@ function CreateTask() {
                                     Select the category
                                 </label>
                             </div>
+                            <div className="relative h-10 w-full min-w-[200px]">
+                                <select
+                                    onChange={(event) => {
+                                        setPriority(event.target.value);
+                                    }}
+                                    className="peer h-full w-full rounded-[7px] border border-blue-gray-600 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-600 placeholder-shown:border-t-gray-600 empty:!bg-gray-600 focus:border-2 focus:border-gray-600 focus:border-t-transparent focus:outline-0 disabled:border-1 disabled:bg-gray-600"
+                                >
+                                    <option
+                                        className="bg-gray-500"
+                                        value="High"
+                                    >
+                                        High
+                                    </option>
+                                    <option
+                                        className="bg-gray-600"
+                                        value="Medium"
+                                    >
+                                        Medium
+                                    </option>
+                                    <option className="bg-gray-500" value="Low">
+                                        Low
+                                    </option>
+                                </select>
+                                <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-white transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-gray-600 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-gray-600 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-white peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-white peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-600 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-600 peer-disabled:peer-placeholder-shown:text-white">
+                                    Select the priority
+                                </label>
+                            </div>
+                            <label
+                                htmlFor=""
+                                className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                            >
+                                Select Employee
+                            </label>
+                            <MembersList
+                                users={allEmployees}
+                                selectedUsers={selectedEmployee}
+                                onUserSelect={handleEmployeeLeadSelect}
+                                heading={undefined}
+                            />
 
                             <div className="w-full">
                                 <div className="relative w-full min-w-[200px]">
@@ -201,10 +264,21 @@ function CreateTask() {
                             <div className="m-0 text-sm text-slate-400">
                                 <p>
                                     If you require a line break or paragraph
-                                    break in project details, type {"'{<br/>}'"}.
+                                    break in project details, type {"'{<br/>}'"}
+                                    .
                                 </p>
                             </div>
-                            <input type="date" onChange={(e) => console.log(e.target.value) } />
+                            <div className="flex flex-col">
+                                <label htmlFor="date" className="text-sm mb-2">
+                                    Selelct Due Date
+                                </label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => setDueDate(e.target.value)}
+                                    min={today}
+                                    className="bg-gray-800 text-white p-2 rounded border border-gray-600 outline-none"
+                                />
+                            </div>
                             <div className="flex w-full justify-center">
                                 <DragAndDrop
                                     files={files}
@@ -221,6 +295,8 @@ function CreateTask() {
                     </div>
                     <div></div>
                 </div>
+                    )
+                }
             </EmployeeSideBar>
         </>
     );
