@@ -12,6 +12,7 @@ import NotFound from "../components/common/404";
 import TaskManagement from "../Pages/employeePages/TaskManagement";
 import CreateTask from "../Pages/employeePages/CreateTask";
 import CreateProject from "../components/employee/CreateProject";
+import TaskDetails from "../Pages/employeePages/TaskDetails";
 const EmployeeRoutes = () => {
   return (
     <>
@@ -29,6 +30,7 @@ const EmployeeRoutes = () => {
                 <Route path="/tasks" element={<TaskManagement />} />
                 <Route path="/create-task/:projectId" element={<CreateTask />} />
                 <Route path="/create-project" element={<CreateProject />} />
+                <Route path="/task/:taskId" element={<TaskDetails />} />
             </Route>
             <Route path='*' element={<NotFound />} />
         </Routes>

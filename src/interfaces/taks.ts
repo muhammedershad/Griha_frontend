@@ -12,6 +12,7 @@ export interface Tasks extends Document {
     department: string;
     details: string;
     project: string;
+    priority: string;
     comments: {
         comment: string;
         user: string;

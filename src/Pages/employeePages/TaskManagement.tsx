@@ -22,11 +22,17 @@ function TaskManagement() {
                 console.log(response);
                 if (response.success) {
                     setTasks(response.tasks);
+                    const active = []
+                    const review = []
+                    const completed = []
                     for (let i = 0; i < response?.tasks.length; i++ ) {
-                        if(response.tasks[i].status === 'active') () => setActiveTasks([...activeTasks, response.tasks[i]])
-                        else if(response.tasks[i].status === 'needToReview') () => setNeedToReviewTasks([...needToReviewTasks, response.tasks[i]])
-                        else if(response.tasks[i].status === 'completed') () => setCompletedTasks([...completedTasks, response.tasks[i]])
+                        if(response.tasks[i].status === 'active') active.push(response.tasks[i])
+                        else if(response.tasks[i].status === 'needToReview') review.push(response.tasks[i])
+                        else if(response.tasks[i].status === 'completed') completed.push(response.tasks[i])
                     }
+                    setActiveTasks(active)
+                    setNeedToReviewTasks(review)
+                    setCompletedTasks(completed)
                 }
             }
         })();
@@ -38,7 +44,7 @@ function TaskManagement() {
                 <div className="p-10 text-xl">
                     <div className="flex justify-between">
                         <h3>Task Management</h3>
-                        <Link to="/employee/create-task">
+                        <Link to="/employee/projects">
                             <p className="text-sm p-2 max-w-[100px] text-center rounded-lg border-[1px]">
                                 Create Task
                             </p>
@@ -48,19 +54,19 @@ function TaskManagement() {
                         <div className="md:w-1/3">
                             <h3 className="text-gray-300">In Progress</h3>
                             {
-                                activeTasks?.map((task) => <Task key={task?._id} /> )
+                                activeTasks?.map((task) => <Task key={task?._id} task={task} /> )
                             }
                         </div>
                         <div className="md:w-1/3">
                             <h3 className="text-gray-300">Needs Review</h3>
                             {
-                                needToReviewTasks?.map((task) => <Task key={task?._id} /> )
+                                needToReviewTasks?.map((task) => <Task key={task?._id} task={task} /> )
                             }
                         </div>
                         <div className="md:w-1/3 ">
                             <h3 className="text-gray-300">Completed</h3>
                             {
-                                completedTasks?.map((task) => <Task key={task?._id} /> )
+                                completedTasks?.map((task) => <Task key={task?._id} task={task} /> )
                             }
                         </div>
                     </div>

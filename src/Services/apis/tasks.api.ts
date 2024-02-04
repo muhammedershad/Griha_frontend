@@ -22,7 +22,19 @@ const tasksByEmployee = async (employeeId: string) => {
     }
 }
 
+const taskDetails = async (taskId: string) => {
+    try {
+        const response = await axios.get(`/tasks/task-details/${taskId}`)
+        return response.data
+
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
 export default {
     addTask,
-    tasksByEmployee
+    tasksByEmployee,
+    taskDetails
 }
