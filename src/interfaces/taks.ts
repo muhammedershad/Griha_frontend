@@ -18,4 +18,10 @@ export interface Tasks extends Document {
         user: string;
         time: Date;
     }[];
+    response: {
+        details: string;
+        user: string;
+        time: Date;
+        attachments: string[]
+    }[]
 }

@@ -33,8 +33,31 @@ const taskDetails = async (taskId: string) => {
     }
 }
 
+const addResponse = async (data) => {
+    try {
+        const response = await axios.post('/tasks/response', data)
+        console.log(response)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
+const addCommad = async (data) => {
+    try {
+        const response = await axios.post('/tasks/comment', data)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
 export default {
     addTask,
     tasksByEmployee,
-    taskDetails
+    taskDetails,
+    addResponse,
+    addCommad
 }

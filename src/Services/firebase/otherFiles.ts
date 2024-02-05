@@ -54,9 +54,9 @@ const uploadOtherFilesToFirebase = async (otherFiles, folderRute) => {
             })
         ),
         {
-            loading: "Uploading other files...",
-            success: "All other files uploaded successfully",
-            error: "Error uploading other files",
+            loading: "Uploading files...",
+            success: "All files uploaded successfully",
+            error: "Error uploading files",
         }
     );
 };

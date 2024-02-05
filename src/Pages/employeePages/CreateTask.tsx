@@ -15,6 +15,7 @@ import Spinner from "../../components/common/Spinner";
 import { Tasks } from "../../interfaces/taks";
 import { useAppSelector } from "../../Services/redux/hooks";
 import tasksApi from "../../Services/apis/tasks.api";
+import uploadOtherFilesToFirebase from "../../Services/firebase/otherFiles";
 
 function CreateTask() {
     const [formData, setFormData] = useState<featuredProjects>();
@@ -100,7 +101,7 @@ function CreateTask() {
 
         let fileUrls = []
         if(files.length > 0) {
-            fileUrls = await uploadImageToFirebase(
+            fileUrls = await uploadOtherFilesToFirebase(
                 files,
                 "tasks_attachments/"
             );
