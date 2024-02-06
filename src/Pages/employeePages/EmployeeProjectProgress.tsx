@@ -44,24 +44,24 @@ function EmployeeProjectProgress() {
     const handleNextClick = () => {};
 
     const handleComment = async () => {
-        if(comment.trim() === '') return toast.error('Enter a valid comment')
+        if (comment.trim() === "") return toast.error("Enter a valid comment");
 
         const data = {
             comment,
             projectId,
             progressId,
-            userId
-        }
+            userId,
+        };
 
-        const response = await projectApi.addComment(data)
-        if(response.success){
-            toast.success(response.message)
-            setProject(response.project)
+        const response = await projectApi.addComment(data);
+        if (response.success) {
+            toast.success(response.message);
+            setProject(response.project);
             const foundProgress = response.project.progress?.find(
                 (progress) => progress?._id === progressId
             );
             setProgress(foundProgress);
-            setComment('')
+            setComment("");
         }
     };
 
@@ -77,11 +77,11 @@ function EmployeeProjectProgress() {
                                 - {progress?.title}
                             </span>
                         </p>
-                        {
-                            progress?.postedBy?._id === userId && (<p className="text-sm text-center p-2 w-24 rounded-lg border-[1px]">
-                            Edit Project
-                        </p>)
-                        }
+                        {progress?.postedBy?._id === userId && (
+                            <p className="text-sm text-center p-2 w-24 rounded-lg border-[1px]">
+                                Edit Project
+                            </p>
+                        )}
                     </div>
                 </div>
                 <div className=" p-10 h-[450px] w-full flex flex-col md:flex-row">
@@ -174,7 +174,9 @@ function EmployeeProjectProgress() {
                             Post
                         </button>
                     </div>
-                    {progress?.comments && <Comments comments={progress?.comments} />}
+                    {progress?.comments && (
+                        <Comments comments={progress?.comments} />
+                    )}
                 </div>
             </EmployeeSideBar>
         </>

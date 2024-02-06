@@ -13,6 +13,7 @@ import UserMessenger from "../Pages/userPages/UserMessenger";
 import VideoCall from "../Pages/userPages/VideoCall";
 import Room from "../components/common/videoCall/Room";
 import NotFound from "../components/common/404";
+import Meeting from "../Pages/userPages/Meeting";
 
 const UserRoutes = () => {
     return (
@@ -33,6 +34,7 @@ const UserRoutes = () => {
                     <Route path="/dash" element={<UserDash />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/messages" element={<UserMessenger />} />
+                    <Route path='/meeting' element={<Meeting/>} />
                 </Route>
                 <Route path='*' element={<NotFound />} />
             </Routes>
