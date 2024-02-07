@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import meetingApi from "../../Services/apis/meetingApi";
 import { useAppSelector } from "../../Services/redux/hooks";
+import Swal from "sweetalert2";
 
 const TimeSlots = () => {
     const today = new Date().toISOString().split("T")[0];
@@ -30,6 +31,7 @@ const TimeSlots = () => {
 
     useEffect(() => {
         const today = new Date();
+        console.log(today)
         setMinDate(today.toISOString().split("T")[0]);
 
         const maxDateObj = new Date();
@@ -47,28 +49,7 @@ const TimeSlots = () => {
                 if (response.success) {
                     setTimeSlots(response.timeSlots);
                     setSelectedDate(formattedDate);
-                    const bookedTimes = response.timeSlots.map((timeSlot) =>
-                        new Date(timeSlot?.time).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })
-                    );
-                    console.log(bookedTimes);
-
-                    // Filter out booked times from the initial array
-                    const availableTimes = timeArray.filter((time) => {
-                        const formattedTime = new Date(
-                            `2000-01-01 ${time}`
-                        ).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        });
-
-                        return !bookedTimes.includes(formattedTime);
-                    });
-                    console.log(availableTimes);
-
-                    setTimeArray(availableTimes);
+                    handleTimeSlotFiltering(response.timeSlots)
                 }
             })();
         }
@@ -97,42 +78,73 @@ const TimeSlots = () => {
         );
         console.log(response);
         if (response.success) {
-            const bookedTimes = response.timeSlots.map((timeSlot) =>
-                new Date(timeSlot?.time).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                })
-            );
-            console.log(bookedTimes);
-
-            const initialTime = [
-                "9:00",
-                "10:00",
-                "11:00",
-                "12:00",
-                "13:00",
-                "14:00",
-                "15:00",
-                "16:00",
-                "17:00",
-                "18:00",
-            ];
-
-            // Filter out booked times from the initial array
-            const availableTimes = initialTime.filter((time) => {
-                const formattedTime = new Date(
-                    `2000-01-01 ${time}`
-                ).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                });
-
-                return !bookedTimes.includes(formattedTime);
-            });
-            console.log(availableTimes);
-
-            setTimeArray(availableTimes);
+            handleTimeSlotFiltering(response.timeSlots);
         }
+    };
+
+    const handleTimeSlotFiltering = (timeSlots) => {
+
+        const bookedTimes = timeSlots.map((timeSlot) =>
+            new Date(timeSlot?.time).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            })
+        );
+        console.log(bookedTimes);
+
+        const initialTime = [
+            "9:00",
+            "10:00",
+            "11:00",
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "16:00",
+            "17:00",
+            "18:00",
+        ];
+
+        // Filter out booked times from the initial array
+        const availableTimes = initialTime.filter((time) => {
+            const formattedTime = new Date(
+                `2000-01-01 ${time}`
+            ).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+
+            return !bookedTimes.includes(formattedTime);
+        });
+        console.log(availableTimes);
+
+        setTimeArray(availableTimes);
+    };
+
+    const handleCancelTimeSlot = async (timeSlotId: string) => {
+        console.log(timeSlotId);
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+            background: "rgb(44,48,58)",
+            customClass: {
+                title: "swal-text-white", // Add this class to style the title
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = await meetingApi.cancelTimeSlot(timeSlotId);
+                // console.log(response);
+                if (response?.success) {
+                    toast.success(response.message);
+                    console.log(response);
+                    setTimeSlots(timeSlots.filter((timeSlot) => timeSlot._id !== timeSlotId))
+                }
+            } else return;
+        });
     };
 
     const handleAddTimeSlot = async () => {
@@ -141,7 +153,7 @@ const TimeSlots = () => {
             toast.error("Select department");
             error = true;
         }
-        if (!selectedButton) {
+        if (!selectedDate) {
             toast.error("Select Date");
             error = true;
         }
@@ -159,7 +171,7 @@ const TimeSlots = () => {
         const response = await meetingApi.addTimeSlot(data);
         if (response.success) {
             toast.success(response.message);
-            setDepartment("");
+            setDepartment("Construction");
             setSelectedButton(null);
             setSelectedDate("");
         }
@@ -191,7 +203,10 @@ const TimeSlots = () => {
                                 minute: "2-digit",
                             }) ?? "adas"}
                         </button>
-                        <div className="absolute top-0 right-0 mt-2 mr-2">
+                        <div
+                            onClick={() => handleCancelTimeSlot(timeSlot?._id)}
+                            className="absolute top-0 right-0 mt-2 mr-2"
+                        >
                             <FontAwesomeIcon
                                 icon={faTimes}
                                 className="text-red-600 cursor-pointer"
@@ -205,7 +220,7 @@ const TimeSlots = () => {
                 <div className="max-w-[300px]">
                     <div className="flex flex-col">
                         <label htmlFor="date" className="text-sm mb-2">
-                            Selelct Due Date
+                            Selelct Date
                         </label>
                         <input
                             type="date"

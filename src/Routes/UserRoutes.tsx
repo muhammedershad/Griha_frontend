@@ -26,7 +26,6 @@ const UserRoutes = () => {
                     <Route path="/project" element={<Projects />} />
                     <Route path="/project/:projectId" element={<UserProjectDetails />} />
                     <Route path='/videoCall' element={<VideoCall />} />
-                    <Route path='/room/:id' element={<Room />} />
                 </Route>
                 <Route element={<UserPrivateRoutes />}>
                     <Route path="/projects/:id" element={<ProjectDetails />} />
@@ -35,6 +34,7 @@ const UserRoutes = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/messages" element={<UserMessenger />} />
                     <Route path='/meeting' element={<Meeting/>} />
+                    <Route path='/room/:id' element={<Room />} />
                 </Route>
                 <Route path='*' element={<NotFound />} />
             </Routes>

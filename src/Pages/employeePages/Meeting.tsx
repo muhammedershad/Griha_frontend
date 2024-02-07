@@ -6,10 +6,12 @@ import { Modal } from "../../components/common/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TimeSlots from "../../components/employee/TimeSlots";
+import ScheduledMeeting from "../../components/employee/ScheduledMeeting";
 
 const Meeting = () => {
     const [meetings, setMeetings] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [activeItem, setActiveItem] = useState('Scheduled');
     
     const openModal = () => {
         setIsModalOpen(true);
@@ -52,8 +54,15 @@ const Meeting = () => {
                                 Add Time Slots
                             </p>
                         </div>
-                        <Tabs />
-                        <TimeSlots />
+                        <Tabs activeItem={activeItem} setActiveItem={setActiveItem} />
+                        {
+                            activeItem === 'Scheduled' && <ScheduledMeeting />
+                        }
+                        {
+                            activeItem === 'TimeSlot' && <TimeSlots />
+                        }
+                        
+                        
                     </div>
                 )}
             </EmployeeSideBar>

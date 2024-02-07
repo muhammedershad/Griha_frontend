@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarCheck, faClock, faCalendarTimes, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
-const Tabs = () => {
-  const [activeItem, setActiveItem] = useState(null);
+const Tabs = ({activeItem, setActiveItem}) => {
+  // const [activeItem, setActiveItem] = useState(null);
 
   const handleItemClick = (itemName) => {
     setActiveItem(itemName === activeItem ? null : itemName);

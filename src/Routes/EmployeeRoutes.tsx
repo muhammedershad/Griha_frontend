@@ -14,6 +14,7 @@ import CreateTask from "../Pages/employeePages/CreateTask";
 import CreateProject from "../components/employee/CreateProject";
 import TaskDetails from "../Pages/employeePages/TaskDetails";
 import Meeting from "../Pages/employeePages/Meeting";
+import Room from "../components/common/videoCall/Room";
 const EmployeeRoutes = () => {
   return (
     <>
@@ -33,6 +34,7 @@ const EmployeeRoutes = () => {
                 <Route path="/create-project" element={<CreateProject />} />
                 <Route path="/task/:taskId" element={<TaskDetails />} />
                 <Route path="/meetings" element={<Meeting />} />
+                <Route path='/room/:id' element={<Room />} />
             </Route>
             <Route path='*' element={<NotFound />} />
         </Routes>
