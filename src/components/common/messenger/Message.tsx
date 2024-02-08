@@ -21,9 +21,9 @@ function Message({ message, own = false }) {
                 }`}
             >
                 <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                        Bonnie Green
-                    </span>
+                    {/* <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                        {}
+                    </span> */}
                 </div>
                 <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
                     {message.text}

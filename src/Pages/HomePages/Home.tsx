@@ -2,6 +2,7 @@ import Body from "../../components/common/Body";
 import Navbar from "../../components/Home/Navbar";
 import Carousel1 from "../../components/Home/Carousel1";
 import house_top_cut from "../../../public/images/house_top_cut-removebg-preview.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     return (
@@ -48,9 +49,10 @@ const Home = () => {
                                     </span>{" "}
                                     Consultation Today!
                                 </p>
-                                <button className="mt-5 text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                               <Link to='/meeting'>
+                               <button className="mt-5 text-white bg-gradient-to-r from-[#2d63d8] to-[#02155c] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                     Schedule Meeting..
-                                </button>
+                                </button></Link>
                             </div>
                         </div>
                     </div>

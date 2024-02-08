@@ -21,6 +21,7 @@ function Room() {
             video: true,
         });
         const offer = await peer.getOffer();
+        sendStreams
         socket.emit("user:call", { to: remoteSocketId, offer });
         setMyStream(stream);
     }, [remoteSocketId, socket]);
@@ -118,24 +119,28 @@ function Room() {
     return (
         <>
             <div
-            style={{ backgroundImage: 'url("")' }} className="bg-cover bg-center min-h-screen flex flex-col items-center justify-center">
+                style={{ backgroundImage: 'url("")' }}
+                className="bg-cover bg-center min-h-screen flex flex-col items-center justify-center"
+            >
                 {/* Background Image CSS */}
-                <div className="text-white flex">
-                    Room
+                <div className="text-white text-2xl flex flex-col">
                     <br />
-                    {remoteSocketId ? "connected" : "no one here"}
+                    {remoteSocketId ? "A participant has entered the room." : "Waiting for people to join."}
                     <br />
+                    <hr />
+                    <div className="my-5">
                     {remoteSocketId && (
-                        <button onClick={handleCallUser}>Call </button>
+                        <button className="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-3 py-1 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" onClick={handleCallUser}>Call </button>
                     )}
-                    {myStream && (
+                    {/* {myStream && (
                         <button onClick={sendStreams}>Send Stream</button>
-                    )}
+                    )} */}
+                    </div>
                 </div>
 
                 <div>
                     {myStream && remoteStream && (
-                        <div className="flex flex-col rounded-md md:flex-row md:space-x-4">
+                        <div className="flex flex-col my-5 gap-5 rounded-md md:flex-row md:space-x-4">
                             {/* Stream Player for My Stream */}
                             <ReactPlayer
                                 playing
@@ -143,7 +148,7 @@ function Room() {
                                 height="500px"
                                 width="700px"
                                 url={myStream}
-                                className="md:w-1/2 rounded-md"
+                                className="md:w-1/2 my-5 rounded-md"
                             />
 
                             {/* Stream Player for Remote Stream */}
@@ -153,7 +158,7 @@ function Room() {
                                 height="500px"
                                 width="700px"
                                 url={remoteStream}
-                                className="md:w-1/2 rounded-md"
+                                className="md:w-1/2 my-5 rounded-md"
                             />
                         </div>
                     )}

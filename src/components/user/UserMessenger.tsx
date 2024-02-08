@@ -145,7 +145,7 @@ function UserMessenger() {
                         <div className="w-1/4 flex">
                             <SmallSideBar />
 
-                            <div className="h-screen max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <div className="h-screen max-w-md w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                                 <div className="flow-root">
                                     {conversations.map(
                                         (conversation, index) => (
@@ -166,7 +166,7 @@ function UserMessenger() {
                             </div>
                         </div>
                         <div
-                            className="w-3/4 flex flex-col h-screen bg-green-500"
+                            className="w-3/4 flex flex-col h-screen"
                             style={{
                                 backgroundImage: `url("${background}")`,
                                 backgroundSize: "cover",
@@ -178,7 +178,7 @@ function UserMessenger() {
                                 <>
                                     <div className="h-[60px] align-middle items-center flex w-full bg-gray-900">
                                         <img
-                                            className="h-12 w-12 my-2 rounded-full"
+                                            className="h-12 w-12 my-2 ml-3 rounded-full"
                                             src={
                                                 "https://storage.prompt-hunt.workers.dev/clg3sqmjo0001jn08bq79yqzo_1"
                                             }
@@ -222,7 +222,8 @@ function UserMessenger() {
                                     </div>
                                 </>
                             ) : (
-                                <div>Select one chat</div>
+                                <div className="h-full font-bold flex-grow w-full text-white text-3xl flex justify-center items-center text-center">Select one chat</div>
+
                             )}
                         </div>
                     </div>

@@ -10,6 +10,8 @@ import FeaturedProjects from "../Pages/adminPages/FeaturedProjects";
 import EditFeaturedProject from "../Pages/adminPages/EditFeaturedProject";
 import NotFound from "../components/common/404";
 import ManagePorject from "../Pages/adminPages/ManageProject";
+import Payments from "../Pages/adminPages/Payments";
+import CreatePayentRequest from "../Pages/adminPages/CreatePayentRequest";
 
 
 
@@ -29,6 +31,8 @@ const AdminRoutes = () => {
                     <Route path="/add-project" element={<AddProjects />} />
                     <Route path="/featured-projects" element={<FeaturedProjects />} />
                     <Route path="/edit-featured-project/:projectId" element={<EditFeaturedProject />} />
+                    <Route path='/payments' element={<Payments />} />
+                    <Route path='/create-payment' element={<CreatePayentRequest />} />
                 </Route>
                 <Route path='*' element={<NotFound />} />
             </Routes>

@@ -31,8 +31,19 @@ const sendMessage = async (data) => {
     }
 }
 
+const createConversation = async (userId: string, employeeId: string) => {
+    try {
+        const response = await axios.post('/conversation/', {senderId: userId, receiverId: employeeId})
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || (error as Error)?.message)
+    }
+}
+
 export default {
     conversation,
     chat,
-    sendMessage
+    sendMessage,
+    createConversation
 }

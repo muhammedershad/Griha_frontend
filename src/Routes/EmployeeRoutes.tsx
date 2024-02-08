@@ -6,7 +6,7 @@ import EmployeeProfile from "../Pages/employeePages/EmployeeProfile";
 import EmployeeAvilableSlots from '../Pages/employeePages/EmployeeAvilableSlots'
 import EmployeeProjects from "../Pages/employeePages/EmployeeProjects";
 import ProjectDetails from "../Pages/employeePages/ProjectDetails";
-import ProjectProgress from "../components/employee/ProjectProgress";
+// import ProjectProgress from "../components/employee/ProjectProgress";
 import EmployeeProjectProgress from "../Pages/employeePages/EmployeeProjectProgress";
 import NotFound from "../components/common/404";
 import TaskManagement from "../Pages/employeePages/TaskManagement";
@@ -15,6 +15,8 @@ import CreateProject from "../components/employee/CreateProject";
 import TaskDetails from "../Pages/employeePages/TaskDetails";
 import Meeting from "../Pages/employeePages/Meeting";
 import Room from "../components/common/videoCall/Room";
+import UserMessenger from "../components/user/UserMessenger";
+import Paymets from "../Pages/userPages/Paymets";
 const EmployeeRoutes = () => {
   return (
     <>
@@ -35,6 +37,7 @@ const EmployeeRoutes = () => {
                 <Route path="/task/:taskId" element={<TaskDetails />} />
                 <Route path="/meetings" element={<Meeting />} />
                 <Route path='/room/:id' element={<Room />} />
+                <Route path="/messages" element={<UserMessenger />} />
             </Route>
             <Route path='*' element={<NotFound />} />
         </Routes>

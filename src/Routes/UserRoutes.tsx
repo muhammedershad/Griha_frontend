@@ -14,6 +14,9 @@ import VideoCall from "../Pages/userPages/VideoCall";
 import Room from "../components/common/videoCall/Room";
 import NotFound from "../components/common/404";
 import Meeting from "../Pages/userPages/Meeting";
+import Payment from "../components/common/payment";
+import PaymentSuccessPage from "../components/common/PaymentSuccessPage";
+import Paymets from "../Pages/userPages/Paymets";
 
 const UserRoutes = () => {
     return (
@@ -26,6 +29,8 @@ const UserRoutes = () => {
                     <Route path="/project" element={<Projects />} />
                     <Route path="/project/:projectId" element={<UserProjectDetails />} />
                     <Route path='/videoCall' element={<VideoCall />} />
+                    <Route path="/payment" element={<Payment />} />
+                    <Route path='/checkout-success' element={<PaymentSuccessPage />} />
                 </Route>
                 <Route element={<UserPrivateRoutes />}>
                     <Route path="/projects/:id" element={<ProjectDetails />} />
@@ -35,6 +40,7 @@ const UserRoutes = () => {
                     <Route path="/messages" element={<UserMessenger />} />
                     <Route path='/meeting' element={<Meeting/>} />
                     <Route path='/room/:id' element={<Room />} />
+                    <Route path="/payments" element={<Paymets />} />
                 </Route>
                 <Route path='*' element={<NotFound />} />
             </Routes>
