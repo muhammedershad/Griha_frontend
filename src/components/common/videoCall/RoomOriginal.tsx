@@ -4,59 +4,94 @@ import { button } from "@material-tailwind/react";
 import ReactPlayer from "react-player";
 import peer from "../../../Services/videoCall/peer";
 
+type WebRTCOffer = {
+    sdp: string;
+    type: "offer";
+};
+
+type IncommingCallPayload = {
+    from: string;
+    offer: WebRTCOffer;
+};
+
+type WebRTCAnswer = {
+    sdp: string;
+    type: "answer";
+};
+
+type NegoNeedIncomingPayload = {
+    from: string;
+    offer: WebRTCOffer;
+};
+
 function Room() {
-    const [remoteSocketId, setRemoteSocketId] = useState(null);
-    const [myStream, setMyStream] = useState(null);
-    const [remoteStream, setRemoteStream] = useState();
+    const [remoteSocketId, setRemoteSocketId] = useState<string>();
+    const [myStream, setMyStream] = useState<null | MediaStream>(null);
+    const [remoteStream, setRemoteStream] = useState<string>();
     const socket = useSocket();
 
-    const handleUserJoined = useCallback(({ email, id }) => {
-        console.log(`${email} joined room`);
-        setRemoteSocketId(id);
-    }, []);
-
+    const handleUserJoined = useCallback(
+        ({ email, id }: { email: string; id: string }) => {
+            console.log(`${email} joined room`);
+            setRemoteSocketId(id);
+        },
+        []
+    );
     const handleCallUser = useCallback(async () => {
         const stream = await navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true,
         });
         const offer = await peer.getOffer();
-        socket.emit("user:call", { to: remoteSocketId, offer });
+        socket?.emit("user:call", { to: remoteSocketId, offer });
         setMyStream(stream);
     }, [remoteSocketId, socket]);
 
     const handleIncommingCall = useCallback(
-        async ({ from, offer }) => {
+        async ({ from, offer }: IncommingCallPayload) => {
             console.log("incoming call", from, offer);
             setRemoteSocketId(from);
-            const stream = await navigator.mediaDevices.getUserMedia({
-                audio: true,
-                video: true,
-            });
-            setMyStream(stream);
-            const ans = await peer.getAnswer(offer);
-            socket.emit("call:accepted", { to: from, ans });
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: true,
+                });
+
+                setMyStream(stream);
+
+                const ans = await peer.getAnswer(offer);
+                socket?.emit("call:accepted", { to: from, ans });
+            } catch (error) {
+                // Handle errors, if any
+                console.error(
+                    "Error getting user media or processing incoming call:",
+                    error
+                );
+            }
         },
-        [socket]
+        [socket, peer]
     );
 
     const sendStreams = useCallback(() => {
-        for (const track of myStream.getTracks()) {
-            peer.peer.addTrack(track, myStream);
+        if (myStream) {
+            for (const track of myStream.getTracks()) {
+                peer.peer.addTrack(track, myStream);
+            }
         }
-    }, [myStream]);
+    }, [myStream, peer]);
 
     const handleCallAccepted = useCallback(
-        ({ from, ans }) => {
+        ({ from, ans }: { from: string; ans: WebRTCAnswer }) => {
             peer.setLocalDescription(ans);
             console.log("Call Accepted!");
             sendStreams();
         },
-        [sendStreams]
+        [peer, sendStreams]
     );
 
     useEffect(() => {
-        peer.peer.addEventListener("track", async (ev) => {
+        peer.peer.addEventListener("track", async (ev: { streams: any }) => {
             const remoteStream = ev.streams;
             console.log("GOT TRACKS!!");
             setRemoteStream(remoteStream[0]);
@@ -65,7 +100,7 @@ function Room() {
 
     const handleNegoNeeded = useCallback(async () => {
         const offer = await peer.getOffer();
-        socket.emit("peer:nego:needed", { offer, to: remoteSocketId });
+        socket?.emit("peer:nego:needed", { offer, to: remoteSocketId });
     }, [remoteSocketId, socket]);
 
     useEffect(() => {
@@ -80,31 +115,34 @@ function Room() {
     }, [handleNegoNeeded]);
 
     const handleNegoNeedIncomming = useCallback(
-        async ({ from, offer }) => {
+        async ({ from, offer }: NegoNeedIncomingPayload) => {
             const ans = await peer.getAnswer(offer);
-            socket.emit("peer:nego:done", { to: from, ans });
+            socket?.emit("peer:nego:done", { to: from, ans });
         },
-        [socket]
+        [socket, peer]
     );
 
-    const handleNegoNeedFinal = useCallback(async ({ ans }) => {
-        await peer.setLocalDescription(ans);
-    }, []);
+    const handleNegoNeedFinal = useCallback(
+        async ({ ans }: { ans: WebRTCAnswer }) => {
+            await peer.setLocalDescription(ans);
+        },
+        [peer]
+    );
 
     useEffect(() => {
-        socket.on("user:joined", handleUserJoined);
-        socket.on("incomming:call", handleIncommingCall);
-        socket.on("call:accepted", handleCallAccepted);
-        socket.on("peer:nego:needed", handleNegoNeedIncomming);
-        socket.on("peer:nego:final", handleNegoNeedFinal);
+        socket?.on("user:joined", handleUserJoined);
+        socket?.on("incomming:call", handleIncommingCall);
+        socket?.on("call:accepted", handleCallAccepted);
+        socket?.on("peer:nego:needed", handleNegoNeedIncomming);
+        socket?.on("peer:nego:final", handleNegoNeedFinal);
 
         return () => {
-            socket.off("user:joined", handleUserJoined);
-            socket.off("incomming:call", handleIncommingCall);
-            socket.off("call:accepted", handleCallAccepted);
-            socket.off("peer:nego:needed", handleNegoNeeded);
-            socket.off("peer:nego:needed", handleNegoNeedIncomming);
-            socket.off("peer:nego:final", handleNegoNeedFinal);
+            socket?.off("user:joined", handleUserJoined);
+            socket?.off("incomming:call", handleIncommingCall);
+            socket?.off("call:accepted", handleCallAccepted);
+            socket?.off("peer:nego:needed", handleNegoNeeded);
+            socket?.off("peer:nego:needed", handleNegoNeedIncomming);
+            socket?.off("peer:nego:final", handleNegoNeedFinal);
         };
     }, [
         socket,
@@ -118,7 +156,9 @@ function Room() {
     return (
         <>
             <div
-            style={{ backgroundImage: 'url("")' }} className="bg-cover bg-center min-h-screen flex flex-col items-center justify-center">
+                style={{ backgroundImage: 'url("")' }}
+                className="bg-cover bg-center min-h-screen flex flex-col items-center justify-center"
+            >
                 {/* Background Image CSS */}
                 <div className="text-white flex">
                     Room

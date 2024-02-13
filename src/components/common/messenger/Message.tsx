@@ -1,7 +1,12 @@
-import React from "react";
 import { format } from "timeago.js";
+import { IMessage } from "../../../interfaces/message";
 
-function Message({ message, own = false }) {
+interface Props {
+    message: IMessage
+    own: boolean
+}
+
+function Message({ message, own = false }: Props) {
     return (
         <div
             className={`flex ${
@@ -29,7 +34,7 @@ function Message({ message, own = false }) {
                     {message.text}
                 </p>
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    {format(message.createdAt)}
+                    {format(message?.createdAt)}
                 </span>
                 {/* {own && (
       <span className="text-sm font-normal text-gray-500 dark:text-gray-400">

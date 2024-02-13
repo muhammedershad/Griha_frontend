@@ -3,12 +3,16 @@ import { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../Services/api";
 import { useAppDispatch, useAppSelector } from "../../Services/redux/hooks";
-import { userloginSuccess, userlogout } from "../../Services/redux/slices/userSlice";
+import {
+    userloginSuccess,
+    userlogout,
+} from "../../Services/redux/slices/userSlice";
+import grihaLogo from "../../../public/images/griha logo white croped.png";
 
 interface Props {
-    children: ReactNode
+    children: ReactNode;
 }
-const UserSideBar: React.FC<Props> = ({children}) => {
+const UserSideBar: React.FC<Props> = ({ children }) => {
     const user = useAppSelector((state) => state.user.user);
     const dispatch = useAppDispatch();
     useEffect(() => {
@@ -41,56 +45,60 @@ const UserSideBar: React.FC<Props> = ({children}) => {
         dispatch(userlogout());
         navigate("/login");
     };
-    
+
     return (
         <div className="flex h-screen bg-[#131417]">
             <div>
                 <Toaster />
             </div>
             {/* Sidebar (hidden on medium screens and below) */}
-            <div className="hidden md:flex md:w-1/4 m-5 rounded-lg bg-[#2c303a] text-white p-2 pr-0">
+            <div className="hidden md:flex md:w-1/5 w- m-5 rounded-lg bg-[#2c303a] text-white p-2 pr-0">
                 {/* Sidebar content goes here */}
 
                 <div className="overflow-y-auto overflow-x-hidden flex-grow">
                     <ul className="flex flex-col py-4 space-y-1">
-                        <li className="px-5">
-                            <div className="flex flex-row items-center h-8">
-                                <div className="text-sm font-light tracking-wide text-gray-500">
+                        <Link to="/dash">
+                            <li className="px-5">
+                                <div className="flex flex-row my-14 justify-center items-center h-8">
+                                    {/* <div className="text-sm font-light tracking-wide text-gray-500">
                                     Menu
+                                </div> */}
+                                    <img
+                                        className="w-28 h-28"
+                                        src={grihaLogo}
+                                        alt=""
+                                    />
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        </Link>
+                        <Link to="/dash">
+                            <li>
+                                <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
+                                    <span className="inline-flex justify-center items-center ml-4">
+                                        <svg
+                                            className="w-5 h-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span className="ml-2 text-sm tracking-wide truncate">
+                                        Dashboard
+                                    </span>
+                                </a>
+                            </li>
+                        </Link>
+                        <Link to='/meeting'>
                         <li>
-                            <a
-                                href="#"
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                            >
-                                <span className="inline-flex justify-center items-center ml-4">
-                                    <svg
-                                        className="w-5 h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                        />
-                                    </svg>
-                                </span>
-                                <span className="ml-2 text-sm tracking-wide truncate">
-                                    Dashboard
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                            >
+                            <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg
                                         className="w-5 h-5"
@@ -108,18 +116,13 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                     </svg>
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">
-                                    Inbox
-                                </span>
-                                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-indigo-500 bg-indigo-50 rounded-full">
-                                    New
+                                    Appoinments
                                 </span>
                             </a>
-                        </li>
+                        </li></Link>
+                        <Link to='/projects'>
                         <li>
-                            <a
-                                href="#"
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                            >
+                            <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg
                                         className="w-5 h-5"
@@ -137,15 +140,13 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                     </svg>
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">
-                                    Messages
+                                    Projects
                                 </span>
                             </a>
-                        </li>
+                        </li></Link>
+                        <Link to='/messages'>
                         <li>
-                            <a
-                                href="#"
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                            >
+                            <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg
                                         className="w-5 h-5"
@@ -163,25 +164,20 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                     </svg>
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">
-                                    Notifications
-                                </span>
-                                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">
-                                    1.2k
+                                    Messages
                                 </span>
                             </a>
-                        </li>
-                        <li className="px-5">
+                        </li></Link>
+                        {/* <li className="px-5">
                             <div className="flex flex-row items-center h-8">
                                 <div className="text-sm font-light tracking-wide text-gray-500">
                                     Tasks
                                 </div>
                             </div>
-                        </li>
+                        </li> */}
+                        <Link to='/payments'>
                         <li>
-                            <a
-                                href="#"
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                            >
+                            <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg
                                         className="w-5 h-5"
@@ -199,11 +195,11 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                     </svg>
                                 </span>
                                 <span className="ml-2 text-sm tracking-wide truncate">
-                                    Available Tasks
+                                    Payments
                                 </span>
                             </a>
-                        </li>
-                        <Link to="/users">
+                        </li></Link>
+                        {/* <Link to="/users">
                             <li>
                                 <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
                                     <span className="inline-flex justify-center items-center ml-4">
@@ -223,12 +219,12 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                         </svg>
                                     </span>
                                     <span className="ml-2 text-sm tracking-wide truncate">
-                                        Clients
+                                       Profile
                                     </span>
                                 </a>
                             </li>
-                        </Link>
-                        <Link to="/admin/employee">
+                        </Link> */}
+                        {/* <Link to="/admin/employee">
                             <li>
                                 <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
                                     <span className="inline-flex justify-center items-center ml-4">
@@ -259,10 +255,10 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                     Settings
                                 </div>
                             </div>
-                        </li>
+                        </li> */}
                         <Link to="/profile">
                             <li>
-                                <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
+                                <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                     <span className="inline-flex justify-center items-center ml-4">
                                         <svg
                                             className="w-5 h-5"
@@ -285,7 +281,7 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                 </a>
                             </li>
                         </Link>
-                        <li>
+                        {/* <li>
                             <a
                                 href="#"
                                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
@@ -316,11 +312,11 @@ const UserSideBar: React.FC<Props> = ({children}) => {
                                     Settings
                                 </span>
                             </a>
-                        </li>
+                        </li> */}
                         <li>
                             <a
                                 onClick={logout}
-                                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                                className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6"
                             >
                                 <span className="inline-flex justify-center items-center ml-4">
                                     <svg

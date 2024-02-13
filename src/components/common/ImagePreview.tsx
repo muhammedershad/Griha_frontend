@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 
-const ImagePreviewList = ({ files, setFiles }) => {
-    const [previews, setPreviews] = useState([]);
+interface ImagePreviewListProps {
+    files: (Blob | MediaSource)[]; // Adjust the type accordingly
+    setFiles: React.Dispatch<React.SetStateAction<(Blob | MediaSource)[]>>; // Adjust the type accordingly
+}
+
+const ImagePreviewList: React.FC<ImagePreviewListProps> = ({
+    files = [],
+    setFiles,
+}) => {
+    const [previews, setPreviews] = useState<string[]>([]);
 
     useEffect(() => {
-        if (!files) return;
-
-        const objectUrls = files.map((file) => URL.createObjectURL(file));
+        const objectUrls = files.map((file: Blob | MediaSource) =>
+            URL.createObjectURL(file)
+        );
         setPreviews(objectUrls);
 
         // Cleanup function to revoke object URLs
         return () => {
-            objectUrls.forEach((url) => URL.revokeObjectURL(url));
+            objectUrls.forEach((url: string) => URL.revokeObjectURL(url));
         };
     }, [files]);
 
-    const removeImage = (index) => {
+    const removeImage = (index: number) => {
         const updatedFiles = [...files];
         updatedFiles.splice(index, 1);
         setFiles(updatedFiles);
