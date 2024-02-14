@@ -12,7 +12,7 @@ export interface FormField {
 
 interface FormProps {
     obj: FormField[];
-    setData: (something: FormData | ProjectForm) => void;
+    setData: (something: FormData | ProjectForm | any) => void;
     children?: ReactNode;
 }
 

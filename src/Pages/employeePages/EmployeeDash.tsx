@@ -10,12 +10,11 @@ const EmployeeDash = () => {
     // };
     return (
         <>
-        <EmployeeSideBar>
-            <h1>dash</h1>
-        </EmployeeSideBar>
-     </>
-    )
-    
+            <EmployeeSideBar>
+                <h1>dash</h1>
+            </EmployeeSideBar>
+        </>
+    );
 };
 
 export default EmployeeDash;

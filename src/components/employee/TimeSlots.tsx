@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import meetingApi from "../../Services/apis/meetingApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import Swal from "sweetalert2";
+import { Meeting } from "../../interfaces/meeting";
 
 const TimeSlots = () => {
     const today = new Date().toISOString().split("T")[0];
@@ -12,7 +13,7 @@ const TimeSlots = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [minDate, setMinDate] = useState("");
     const [maxDate, setMaxDate] = useState("");
-    const [selectedButton, setSelectedButton] = useState(null);
+    const [selectedButton, setSelectedButton] = useState<string | null>()
     const [department, setDepartment] = useState("Construction");
     const employeeData = useAppSelector((state) => state.employee.employee);
     const [timeSlots, setTimeSlots] = useState([]);
@@ -55,14 +56,14 @@ const TimeSlots = () => {
         }
     }, [employeeData]);
 
-    const handleButtonClick = (time) => {
+    const handleButtonClick = (time: string) => {
         setSelectedButton(time);
     };
 
-    const handleDateChange = async (event) => {
+    const handleDateChange = async (event: { target: { value: string }; }) => {
         setDate(event.target.value);
         const response = await meetingApi.getTimeSlotsForEmployee(
-            employeeData?._id,
+            employeeData?._id!,
             event.target.value
         );
         if (response.success) {
@@ -70,10 +71,10 @@ const TimeSlots = () => {
         }
     };
 
-    const handleSelectedDateChange = async (e) => {
+    const handleSelectedDateChange = async (e: { target: { value: string }; }) => {
         setSelectedDate(e.target.value);
         const response = await meetingApi.getTimeSlotsForEmployee(
-            employeeData?._id,
+            employeeData?._id!,
             e.target.value
         );
         console.log(response);
@@ -82,7 +83,7 @@ const TimeSlots = () => {
         }
     };
 
-    const handleTimeSlotFiltering = (timeSlots) => {
+    const handleTimeSlotFiltering = (timeSlots: any[]) => {
 
         const bookedTimes = timeSlots.map((timeSlot) =>
             new Date(timeSlot?.time).toLocaleTimeString([], {
@@ -141,7 +142,7 @@ const TimeSlots = () => {
                 if (response?.success) {
                     toast.success(response.message);
                     console.log(response);
-                    setTimeSlots(timeSlots.filter((timeSlot) => timeSlot._id !== timeSlotId))
+                    setTimeSlots(timeSlots.filter((timeSlot:Meeting) => timeSlot?._id !== timeSlotId))
                 }
             } else return;
         });
@@ -192,7 +193,7 @@ const TimeSlots = () => {
                 />
             </div>
             <div className="mt-4 grid grid-cols-4 gap-2 lg:max-w-xl">
-                {timeSlots.map((timeSlot) => (
+                {timeSlots.map((timeSlot: Meeting) => (
                     <div className="flex relative">
                         <button
                             key={timeSlot?._id}
@@ -204,7 +205,7 @@ const TimeSlots = () => {
                             }) ?? "adas"}
                         </button>
                         <div
-                            onClick={() => handleCancelTimeSlot(timeSlot?._id)}
+                            onClick={() => handleCancelTimeSlot(timeSlot?._id!)}
                             className="absolute top-0 right-0 mt-2 mr-2"
                         >
                             <FontAwesomeIcon

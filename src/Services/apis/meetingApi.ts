@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import axios from "../axios"
 
-const addTimeSlot = async (data) => {
+const addTimeSlot = async (data: any) => {
     try {
         const response = await axios.post('/meeting', data)
         return response.data
@@ -11,7 +11,7 @@ const addTimeSlot = async (data) => {
     }
 }
 
-const getTimeSlotsForEmployee = async ( employeeId: string, date: Date) => {
+const getTimeSlotsForEmployee = async ( employeeId: string, date: string) => {
     try {
         const response = await axios.get(`/meeting?employeeId=${employeeId}&date=${date}`)
         return response.data

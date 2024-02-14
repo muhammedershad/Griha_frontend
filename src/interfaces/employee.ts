@@ -1,9 +1,9 @@
 export interface Employees extends Document {
-    jobRole?: string;
-    joinedDate?: Date | null;
+    jobRole: string;
+    joinedDate?: Date;
     lastName?: string;
     firstName?: string;
-    _id?: string;
+    _id: string;
     name?: string;
     password?: string;
     phone?: string;

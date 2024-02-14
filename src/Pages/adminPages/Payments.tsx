@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
 import { Link } from "react-router-dom";
 import paymentApi from "../../Services/apis/paymentApi";
+import { IPayment, PaymentPopulated } from "../../interfaces/payment";
 
 const Payments = () => {
-    const [payments, setPayments] = useState([]);
+    const [payments, setPayments] = useState<PaymentPopulated[]>([]);
     useEffect(() => {
         (async () => {
             const response = await paymentApi.allPaymentsOfAdmin();
@@ -78,7 +79,7 @@ const Payments = () => {
                             </th>
                         </tr>
                     </thead>
-                    {payments.map((payment) => (
+                    {payments.map((payment: PaymentPopulated) => (
                         <tbody
                             key={payment?._id}
                             className="bg-gray-800 divide-y divide-gray-200"
@@ -89,14 +90,14 @@ const Payments = () => {
                                         <div className="flex-shrink-0 h-10 w-10">
                                             <img
                                                 className="h-10 w-10 rounded-full"
-                                                src={payment?.paidBy?.Image || "https://cdn3d.iconscout.com/3d/premium/thumb/man-avatar-6299539-5187871.png"}
+                                                src={payment?.paidBy?.image || "https://cdn3d.iconscout.com/3d/premium/thumb/man-avatar-6299539-5187871.png"}
                                             />
                                         </div>
                                         <div className="ml-4">
                                             <div className="text-sm font-medium text-gray-200">
                                                 {
-                                                    payment?.paidBy?.FirstName + " "+
-                                                    payment.paidBy?.LastName
+                                                    payment?.paidBy?.firstName + " "+
+                                                    payment.paidBy?.lastName
                                                 }
                                             </div>
                                             <div className="text-sm text-gray-400">
@@ -117,7 +118,7 @@ const Payments = () => {
                                 </td>
                                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-400">
                                     <div className="text-base text-gray-400">
-                                        {payment.amount}
+                                        {payment?.amount}
                                     </div>
                                 </td>
                                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-400">

@@ -13,8 +13,6 @@ import ManagePorject from "../Pages/adminPages/ManageProject";
 import Payments from "../Pages/adminPages/Payments";
 import CreatePayentRequest from "../Pages/adminPages/CreatePayentRequest";
 
-
-
 const AdminRoutes = () => {
     return (
         <>
@@ -25,16 +23,28 @@ const AdminRoutes = () => {
                 <Route element={<AdminPrivateRoutes />}>
                     <Route path="/dash" element={<AdminDash />} />
                     <Route path="/users" element={<AdminUserManagement />} />
-                    <Route path="/employee" element={<AdminEmployeeManagement />} />
+                    <Route
+                        path="/employee"
+                        element={<AdminEmployeeManagement />}
+                    />
                     <Route path="/test" element={<InteractiveModalExample />} />
                     <Route path="/projects" element={<ManagePorject />} />
                     <Route path="/add-project" element={<AddProjects />} />
-                    <Route path="/featured-projects" element={<FeaturedProjects />} />
-                    <Route path="/edit-featured-project/:projectId" element={<EditFeaturedProject />} />
-                    <Route path='/payments' element={<Payments />} />
-                    <Route path='/create-payment' element={<CreatePayentRequest />} />
+                    <Route
+                        path="/featured-projects"
+                        element={<FeaturedProjects />}
+                    />
+                    <Route
+                        path="/edit-featured-project/:projectId"
+                        element={<EditFeaturedProject />}
+                    />
+                    <Route path="/payments" element={<Payments />} />
+                    <Route
+                        path="/create-payment"
+                        element={<CreatePayentRequest />}
+                    />
                 </Route>
-                <Route path='*' element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );

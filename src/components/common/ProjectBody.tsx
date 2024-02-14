@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import MembersList from "./MembersList";
-import { project } from "../../interfaces/project";
 import { Spinner } from "flowbite-react";
+import { ProjectPopulated } from "../../interfaces/project";
 
 interface Props {
-    project: project | null;
+    project: ProjectPopulated;
 }
 
 const ProjectBody: React.FC<Props> = ({ project }) => {
@@ -25,19 +25,18 @@ const ProjectBody: React.FC<Props> = ({ project }) => {
                     <div className="sm:w-full md:w-1/2">
                         <MembersList
                             users={project?.clients}
-                            selectedUsers={project?.clients}
-                            onUserSelect={undefined}
                             edit={false}
                             heading={"Clients"}
+                            selectedUsers={[]}
                         />
                     </div>
                     <div className="sm:w-full md:w-1/2">
                         <MembersList
                             users={project?.team?.members}
-                            selectedUsers={project?.team?.members}
-                            onUserSelect={undefined}
+                            // selectedUsers={project?.team?.members}
                             edit={false}
                             heading={"Team Members"}
+                            selectedUsers={[]}
                         />
                     </div>
                 </div>

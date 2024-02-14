@@ -8,5 +8,5 @@ export interface featuredProjects {
     youtubeLink?: string,
     category?: string,
     details?: string,
-    images?: string[]
+    images: string[]
 }

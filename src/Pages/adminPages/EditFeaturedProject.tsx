@@ -13,7 +13,7 @@ function EditFeaturedProject() {
     const [formData, setFormData] = useState<featuredProjects>();
     const [details, setDetails] = useState<string>("");
     const [category, setCategory] = useState<string>("Residential");
-    const [files, setFiles] = useState<[]>([]);
+    const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
     const [project, setProject] = useState<featuredProjects>();
     // const [imageUrls, setImageUrls] = useState<string[]>([])
     const { projectId } = useParams<{ projectId: string }>();
@@ -70,8 +70,8 @@ function EditFeaturedProject() {
         }
         if (error) return;
 
-        let imageUrls = []
-        if(files.length > 0) {
+        let imageUrls = [];
+        if (files.length > 0) {
             imageUrls = await uploadImageToFirebase(
                 files,
                 "featured_projects/"
@@ -84,13 +84,13 @@ function EditFeaturedProject() {
             ...formData,
             details: details,
             category: category,
-            images: [...imageUrls, ...project?.images],
+            images: [...imageUrls, ...project?.images!],
         };
 
         const response = await projectApi.updateFeatruedProjects(data);
         if (response.success) {
             toast.success("Project addition completed successfully.");
-            setProject(response.project)
+            setProject(response.project);
         }
     };
 
@@ -140,9 +140,13 @@ function EditFeaturedProject() {
     ];
 
     const removeImage = (index: number) => {
-        const updatedImages = [...project?.images];
+        const updatedImages: string[] = [...project?.images!];
         updatedImages.splice(index, 1);
-        setProject({...project, images: updatedImages});
+
+        setProject({
+            ...project!,
+            images: updatedImages,
+        });
     };
 
     return (
@@ -249,9 +253,9 @@ function EditFeaturedProject() {
                                 ))}
                             </div>
                             <ImagePreviewList
-                                    files={files}
-                                    setFiles={setFiles}
-                                />
+                                files={files}
+                                setFiles={setFiles}
+                            />
                         </Form>
                     </div>
                     <div></div>

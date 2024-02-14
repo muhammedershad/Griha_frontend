@@ -27,10 +27,16 @@ const UserRoutes = () => {
                     <Route path="/login" element={<UserLogin />} />
                     <Route path="/signup" element={<UserSignup />} />
                     <Route path="/project" element={<Projects />} />
-                    <Route path="/project/:projectId" element={<UserProjectDetails />} />
-                    <Route path='/videoCall' element={<VideoCall />} />
+                    <Route
+                        path="/project/:projectId"
+                        element={<UserProjectDetails />}
+                    />
+                    <Route path="/videoCall" element={<VideoCall />} />
                     <Route path="/payment" element={<Payment />} />
-                    <Route path='/checkout-success' element={<PaymentSuccessPage />} />
+                    <Route
+                        path="/checkout-success"
+                        element={<PaymentSuccessPage />}
+                    />
                 </Route>
                 <Route element={<UserPrivateRoutes />}>
                     <Route path="/projects/:id" element={<ProjectDetails />} />
@@ -38,11 +44,11 @@ const UserRoutes = () => {
                     <Route path="/dash" element={<UserDash />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/messages" element={<UserMessenger />} />
-                    <Route path='/meeting' element={<Meeting/>} />
-                    <Route path='/room/:id' element={<Room />} />
+                    <Route path="/meeting" element={<Meeting />} />
+                    <Route path="/room/:id" element={<Room />} />
                     <Route path="/payments" element={<Paymets />} />
                 </Route>
-                <Route path='*' element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );

@@ -1,4 +1,6 @@
 export interface User {
+    phone: number | string;
+    createdAt: any;
     _id: string;
     firstName: string;
     lastName: string;
@@ -9,6 +11,7 @@ export interface User {
     image: string | null;
     client: boolean;
     isBlocked: boolean;
+    jobRole?: string
 }
 
 export default User;

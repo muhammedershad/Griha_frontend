@@ -34,8 +34,10 @@ const AdminEmployeeManagement = () => {
         fetchUsers();
     }, [change]);
 
-    const filteredEmployees = employees.filter((employee) =>
-        employee.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredEmployees = employees.filter(
+        (employee: Employees) =>
+            employee?.firstName &&
+            employee.firstName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -46,7 +48,8 @@ const AdminEmployeeManagement = () => {
     );
 
     // Change page
-    const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber: SetStateAction<number>) =>
+        setCurrentPage(pageNumber);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -146,7 +149,7 @@ const AdminEmployeeManagement = () => {
 
     return (
         <>
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <Modal isOpen={isModalOpen} onClose={closeModal} mainHeading={""}>
                 <div className=" space-y-1 md:space-y-4 sm:p-3">
                     <form
                         className="space-y-2 md:space-y-6"
@@ -317,7 +320,7 @@ const AdminEmployeeManagement = () => {
                                 </td>
                                 <td className="px-2 py-4 whitespace-nowrap">
                                     <div className="text-base text-gray-400">
-                                        {employee.joinedDate.split("T")[0]}
+                                        {new Date(employee?.joinedDate!).toLocaleDateString()}
                                     </div>
                                 </td>
                                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-400">
@@ -371,7 +374,9 @@ const AdminEmployeeManagement = () => {
                 </table>
                 <div className="pagination">
                     {Array.from({
-                        length: Math.ceil(filteredEmployees.length / itemsPerPage),
+                        length: Math.ceil(
+                            filteredEmployees.length / itemsPerPage
+                        ),
                     }).map((_, index) => (
                         <>
                             {/* <button

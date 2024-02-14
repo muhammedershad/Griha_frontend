@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "../../Services/context/SocketProvider";
+import { Meeting } from "../../interfaces/meeting";
 
 const ScheduledMeeting = () => {
-    const [meetings, setMeetings] = useState();
+    const [meetings, setMeetings] = useState<Meeting[]>([]);
     const navigate = useNavigate()
     const socket = useSocket()
     const employeeData = useAppSelector((state) => state.employee.employee);
@@ -25,20 +26,20 @@ const ScheduledMeeting = () => {
         })();
     }, [employeeData]);
 
-    const handleCall = useCallback((meeting) => {
+    const handleCall = useCallback((meeting: Meeting) => {
         console.log( meeting.employee, meeting._id);
-        socket.emit('room:join', { email: meeting?.employee, room: meeting?._id });
+        socket?.emit('room:join', { email: meeting?.employee, room: meeting?._id });
     }, [socket]);
     
-    const handleJoinRoom = useCallback((data) => {
+    const handleJoinRoom = useCallback((data: { email: any; room: any; }) => {
         const { email, room } = data;
         navigate(`/employee/room/${room}`);
     }, [navigate]);
     
     useEffect(() => {
-        socket.on('room:join', handleJoinRoom);
+        socket?.on('room:join', handleJoinRoom);
         return () => {
-            socket.off('room:join', handleJoinRoom);
+            socket?.off('room:join', handleJoinRoom);
         };
     }, [socket, handleJoinRoom]);
 

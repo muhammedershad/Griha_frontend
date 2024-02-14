@@ -18,13 +18,13 @@ import tasksApi from "../../Services/apis/tasks.api";
 import uploadOtherFilesToFirebase from "../../Services/firebase/otherFiles";
 
 function CreateTask() {
-    const [formData, setFormData] = useState<featuredProjects>();
+    const [formData, setFormData] = useState<Tasks>();
     const [details, setDetails] = useState<string>("");
     const [department, setDepartment] = useState<string>("Architecture");
     const [priority, setPriority] = useState<string>("High");
-    const [files, setFiles] = useState<[]>([]);
+    const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
     // const [attachments, setAttachments] = useState<string[]>([])
-    const [dueDate, setDueDate] = useState();
+    const [dueDate, setDueDate] = useState<string>();
     const [allEmployees, setAllEmployees] = useState<Employees[] | null>(null);
     const [selectedEmployee, setSelectedEmployee] = useState<string[]>([]);
     const { projectId } = useParams<{ projectId: string }>();
@@ -113,10 +113,10 @@ function CreateTask() {
             details: details,
             department: department,
             attachments: fileUrls,
-            assignedBy: employeeData?._id,
-            dueDate: dueDate,
+            assignedBy: employeeData?._id!,
+            dueDate: dueDate!,
             assignedTo: selectedEmployee[0],
-            project: projectId,
+            project: projectId!,
             priority
         };
         const response = await tasksApi.addTask(data);
@@ -244,7 +244,7 @@ function CreateTask() {
                                 users={allEmployees}
                                 selectedUsers={selectedEmployee}
                                 onUserSelect={handleEmployeeLeadSelect}
-                                heading={undefined}
+                                heading={''}
                             />
 
                             <div className="w-full">

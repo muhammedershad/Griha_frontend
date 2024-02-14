@@ -1,10 +1,9 @@
 import SmallSideBar from "../common/SmallSideBar";
 import UserCard from "./UserCard";
 import background from "../../../public/images/1549504.jpg";
-import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../Services/redux/hooks";
+import { Key, useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "../../Services/redux/hooks";
 import messageApi from "../../Services/apis/messageApi";
-import User from "../../interfaces/user";
 import { Spinner } from "flowbite-react";
 import api from "../../Services/api";
 import {
@@ -13,20 +12,27 @@ import {
 } from "../../Services/redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import Message from "../common/messenger/Message";
-import { io } from "socket.io-client";
 import { useSocket } from "../../Services/context/SocketProvider";
+import User from "../../interfaces/user";
+import { Conversation, IMessage } from "../../interfaces/conversation";
+
+interface arrivalMessageInter {
+    sender: string;
+    text: string;
+    createdAt: Date;
+}
 
 function UserMessenger() {
     const [conversations, setConversation] = useState([]);
     const [loading, setLoading] = useState(true);
     const dispatch = useAppDispatch();
-    const [user, setUser] = useState();
-    const [currentChat, setCurrentChat] = useState();
-    const [messages, setMessages] = useState();
+    const [user, setUser] = useState<User>();
+    const [currentChat, setCurrentChat] = useState<Conversation>();
+    const [messages, setMessages] = useState<IMessage[]>([]);
     const [newMessage, setNewMessage] = useState("");
-    const scrollRef = useRef();
+    const scrollRef = useRef<HTMLDivElement>(null);
     const socket = useSocket();
-    const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [arrivalMessage, setArrivalMessage] = useState<IMessage>();
     // console.log(socket);
 
     useEffect(() => {
@@ -72,13 +78,13 @@ function UserMessenger() {
     useEffect(() => {
         console.log(user?._id);
         (async () => {
-            const response = await messageApi.chat(currentChat?._id);
+            const response = await messageApi.chat(currentChat?._id!);
             if (response) {
                 // console.log(response);
                 setMessages(response);
             }
         })();
-        console.log(currentChat);
+        // console.log(currentChat);
     }, [currentChat]);
 
     useEffect(() => {
@@ -102,7 +108,7 @@ function UserMessenger() {
             conversationId: currentChat?._id,
         };
 
-        const receiverId = currentChat.members.find(
+        const receiverId = currentChat?.members.find(
             (member) => member !== user?._id
         );
 
@@ -120,9 +126,9 @@ function UserMessenger() {
     };
 
     useEffect(() => {
-        socket.on("getMessage", (data) => {
+        socket?.on("getMessage", (data) => {
             setArrivalMessage({
-                sender: data.senderId,
+                sender: data?.senderId,
                 text: data.text,
                 createdAt: Date.now(),
             });
@@ -131,7 +137,7 @@ function UserMessenger() {
 
     useEffect(() => {
         arrivalMessage &&
-            currentChat?.members.includes(arrivalMessage.sender) &&
+            currentChat?.members.includes(arrivalMessage?.sender) &&
             setMessages((prev) => [...prev, arrivalMessage]);
     }, [arrivalMessage, currentChat]);
 
@@ -156,7 +162,7 @@ function UserMessenger() {
                                             >
                                                 <UserCard
                                                     conversation={conversation}
-                                                    userId={user?._id}
+                                                    userId={user?._id!}
                                                     key={index}
                                                 />
                                             </div>
@@ -184,21 +190,27 @@ function UserMessenger() {
                                             }
                                             alt=""
                                         />
-                                         <p className="text-white mx-4">User</p>
+                                        <p className="text-white mx-4">User</p>
                                     </div>
 
                                     <div className="flex-grow w-full overflow-y-scroll ">
-                                        {messages?.map((m, i) => (
-                                            <div ref={scrollRef}>
-                                                <Message
-                                                    key={i}
-                                                    message={m}
-                                                    own={
-                                                        m?.sender === user?._id
-                                                    }
-                                                />
-                                            </div>
-                                        ))}
+                                        {messages?.map(
+                                            (
+                                                m: IMessage,
+                                                i: Key | null | undefined
+                                            ) => (
+                                                <div ref={scrollRef}>
+                                                    <Message
+                                                        key={i}
+                                                        message={m}
+                                                        own={
+                                                            m?.sender ===
+                                                            user?._id
+                                                        }
+                                                    />
+                                                </div>
+                                            )
+                                        )}
                                     </div>
 
                                     <div className="relative">
@@ -222,8 +234,9 @@ function UserMessenger() {
                                     </div>
                                 </>
                             ) : (
-                                <div className="h-full font-bold flex-grow w-full text-white text-3xl flex justify-center items-center text-center">Select one chat</div>
-
+                                <div className="h-full font-bold flex-grow w-full text-white text-3xl flex justify-center items-center text-center">
+                                    Select one chat
+                                </div>
                             )}
                         </div>
                     </div>

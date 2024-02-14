@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Modal } from "../common/Modal";
 import Form from "../common/Form";
 import MembersList from "../common/MembersList";
 import { employeeApi } from "../../Services/employeeApi";
@@ -17,23 +16,22 @@ import SideHeading from "../common/SideHeading";
 import Spinner from "../common/Spinner";
 
 const CreateProject = () => {
-    
     const [formData, setFormData] = useState<ProjectForm>();
     const [allEmployees, setAllEmployees] = useState<Employees[]>();
-    const [clients, setClients] = useState<User[]>();
+    const [clients, setClients] = useState<User[]>([]);
     const employee = useAppSelector((state) => state.employee.employee);
-    console.log('object')
+    console.log("object");
 
     useEffect(() => {
-        console.log('here');
+        console.log("here");
         (async () => {
             const response = await employeeApi.allEmployees();
-            console.log(response)
+            console.log(response);
             if (response?.success) setAllEmployees(response.allEmployees);
         })();
         (async () => {
             const response = await api.allClients();
-            console.log(response)
+            console.log(response);
             if (response?.success) setClients(response.allClients);
         })();
     }, []);
@@ -52,73 +50,88 @@ const CreateProject = () => {
 
     const handleEmployeeSelect = (userId: string) => {
         if (selectedEmployees.includes(userId)) {
-            setSelectedEmployees(selectedEmployees.filter((id) => id !== userId));
+            setSelectedEmployees(
+                selectedEmployees.filter((id) => id !== userId)
+            );
         } else {
             setSelectedEmployees([...selectedEmployees, userId]);
         }
     };
 
     useEffect(() => {
-        console.log(formData,'formdata', selectedUsers,'selected users', selectedEmployees, 'selected employees');
+        console.log(
+            formData,
+            "formdata",
+            selectedUsers,
+            "selected users",
+            selectedEmployees,
+            "selected employees"
+        );
         if (formData) {
-            CreateProject()
+            CreateProject();
         }
     }, [formData]);
 
     const CreateProject = async () => {
         let err = false;
-        if (formData) setFormData(trimProjectFormData(formData))
-        if (!formData?.address || !validations.validateAddress(formData.address)) {
-            toast.error('Enter valid address')
-            err = true
+        if (formData) setFormData(trimProjectFormData(formData));
+        if (
+            !formData?.address ||
+            !validations.validateAddress(formData.address)
+        ) {
+            toast.error("Enter valid address");
+            err = true;
         }
         if (!formData?.projectName) {
-            toast.error('Enter valid project name')
-            err = true
+            toast.error("Enter valid project name");
+            err = true;
         }
         if (!formData?.district) {
-            toast.error('Enter valid district')
-            err = true
+            toast.error("Enter valid district");
+            err = true;
         }
         if (!formData?.longitudeAndLatitude) {
-            toast.error('Enter valid Longitude and Latitude')   
-            err = true
+            toast.error("Enter valid Longitude and Latitude");
+            err = true;
         }
-        if (!formData?.pincode || !validations.validatePINCode(formData.pincode)) {
-            toast.error('Enter valid Pincode')
-            err = true
+        if (
+            !formData?.pincode ||
+            !validations.validatePINCode(formData.pincode)
+        ) {
+            toast.error("Enter valid Pincode");
+            err = true;
         }
         if (!formData?.state) {
-            toast.error('Enter Valid State')
-            err = true
+            toast.error("Enter Valid State");
+            err = true;
         }
-        if ( err ) return
+        if (err) return;
 
-        if ( formData && employee ) {
+        if (formData && employee) {
             const data: project = {
                 projectName: formData?.projectName,
                 postedBy: employee?._id,
                 clients: selectedUsers,
                 details: formData.district,
                 location: formData.longitudeAndLatitude,
-                team : {
+                team: {
                     members: selectedEmployees,
-                    teamLead: employee?._id
+                    teamLead: employee?._id,
                 },
                 address: {
                     address: formData.address,
                     district: formData.district,
                     state: formData.state,
-                    pincode: formData.pincode
+                    pincode: formData.pincode,
                 },
-            }
-            const response = await projectApi.createProject( data )
-            if ( response.success ) {
-                toast.success('Project created')
+            };
+            const response = await projectApi.createProject(data);
+            if (response.success) {
+                toast.success("Project created");
                 // closeModal()
-            }   
+            }
         }
-    }
+    };
 
     // const openModal = () => {
     //     setIsModalOpen(true);
@@ -179,42 +192,54 @@ const CreateProject = () => {
             {/* <Modal isOpen={isModalOpen} onClose={closeModal} mainHeading={"Create Project"}>
                 fdsfs
             </Modal> */}
-           <EmployeeSideBar>
-           {
-            allEmployees ? (<div className="w-full flex items-center justify-center">
-            <div className="space-y-1 w-[500px] md:space-y-4 sm:p-3">
-                     <div className="text-center">
-                     <SideHeading title={"Create New Project"}/>
-                     </div>
-                     <Form obj={formFields} setData={setFormData}>
-                         <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
-                             Select Team Members
-                         </label>
-                         <MembersList
-                                 users={allEmployees}
-                                 selectedUsers={selectedEmployees}
-                                 onUserSelect={handleEmployeeSelect} heading={undefined}                        />
-                         <label htmlFor="" className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white" >
-                             Select Clients
-                         </label>
-                         <MembersList
-                                 users={clients}
-                                 selectedUsers={selectedUsers}
-                                 onUserSelect={handleUserSelect} heading={undefined}                        />
-                     </Form>
-                     {/* <button
+            <EmployeeSideBar>
+                {allEmployees ? (
+                    <div className="w-full flex items-center justify-center">
+                        <div className="space-y-1 w-[500px] md:space-y-4 sm:p-3">
+                            <div className="text-center">
+                                <SideHeading title={"Create New Project"} />
+                            </div>
+                            <Form obj={formFields} setData={setFormData}>
+                                <label
+                                    htmlFor=""
+                                    className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                                >
+                                    Select Team Members
+                                </label>
+                                <MembersList
+                                    users={allEmployees}
+                                    selectedUsers={selectedEmployees}
+                                    onUserSelect={handleEmployeeSelect}
+                                    heading={""}
+                                />
+                                <label
+                                    htmlFor=""
+                                    className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                                >
+                                    Select Clients
+                                </label>
+                                <MembersList
+                                    users={clients}
+                                    selectedUsers={selectedUsers}
+                                    onUserSelect={handleUserSelect}
+                                    heading={""}
+                                />
+                            </Form>
+                            {/* <button
                          onClick={closeModal}
                          type="submit"
                          className="w-full text-white bg-gradient-to-r from-[#8e1c1c] to-[#422c34] hover:bg-opacity-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                      >
                          cancel
                      </button> */}
-                 </div>
-            </div>) : (<Spinner />)
-           }
-           </EmployeeSideBar>
+                        </div>
+                    </div>
+                ) : (
+                    <Spinner />
+                )}
+            </EmployeeSideBar>
         </>
     );
 };
 
-export default CreateProject    
+export default CreateProject;

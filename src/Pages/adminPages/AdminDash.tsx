@@ -81,7 +81,6 @@ const AdminDash = () => {
                 <h3 className="font-semibold font-sans tracking-wider m-5 text-lg">
                     Admin Dash
                 </h3>
-                
             </MainDash>
         </>
     );

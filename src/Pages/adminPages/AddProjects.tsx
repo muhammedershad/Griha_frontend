@@ -12,7 +12,7 @@ function AddProjects() {
     const [formData, setFormData] = useState<featuredProjects>();
     const [details, setDetails] = useState<string>("");
     const [category, setCategory] = useState<string>('Residential')
-    const [files, setFiles] = useState<[]>([]);
+    const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
     // const [imageUrls, setImageUrls] = useState<string[]>([])
 
     useEffect(() => {

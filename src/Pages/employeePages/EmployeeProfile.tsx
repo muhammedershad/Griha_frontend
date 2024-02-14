@@ -202,7 +202,7 @@ const EmployeeProfile = () => {
                                 <span className="font-bold text-slate-400">
                                     Date of Join:
                                 </span>{" "}
-                                {employee?.joinedDate.split("T")[0] ?? ""}
+                                {new Date(employee?.joinedDate!).toLocaleDateString()}
                             </p>
                             <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">

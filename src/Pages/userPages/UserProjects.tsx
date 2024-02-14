@@ -17,7 +17,7 @@ const UserProjects = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await projectApi.userProjects(userData?._id);
+                const response = await projectApi.userProjects(userData?._id!);
                 setProjects(response.projects);
                 setLoading(false);
                 console.log(response, "respo");
@@ -57,7 +57,7 @@ const UserProjects = () => {
                                             <Link
                                                 to={`/projects/${project._id}`}
                                             >
-                                               <div className="relative z-0 flex bg-clip-border rounded-xl bg-gray-900 text-gray-700 shadow-md w-full max-w-[30rem] min-w-[20rem] border-b border-red-500 border-6">
+                                                <div className="relative z-0 flex bg-clip-border rounded-xl bg-gray-900 text-gray-700 shadow-md w-full max-w-[30rem] min-w-[20rem] border-b border-red-500 border-6">
                                                     <div className="relative w-2/5 m-0 overflow-hidden text-gray-700 bg-white rounded-r-none bg-clip-border rounded-xl shrink-0">
                                                         <img
                                                             src="https://www.shutterstock.com/image-illustration/architecture-3d-rendering-illustration-minimal-260nw-2274549397.jpg"

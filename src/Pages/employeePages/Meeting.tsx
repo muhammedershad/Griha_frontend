@@ -11,7 +11,7 @@ import ScheduledMeeting from "../../components/employee/ScheduledMeeting";
 const Meeting = () => {
     const [meetings, setMeetings] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [activeItem, setActiveItem] = useState('Scheduled');
+    const [activeItem, setActiveItem] = useState<string | null>('Scheduled');
     
     const openModal = () => {
         setIsModalOpen(true);

@@ -23,8 +23,8 @@ const Signup = () => {
     useEffect(() => {
         let interval: NodeJS.Timeout;
 
-        if ( timer === 1) {
-            setButtonDisabled(false)
+        if (timer === 1) {
+            setButtonDisabled(false);
         }
 
         if (isActive && timer > 0) {
@@ -133,16 +133,16 @@ const Signup = () => {
     };
 
     const handleResendClick = async () => {
-        const response = await api.resend_OTP( email )
+        const response = await api.resend_OTP(email);
 
-        if ( response?.success ) {
-            toast.success(response.message)
-            resetTimer()
-            setButtonDisabled(true)
+        if (response?.success) {
+            toast.success(response.message);
+            resetTimer();
+            setButtonDisabled(true);
         } else {
-            toast.error( "Error in sending OTP")
+            toast.error("Error in sending OTP");
         }
-    }
+    };
 
     // const googleAuth = async () => {
     //     api.googleAuth();
@@ -291,9 +291,12 @@ const Signup = () => {
                                                 type="button"
                                                 onClick={handleResendClick}
                                                 disabled={isButtonDisabled}
-                                             className={`bg-gradient-to-r from-[#2d63d8] to-[#02155c] text-white text-xs px-2 py-1 rounded-md hover:bg-blue-600${
-                                                isButtonDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
-                                              }`}>
+                                                className={`bg-gradient-to-r from-[#2d63d8] to-[#02155c] text-white text-xs px-2 py-1 rounded-md hover:bg-blue-600${
+                                                    isButtonDisabled
+                                                        ? "opacity-50 cursor-not-allowed"
+                                                        : "hover:bg-blue-600"
+                                                }`}
+                                            >
                                                 Resend OTP
                                             </button>
                                         </div>

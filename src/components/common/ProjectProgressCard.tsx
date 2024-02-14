@@ -2,13 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faFileAlt } from "@fortawesome/free-solid-svg-icons";
-import { project } from "../../interfaces/project";
+import {  ProjectProgressPopulated } from "../../interfaces/project";
 import React from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
-    progress: project['progress']
-    projectId: string | undefined
+    progress: ProjectProgressPopulated
+    projectId: string 
 }
 
 const ProjectProgressCard: React.FC<Props> = ({ progress, projectId }) => {
@@ -41,7 +41,7 @@ const ProjectProgressCard: React.FC<Props> = ({ progress, projectId }) => {
                 <div className="min-w-fit">
                     <img
                         className="h-10 w-10 object-cover object-center bg-slate-50 rounded-full"
-                        src={progress?.postedBy?.image || "https://cdn4.iconfinder.com/data/icons/gamer-player-3d-avatars-3d-illustration-pack/512/19_Man_T-Shirt_Suit.png"}
+                        src={typeof progress?.postedBy === 'string' ? '' : progress?.postedBy?.image || "https://cdn4.iconfinder.com/data/icons/gamer-player-3d-avatars-3d-illustration-pack/512/19_Man_T-Shirt_Suit.png"}
                         alt=""
                     />
                 </div>

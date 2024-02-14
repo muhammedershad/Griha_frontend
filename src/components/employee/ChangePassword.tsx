@@ -9,7 +9,7 @@ import { Employees } from "../../interfaces/employee";
 import User from "../../interfaces/user";
 
 interface Props {
-    employee: Employees| User | null | undefined;
+    employee: Employees | User | null | undefined;
 }
 
 const ChangePassword: React.FC<Props> = ({ employee }) => {

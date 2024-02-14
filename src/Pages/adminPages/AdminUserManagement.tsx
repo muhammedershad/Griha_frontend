@@ -26,7 +26,7 @@ const AdminUserManagement = () => {
     }, [change]);
 
     const filteredusers = users.filter((user) =>
-        user.FirstName.toLowerCase().includes(searchQuery.toLowerCase())
+        user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -34,7 +34,7 @@ const AdminUserManagement = () => {
     const currentItems = filteredusers.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
 
     const handleChangeUserBlock = async (userId: string) => {
         // console.log(userId);
@@ -162,34 +162,34 @@ const AdminUserManagement = () => {
                                         </div>
                                         <div className="ml-4">
                                             <div className="text-sm font-medium text-gray-200">
-                                                {user.FirstName +
+                                                {user.firstName +
                                                     " " +
-                                                    user.LastName}
+                                                    user.lastName}
                                             </div>
                                             <div className="text-sm text-gray-400">
-                                                {user.Username}
+                                                {user.username}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="text-base text-gray-400">
-                                        {user.Email}
+                                        {user.email}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="text-base text-gray-400">
-                                        {user.CreatedAt.split("T")[0]}
+                                    {new Date(user?.createdAt!).toLocaleDateString()}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                                     <div className="text-base text-gray-400">
-                                        {user.Client ? "Client" : "User"}
+                                        {user.client ? "Client" : "User"}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div className="text-base text-gray-400">
-                                        {user.Phone}
+                                        {user.phone}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
@@ -200,7 +200,7 @@ const AdminUserManagement = () => {
                                             handleChangeUserRole(user._id)
                                         }
                                     >
-                                        {user.Client
+                                        {user.client
                                             ? "Make User"
                                             : "Make Client"}
                                     </a>
@@ -211,36 +211,36 @@ const AdminUserManagement = () => {
                                         href="#"
                                         className="ml-2 text-red-600 hover:text-red-900"
                                     >
-                                        {user.IsBlocked ? "Unblock" : "Block"}
+                                        {user.isBlocked ? "Unblock" : "Block"}
                                     </a>
                                 </td>
                             </tr>
-                            
 
                             {/* More rows... */}
                         </tbody>
                     ))}
                 </table>
                 <div className="pagination">
-                                {Array.from({
-                                    length: Math.ceil(
-                                        filteredusers.length / itemsPerPage
-                                    ),
-                                }).map((_, index) => (
-                                    <>
-                                    {/* <button
+                    {Array.from({
+                        length: Math.ceil(filteredusers.length / itemsPerPage),
+                    }).map((_, index) => (
+                        <>
+                            {/* <button
                                         key={index + 1}
                                         onClick={() => paginate(index + 1)}
                                     >
                                         {index + 1}
                                     </button> */}
-                                    <a
-                                    onClick={() => paginate(index + 1)}
-                                    key={index + 1}
-                                    className="items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{index+1}</a>
-                                    </>
-                                ))}
-                            </div>
+                            <a
+                                onClick={() => paginate(index + 1)}
+                                key={index + 1}
+                                className="items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            >
+                                {index + 1}
+                            </a>
+                        </>
+                    ))}
+                </div>
             </MainDash>
         </>
     );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
     EditProjectDetails,
     ProjectForm,
+    ProjectPopulated,
     project,
 } from "../../interfaces/project";
 import { Modal } from "./Modal";
@@ -19,8 +20,8 @@ import api from "../../Services/api";
 import { Link } from "react-router-dom";
 
 interface Props {
-    project: project | null;
-    setProject: (project: project) => void;
+    project: ProjectPopulated;
+    setProject: (project: ProjectPopulated) => void;
 }
 
 const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
@@ -227,7 +228,7 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                     <Form obj={formFields} setData={setFormData}>
                         <label
                             htmlFor=""
-                            className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                            className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                         >
                             Change Team Lead
                         </label>
@@ -235,10 +236,11 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                             users={allSeniors}
                             selectedUsers={selectedTeamLead}
                             onUserSelect={handleTeamLeadSelect}
+                            heading={""}
                         />
                         <label
                             htmlFor=""
-                            className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                            className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                         >
                             Edit Team Members
                         </label>
@@ -246,10 +248,11 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                             users={allEmployees}
                             selectedUsers={selectedEmployees}
                             onUserSelect={handleEmployeeSelect}
+                            heading={""}
                         />
                         <label
                             htmlFor=""
-                            className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                            className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                         >
                             Edit Clients
                         </label>
@@ -257,7 +260,7 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                             users={allClients}
                             selectedUsers={selectedClients}
                             onUserSelect={handleClientsSelect}
-                            heading={undefined}
+                            heading={""}
                         />
                     </Form>
                     <button
@@ -279,11 +282,9 @@ const ProjectHeader: React.FC<Props> = ({ project, setProject }) => {
                     {employee?._id === project?.team?.teamLead?._id && (
                         <div className="flex gap-5">
                             <Link to={`/employee/create-task/${project?._id}`}>
-                            <p
-                                className="text-sm p-2 rounded-lg border-[1px]"
-                            >
-                                Create Task
-                            </p>
+                                <p className="text-sm p-2 rounded-lg border-[1px]">
+                                    Create Task
+                                </p>
                             </Link>
                             <p
                                 onClick={openModal}

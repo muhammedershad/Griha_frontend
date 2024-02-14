@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
 import api from "../../Services/api";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { project } from "../../interfaces/project";
+import { ProjectPopulated, project } from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
-import PaginationBar from "../../components/common/Pagination";
 import { Link } from "react-router-dom";
 import SideHeading from "../../components/common/SideHeading";
 
 const ManagePorject = () => {
-    const [projects, setProjects] = useState<project[]>([]);
+    const [projects, setProjects] = useState<ProjectPopulated[]>([]);
     const [change, setChange] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +40,7 @@ const ManagePorject = () => {
     // );
 
     // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
 
     const handleChangeUserBlock = async (userId: string) => {
         // console.log(userId);
@@ -194,7 +193,7 @@ const ManagePorject = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="text-base text-gray-400">
-                                        {project.postedBy.firstName}
+                                        {project?.postedBy?.firstName}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">

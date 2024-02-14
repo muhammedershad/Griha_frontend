@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import UserSideBar from '../../components/user/UserSideBar';
-import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../Services/redux/hooks';
-import projectApi from '../../Services/apis/projectApi';
-import toast from 'react-hot-toast';
-import ReactPlayer from 'react-player';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import Comments from '../../components/common/Comments';
+import { useEffect, useState } from "react";
+import UserSideBar from "../../components/user/UserSideBar";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "../../Services/redux/hooks";
+import projectApi from "../../Services/apis/projectApi";
+import toast from "react-hot-toast";
+import ReactPlayer from "react-player";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Comments from "../../components/common/Comments";
 
 function UserProjectProgress() {
     const [project, setProject] = useState<project>();
@@ -36,34 +36,34 @@ function UserProjectProgress() {
         console.log(progress, "progress", project);
     }, [projectId, progressId]);
 
-    console.log(progress.postedBy)
+    console.log(progress.postedBy);
     const handlePrevClick = () => {};
 
     const handleNextClick = () => {};
 
     const handleComment = async () => {
-        if(comment.trim() === '') return toast.error('Enter a valid comment')
+        if (comment.trim() === "") return toast.error("Enter a valid comment");
 
         const data = {
             comment,
             projectId,
             progressId,
-            userId
-        }
+            userId,
+        };
 
-        const response = await projectApi.addComment(data)
-        if(response.success){
-            toast.success(response.message)
-            setProject(response.project)
+        const response = await projectApi.addComment(data);
+        if (response.success) {
+            toast.success(response.message);
+            setProject(response.project);
             const foundProgress = response.project.progress?.find(
                 (progress) => progress?._id === progressId
             );
             setProgress(foundProgress);
-            setComment('')
+            setComment("");
         }
     };
-  return (
-    <>
+    return (
+        <>
             <UserSideBar>
                 <div>
                     <div className="p-10 flex justify-between">
@@ -74,11 +74,11 @@ function UserProjectProgress() {
                                 - {progress?.title}
                             </span>
                         </p>
-                        {
-                            progress?.postedBy?._id === userId && <p className="text-sm text-center p-2 w-24 rounded-lg border-[1px]">
-                            Edit Project
-                        </p>
-                        }
+                        {progress?.postedBy?._id === userId && (
+                            <p className="text-sm text-center p-2 w-24 rounded-lg border-[1px]">
+                                Edit Project
+                            </p>
+                        )}
                     </div>
                 </div>
                 <div className=" p-10 h-[450px] w-full flex flex-col md:flex-row">
@@ -171,11 +171,13 @@ function UserProjectProgress() {
                             Post
                         </button>
                     </div>
-                    {progress?.comments && <Comments comments={progress?.comments} />}
+                    {progress?.comments && (
+                        <Comments comments={progress?.comments} />
+                    )}
                 </div>
             </UserSideBar>
         </>
-  )
+    );
 }
 
-export default UserProjectProgress
+export default UserProjectProgress;

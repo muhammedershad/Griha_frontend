@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "../common/Modal";
 import Form from "../common/Form";
 import toast from "react-hot-toast";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../../Services/firebase";
 import { ProjectProgress, project } from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
 import { useAppSelector } from "../../Services/redux/hooks";
@@ -110,18 +108,18 @@ const ProjectProgressHeader: React.FC<Props> = ({
         }
     };
 
-    const addPost = async (imageUrls, videoUrls, fileUrls) => {
+    const addPost = async (imageUrls: any[], videoUrls: any[], fileUrls: any[]) => {
         const data: ProjectProgress = {
-            title: formData.title,
-            shortDiscription: formData.shortDiscription,
+            title: formData?.title!,
+            shortDiscription: formData?.shortDiscription!,
             details: details,
             imageUrls,
             videoUrls,
             otherFileUrls: fileUrls,
-            postedBy: employee?._id,
+            postedBy: employee?._id!,
         };
 
-        const response = await projectApi.addProgress(data, project?._id);
+        const response = await projectApi.addProgress(data, project?._id!);
         if (response?.success) {
             toast.success("Progress Posted");
             setProject(response?.project);

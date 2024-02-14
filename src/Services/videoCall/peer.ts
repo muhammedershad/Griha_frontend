@@ -13,7 +13,7 @@ class PeerService {
         }
     }
 
-    async getAnswer(offer) {
+    async getAnswer(offer: { sdp: string; type: "offer" }) {
         if (this.peer) {
             await this.peer.setRemoteDescription(offer)
             const ans = await this.peer.createAnswer()
@@ -30,7 +30,7 @@ class PeerService {
         }
     }
 
-    async setLocalDescription(ans) {
+    async setLocalDescription(ans: RTCSessionDescriptionInit) {
         if (this.peer) {
             await this.peer.setRemoteDescription(new RTCSessionDescription(ans))
         }

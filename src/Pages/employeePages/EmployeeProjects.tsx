@@ -18,7 +18,7 @@ const EmployeeProjects = () => {
         const fetchData = async () => {
             try {
                 const response = await projectApi.employeeProjects(
-                    employeeData?._id
+                    employeeData?._id!
                 );
                 setProjects(response.projects);
                 setLoading(false);

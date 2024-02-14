@@ -1,17 +1,19 @@
+import { project } from "./project";
+
 export interface Tasks extends Document {
-    _id: string;
+    _id?: string;
     taskName: string;
     shortDescription: string;
     assignedTo: string;
     status: string;
-    dueDate: Date;
+    dueDate: string 
     assignedDate: Date;
     assignedBy: string;
     attachments: string[] | null;
     updateDate: Date;
     department: string;
     details: string;
-    project: string;
+    project: (string | project);
     priority: string;
     comments: {
         comment: string;
@@ -24,4 +26,8 @@ export interface Tasks extends Document {
         time: Date;
         attachments: string[]
     }[]
+}
+
+export interface TaskPopulated extends Tasks {
+    project: project
 }
