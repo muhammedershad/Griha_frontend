@@ -1,14 +1,14 @@
 import toast from "react-hot-toast";
-import { Tasks } from "../../interfaces/taks"
+import { TaskFormData, Tasks } from "../../interfaces/taks"
 import axios from "../axios"
 
-const addTask = async (data: Tasks) => {
+const addTask = async (data: TaskFormData) => {
     try {
         const response = await axios.post('/tasks', data)
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
@@ -18,7 +18,7 @@ const tasksByEmployee = async (employeeId: string) => {
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
@@ -29,28 +29,28 @@ const taskDetails = async (taskId: string) => {
 
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
-const addResponse = async (data) => {
+const addResponse = async (data: any) => {
     try {
         const response = await axios.post('/tasks/response', data)
         console.log(response)
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
-const addCommad = async (data) => {
+const addCommad = async (data: any) => {
     try {
         const response = await axios.post('/tasks/comment', data)
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 

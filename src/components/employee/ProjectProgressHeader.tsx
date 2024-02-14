@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "../common/Modal";
 import Form from "../common/Form";
 import toast from "react-hot-toast";
-import { ProjectProgress, project } from "../../interfaces/project";
+import { ProjectPopulated, Project, ProjectProgressInterface } from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import uploadImageToFirebase from "../../Services/firebase/imageUploader";
@@ -15,8 +15,8 @@ interface FormData {
 }
 
 interface Props {
-    project: project;
-    setProject: (project: project) => void;
+    project: Project;
+    setProject: (project: ProjectPopulated) => void;
     user: boolean;
 }
 const ProjectProgressHeader: React.FC<Props> = ({
@@ -60,8 +60,8 @@ const ProjectProgressHeader: React.FC<Props> = ({
     const handleCreateProgress = async () => {
         setError(false);
         let imageUrls = []
-        let videoUrls = []
-        let fileUrls = []
+        let videoUrls: any[] = []
+        let fileUrls: any[] = []
         if (formData) {
             if (!formData.shortDiscription.trim()) {
                 toast.error("Enter a valid short discription");
@@ -109,7 +109,7 @@ const ProjectProgressHeader: React.FC<Props> = ({
     };
 
     const addPost = async (imageUrls: any[], videoUrls: any[], fileUrls: any[]) => {
-        const data: ProjectProgress = {
+        const data: ProjectProgressInterface = {
             title: formData?.title!,
             shortDiscription: formData?.shortDiscription!,
             details: details,
@@ -183,7 +183,7 @@ const ProjectProgressHeader: React.FC<Props> = ({
                         <div>
                             <label
                                 htmlFor={"Project Details"}
-                                className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                                className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                             >
                                 {"Task Details"}
                             </label>
@@ -200,7 +200,7 @@ const ProjectProgressHeader: React.FC<Props> = ({
                         <div>
                             <label
                                 htmlFor={"Project Details"}
-                                className="flex block mb-2 text-base justify-start font-medium text-gray-900 dark:text-white"
+                                className="flex mb-2 text-base justify-start font-medium text-gray-900 dark:text-white"
                             >
                                 Upload Files
                             </label>

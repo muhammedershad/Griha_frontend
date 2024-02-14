@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
 import Form, { FormField } from "../../components/common/Form";
 import api from "../../Services/api";
@@ -7,15 +7,13 @@ import MembersList from "../../components/common/MembersList";
 import Spinner from "../../components/common/Spinner";
 import projectApi from "../../Services/apis/projectApi";
 import toast from "react-hot-toast";
-import payment from "../../components/common/payment";
 import paymentApi from "../../Services/apis/paymentApi";
 import { useNavigate } from "react-router-dom";
-import { Employees } from "../../interfaces/employee";
-import { project } from "../../interfaces/project";
+import { Project } from "../../interfaces/project";
 
 interface FormData {
-    purpose: string,
-    amount: number
+    purpose: string;
+    amount: number;
 }
 
 const CreatePayentRequest = () => {
@@ -23,7 +21,7 @@ const CreatePayentRequest = () => {
     const [allClients, setAllClients] = useState<User[]>();
     const [selectedClient, setSelectedClient] = useState<string[]>([]);
     const [selectedProject, setSelectedProject] = useState<string>();
-    const [allProjects, setAllProjects] = useState<project[]>([]);
+    const [allProjects, setAllProjects] = useState<Project[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -128,7 +126,7 @@ const CreatePayentRequest = () => {
                             <Form obj={formFields} setData={setFormData}>
                                 <label
                                     htmlFor=""
-                                    className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                                    className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                                 >
                                     Select Employee
                                 </label>
@@ -136,7 +134,7 @@ const CreatePayentRequest = () => {
                                     users={allClients}
                                     selectedUsers={selectedClient}
                                     onUserSelect={handleClientSelect}
-                                    heading={''}
+                                    heading={""}
                                 />
 
                                 <div className="relative h-10 w-full min-w-[200px]">

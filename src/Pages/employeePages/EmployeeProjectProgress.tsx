@@ -3,7 +3,7 @@ import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ReactPlayer from "react-player";
-import { ProjectProgress, ProjectProgressPopulated, project } from "../../interfaces/project";
+import { ProjectProgressPopulated, Project } from "../../interfaces/project";
 import { useParams } from "react-router-dom";
 import projectApi from "../../Services/apis/projectApi";
 import toast from "react-hot-toast";
@@ -11,7 +11,7 @@ import { useAppSelector } from "../../Services/redux/hooks";
 import Comments from "../../components/common/Comments";
 
 function EmployeeProjectProgress() {
-    const [project, setProject] = useState<project>();
+    const [project, setProject] = useState<Project>();
     const [progress, setProgress] = useState<ProjectProgressPopulated>();
     const [video, setVidoe] = useState<boolean>(false);
     const [imageIndex, setImageIndex] = useState(0);
@@ -28,7 +28,8 @@ function EmployeeProjectProgress() {
                 if (response) {
                     setProject(response.project);
                     const foundProgress = response.project.progress?.find(
-                        (progress: { _id: string | undefined; }) => progress?._id === progressId
+                        (progress: { _id: string | undefined }) =>
+                            progress?._id === progressId
                     );
                     setProgress(foundProgress);
                 }
@@ -56,7 +57,8 @@ function EmployeeProjectProgress() {
             toast.success(response.message);
             setProject(response.project);
             const foundProgress = response.project.progress?.find(
-                (progress: { _id: string | undefined; }) => progress?._id === progressId
+                (progress: { _id: string | undefined }) =>
+                    progress?._id === progressId
             );
             setProgress(foundProgress);
             setComment("");

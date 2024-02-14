@@ -2,7 +2,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase";
 import toast from "react-hot-toast";
 
-const uploadVideosToFirebase = async (videos, folderRute: string) => {
+const uploadVideosToFirebase = async (videos: any[], folderRute: string) => {
     const metadata = {
         contentType: "image/jpeg",
     };
@@ -11,18 +11,31 @@ const uploadVideosToFirebase = async (videos, folderRute: string) => {
         Promise.all(
             videos.map((video) => {
                 const storageRef = ref(storage, folderRute + video.name);
-                const uploadTask = uploadBytesResumable(storageRef, video, metadata);
+                const uploadTask = uploadBytesResumable(
+                    storageRef,
+                    video,
+                    metadata
+                );
 
                 return new Promise<void>((resolve, reject) => {
                     const intervalId = setInterval(() => {
                         const progress =
-                            (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
-                        console.log(`Upload of ${video.name} is ${progress}% done`);
+                            (uploadTask.snapshot.bytesTransferred /
+                                uploadTask.snapshot.totalBytes) *
+                            100;
+                        console.log(
+                            `Upload of ${video.name} is ${progress}% done`
+                        );
 
                         // Update the dynamic toast with the current progress
-                        toast.update("upload-progress", {
-                            content: `Uploading ${video.name} (${Math.round(progress)}%)`,
-                        });
+                        toast?.success(
+                            `Uploading ${video.name} (${Math.round(
+                                progress
+                            )}%)`,
+                            {
+                                id: "upload-progress",
+                            }
+                        );
 
                         // Check if upload is complete
                         if (progress === 100) {
@@ -33,7 +46,7 @@ const uploadVideosToFirebase = async (videos, folderRute: string) => {
 
                     uploadTask.on(
                         "state_changed",
-                        (snapshot) => {},
+                        () => {},
                         (error) => {
                             clearInterval(intervalId);
                             reject(error);
@@ -50,6 +63,8 @@ const uploadVideosToFirebase = async (videos, folderRute: string) => {
                                 });
                         }
                     );
+                    
+                    
                 });
             })
         ),

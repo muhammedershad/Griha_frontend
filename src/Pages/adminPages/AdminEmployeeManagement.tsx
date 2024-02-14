@@ -320,7 +320,9 @@ const AdminEmployeeManagement = () => {
                                 </td>
                                 <td className="px-2 py-4 whitespace-nowrap">
                                     <div className="text-base text-gray-400">
-                                        {new Date(employee?.joinedDate!).toLocaleDateString()}
+                                        {new Date(
+                                            employee?.joinedDate!
+                                        ).toLocaleDateString()}
                                     </div>
                                 </td>
                                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-400">

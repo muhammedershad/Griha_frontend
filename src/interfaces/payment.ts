@@ -1,4 +1,4 @@
-import { project } from "./project";
+import { Project } from "./project";
 import User from "./user";
 
 export interface IPayment extends Document {
@@ -10,11 +10,11 @@ export interface IPayment extends Document {
     status: String;
     amount: number;
     bonus: number;
-    project: string | project;
+    project: string | Project;
     progress: string;
 }
 
 export interface PaymentPopulated extends IPayment {
     paidBy: User,
-    project: project
+    project: Project
 }

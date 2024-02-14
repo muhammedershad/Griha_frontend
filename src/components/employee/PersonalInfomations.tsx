@@ -8,9 +8,10 @@ import { employeeApi } from "../../Services/employeeApi";
 import { employeeloginSuccess } from "../../Services/redux/slices/employeeSlice";
 import Form, { FormField } from "../common/Form";
 import SideHeading from "../common/SideHeading";
+import User from "../../interfaces/user";
 
 interface Props {
-    employee: Employees;
+    employee: Employees | User;
 }
 
 const PersonalInfomations: React.FC<Props> = ({ employee }) => {

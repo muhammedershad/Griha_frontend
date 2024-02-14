@@ -7,7 +7,7 @@ const conversation = async (userId: string | undefined) => {
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
@@ -17,17 +17,17 @@ const chat = async (conversationId: string) => {
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
-const sendMessage = async (data) => {
+const sendMessage = async (data: any) => {
     try {
         const response = await axios.post('/message/', data)       
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
@@ -37,7 +37,7 @@ const createConversation = async (userId: string, employeeId: string) => {
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 

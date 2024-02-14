@@ -2,13 +2,13 @@ import toast from "react-hot-toast";
 import axios from "../axios";
 
 
-const createPaymentRequest = async (data) => {
+const createPaymentRequest = async (data: any) => {
     try {
         const response = await axios.post('/payment', data)
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
@@ -18,7 +18,7 @@ const allPaymentsOfAdmin = async () => {
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 
@@ -28,7 +28,7 @@ const allPayamentOfUser = async (userId: string) => {
         return response.data
     } catch (error) {
         console.log(error);
-        toast.error(error?.response?.data?.message || (error as Error)?.message)
+        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
     }
 }
 

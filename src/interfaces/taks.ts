@@ -1,4 +1,4 @@
-import { project } from "./project";
+import { Project } from "./project";
 
 export interface Tasks extends Document {
     _id?: string;
@@ -6,14 +6,14 @@ export interface Tasks extends Document {
     shortDescription: string;
     assignedTo: string;
     status: string;
-    dueDate: string 
+    dueDate: string;
     assignedDate: Date;
     assignedBy: string;
     attachments: string[] | null;
     updateDate: Date;
     department: string;
     details: string;
-    project: (string | project);
+    project: string | Project;
     priority: string;
     comments: {
         comment: string;
@@ -24,10 +24,22 @@ export interface Tasks extends Document {
         details: string;
         user: string;
         time: Date;
-        attachments: string[]
-    }[]
+        attachments: string[];
+    }[];
 }
 
 export interface TaskPopulated extends Tasks {
-    project: project
+    project: Project;
+}
+
+export interface TaskFormData {
+    formData?: any;
+    details: string;
+    department: string;
+    attachments: string[];
+    assignedBy: string;
+    dueDate: string;
+    assignedTo: string;
+    project: string;
+    priority: any;
 }

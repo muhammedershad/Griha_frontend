@@ -1,12 +1,12 @@
-import React from 'react'
-import Messenger from '../../components/user/UserMessenger'
+import React from "react";
+import Messenger from "../../components/user/UserMessenger";
 
 function UserMessenger() {
-  return (
-    <>
-        <Messenger />
-    </>
-  )
+    return (
+        <>
+            <Messenger />
+        </>
+    );
 }
 
-export default UserMessenger
+export default UserMessenger;

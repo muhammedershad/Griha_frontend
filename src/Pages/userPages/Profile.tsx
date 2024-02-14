@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import UserSideBar from "../../components/user/UserSideBar";
 import User from "../../interfaces/user";
 import { useAppSelector } from "../../Services/redux/hooks";
@@ -13,14 +13,12 @@ import ChangePassword from "../../components/employee/ChangePassword";
 const Profile = () => {
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string>("");
-    const [user, setUser] = useState<User | null>();
+    const [user, setUser] = useState<User>();
     const userData: User | null = useAppSelector((state) => state.user.user);
     const [info, setInfo] = useState<string>("info");
 
     useEffect(() => {
-        setUser(userData);
-        console.log(userData);
-        
+        if(userData) setUser(userData);
     },[userData]);
 
     useEffect(() => {
@@ -91,7 +89,7 @@ const Profile = () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
                         async (downloadURL: string) => {
                             const saved = await api.userProfilePhotoUpdate(
-                                user?._id,
+                                user?._id!,
                                 downloadURL
                             );
                             if (saved?.success) {
@@ -168,12 +166,12 @@ const Profile = () => {
                             </label>
                             <div>
                                 <h2 className="text-2xl font-bold">
-                                    {`${user?.FirstName ?? ""} ${
-                                        user?.LastName ?? ""
+                                    {`${user?.firstName ?? ""} ${
+                                        user?.lastName ?? ""
                                     }`}
                                 </h2>
                                 <p className="text-gray-500">
-                                    {user?.Username}
+                                    {user?.username}
                                 </p>
                             </div>
                         </div>
@@ -188,13 +186,13 @@ const Profile = () => {
                                 <span className="font-bold text-slate-400">
                                     Phone:
                                 </span>{" "}
-                                {user?.Phone ?? ""}
+                                {user?.phone ?? ""}
                             </p>
                             <p className="mb-2 text-slate-400">
                                 <span className="font-bold text-slate-400">
                                     Email:
                                 </span>{" "}
-                                {user?.Email ?? ""}
+                                {user?.email ?? ""}
                             </p>
                             </div>
                         </div>
@@ -219,7 +217,7 @@ const Profile = () => {
                 </div>
                 <div className="p-3 max-w-lg mx-auto">
                 {info === "info" ? (
-                    <PersonalInfomations employee={user} />
+                    <PersonalInfomations employee={user!} />
                 ) : (
                     <ChangePassword employee={user} />
                 )}

@@ -7,57 +7,70 @@ import { featuredProjects } from "../../interfaces/featuredProject";
 import toast from "react-hot-toast";
 import projectApi from "../../Services/apis/projectApi";
 import uploadImageToFirebase from "../../Services/firebase/imageUploader";
+import { useNavigate } from "react-router-dom";
 
 function AddProjects() {
     const [formData, setFormData] = useState<featuredProjects>();
     const [details, setDetails] = useState<string>("");
-    const [category, setCategory] = useState<string>('Residential')
+    const [category, setCategory] = useState<string>("Residential");
     const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
+    const navigate = useNavigate()
     // const [imageUrls, setImageUrls] = useState<string[]>([])
 
     useEffect(() => {
-        if(formData) handleAddProject(formData)
+        if (formData) handleAddProject(formData);
     }, [formData]);
 
     const handleAddProject = async (formData: featuredProjects) => {
         let error: boolean = false;
-        if(!formData.projectName.trim()) {
-            toast.error('Invalid project name')
+        if (!formData.projectName.trim()) {
+            toast.error("Invalid project name");
             error = true;
         }
-        if(!formData.client.trim()) {
-            toast.error('Invalid Client name')
-            error = true
+        if (!formData.client.trim()) {
+            toast.error("Invalid Client name");
+            error = true;
         }
-        if(!formData.location.trim()) {
-            toast.error('Invalid project location')
-            error = true
+        if (!formData.location.trim()) {
+            toast.error("Invalid project location");
+            error = true;
         }
-        if(!formData.builtupArea.trim()) {
-            toast.error('Invalid builtup area')
-            error = true
+        if (!formData.builtupArea.trim()) {
+            toast.error("Invalid builtup area");
+            error = true;
         }
-        if(!formData.siteArea.trim()) {
-            toast.error('Invalid site area')
-            error = true
+        if (!formData.siteArea.trim()) {
+            toast.error("Invalid site area");
+            error = true;
         }
-        if(!category.trim()) {
-            toast.error('Invalid cateogory')
-            error = true
+        if (!category.trim()) {
+            toast.error("Invalid cateogory");
+            error = true;
         }
-        if(!details.trim()) {
-            toast.error('Enter project details')
-            error = true
+        if (!details.trim()) {
+            toast.error("Enter project details");
+            error = true;
         }
-        if(error) return
+        if (error) return;
 
-        const imageUrls = await uploadImageToFirebase(files, 'featured_projects/')
-        if (!imageUrls) return toast.error('Error in uploadin images')
-        
-        const data: featuredProjects = {...formData, details: details, category: category, images: imageUrls}
-        const response = await projectApi.addFeatruedProjects(data)
-        if (response.success) toast.success('Project addition completed successfully.')
-    }
+        const imageUrls = await uploadImageToFirebase(
+            files,
+            "featured_projects/"
+        );
+        if (!imageUrls) return toast.error("Error in uploadin images");
+
+        const data: featuredProjects = {
+            ...formData,
+            details: details,
+            category: category,
+            images: imageUrls,
+        };
+        const response = await projectApi.addFeatruedProjects(data);
+        if (response.success){
+            toast.success("Project addition completed successfully.");
+            navigate('/admin/featured-projects')
+        }
+    };
 
     const formFields: FormField[] = [
         {
@@ -115,10 +128,11 @@ function AddProjects() {
                         <Form obj={formFields} setData={setFormData}>
                             <div className="relative h-10 w-full min-w-[200px]">
                                 <select
-                                onChange={(event) => {
-                                    setCategory(event.target.value);
-                                  }}
-                                className="peer h-full w-full rounded-[7px] border border-blue-gray-600 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-600 placeholder-shown:border-t-gray-600 empty:!bg-gray-600 focus:border-2 focus:border-gray-600 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-600">
+                                    onChange={(event) => {
+                                        setCategory(event.target.value);
+                                    }}
+                                    className="peer h-full w-full rounded-[7px] border border-blue-gray-600 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-600 placeholder-shown:border-t-gray-600 empty:!bg-gray-600 focus:border-2 focus:border-gray-600 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-600"
+                                >
                                     <option
                                         className="bg-gray-500"
                                         value="Residential"
@@ -173,7 +187,8 @@ function AddProjects() {
                             <div className="m-0 text-sm text-slate-400">
                                 <p>
                                     If you require a line break or paragraph
-                                    break in project details, type {"'{<br/>}'"}.
+                                    break in project details, type {"'{<br/>}'"}
+                                    .
                                 </p>
                             </div>
 

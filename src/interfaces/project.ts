@@ -1,7 +1,7 @@
 import { Employees } from "./employee";
 import User from "./user";
 
-export interface project {
+export interface Project {
     _id?: string;
     projectName: string;
     postedBy?: string | Employees;
@@ -34,6 +34,7 @@ export interface project {
                 comment: string;
                 user: string;
                 time: Date;
+                id?: string;
             }[];
         }
     ];
@@ -62,7 +63,7 @@ export interface EditProjectDetails {
     };
 }
 
-export interface ProjectProgress {
+export interface ProjectProgressInterface {
     date?: any;
     title: string;
     shortDiscription: string;
@@ -72,7 +73,7 @@ export interface ProjectProgress {
     otherFileUrls: string[];
     postedBy: string | Employees;
     _id?: string;
-    comments: {
+    comments?: {
         comment: string;
         user: Employees;
         time: Date;
@@ -80,7 +81,7 @@ export interface ProjectProgress {
     }[];
 }
 
-export interface ProjectPopulated extends project {
+export interface ProjectPopulated extends Project {
     clients: User[];
     postedBy: Employees;
     team: {
@@ -90,6 +91,6 @@ export interface ProjectPopulated extends project {
 }
 
 type PostedByType = string;
-export interface ProjectProgressPopulated extends ProjectProgress {
+export interface ProjectProgressPopulated extends ProjectProgressInterface {
     postedBy: Employees;
 }

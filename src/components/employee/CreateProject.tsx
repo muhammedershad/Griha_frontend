@@ -6,7 +6,7 @@ import api from "../../Services/api";
 import User from "../../interfaces/user";
 import { Employees } from "../../interfaces/employee";
 import projectApi from "../../Services/apis/projectApi";
-import { ProjectForm, project } from "../../interfaces/project";
+import { ProjectForm, Project } from "../../interfaces/project";
 import toast from "react-hot-toast";
 import { trimProjectFormData } from "../../Services/trim";
 import { validations } from "../../Services/validations";
@@ -108,7 +108,7 @@ const CreateProject = () => {
         if (err) return;
 
         if (formData && employee) {
-            const data: project = {
+            const data: Project = {
                 projectName: formData?.projectName,
                 postedBy: employee?._id,
                 clients: selectedUsers,
@@ -202,7 +202,7 @@ const CreateProject = () => {
                             <Form obj={formFields} setData={setFormData}>
                                 <label
                                     htmlFor=""
-                                    className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                                    className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                                 >
                                     Select Team Members
                                 </label>
@@ -214,7 +214,7 @@ const CreateProject = () => {
                                 />
                                 <label
                                     htmlFor=""
-                                    className="flex block mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
+                                    className="flex mb-2 text-sm justify-start font-medium text-gray-900 dark:text-white"
                                 >
                                     Select Clients
                                 </label>

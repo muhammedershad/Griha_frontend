@@ -2,12 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faFileAlt } from "@fortawesome/free-solid-svg-icons";
-import {  ProjectProgressPopulated } from "../../interfaces/project";
+import {  ProjectProgressInterface } from "../../interfaces/project";
 import React from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
-    progress: ProjectProgressPopulated
+    progress: ProjectProgressInterface
     projectId: string 
 }
 

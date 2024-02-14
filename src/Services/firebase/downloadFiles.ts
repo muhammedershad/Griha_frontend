@@ -25,7 +25,7 @@ const downlaodFiles = (url: string, name: string) => {
             link.href = objectURL;
 
             // Set the download attribute with the provided name and file extension
-            const fileExtension = contentType.split("/").pop(); // Get the file extension from content type
+            const fileExtension = contentType?.split("/").pop(); // Get the file extension from content type
             link.download = `${name}.${fileExtension}`;
 
             // Trigger the download

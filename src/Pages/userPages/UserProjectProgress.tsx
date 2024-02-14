@@ -8,10 +8,15 @@ import ReactPlayer from "react-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../../components/common/Comments";
+import {
+    Project,
+    ProjectProgressInterface,
+    ProjectProgressPopulated,
+} from "../../interfaces/project";
 
 function UserProjectProgress() {
-    const [project, setProject] = useState<project>();
-    const [progress, setProgress] = useState();
+    const [project, setProject] = useState<Project>();
+    const [progress, setProgress] = useState<ProjectProgressPopulated>();
     const [video, setVidoe] = useState<boolean>(false);
     const [imageIndex, setImageIndex] = useState(0);
     const { projectId } = useParams<{ projectId: string }>();
@@ -27,7 +32,8 @@ function UserProjectProgress() {
                 if (response) {
                     setProject(response.project);
                     const foundProgress = response.project.progress?.find(
-                        (progress) => progress?._id === progressId
+                        (progress: { _id: string | undefined }) =>
+                            progress?._id === progressId
                     );
                     setProgress(foundProgress);
                 }
@@ -36,7 +42,7 @@ function UserProjectProgress() {
         console.log(progress, "progress", project);
     }, [projectId, progressId]);
 
-    console.log(progress.postedBy);
+    // console.log(progress.postedBy);
     const handlePrevClick = () => {};
 
     const handleNextClick = () => {};
@@ -56,7 +62,8 @@ function UserProjectProgress() {
             toast.success(response.message);
             setProject(response.project);
             const foundProgress = response.project.progress?.find(
-                (progress) => progress?._id === progressId
+                (progress: { _id: string | undefined }) =>
+                    progress?._id === progressId
             );
             setProgress(foundProgress);
             setComment("");

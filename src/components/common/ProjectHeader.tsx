@@ -3,7 +3,6 @@ import {
     EditProjectDetails,
     ProjectForm,
     ProjectPopulated,
-    project,
 } from "../../interfaces/project";
 import { Modal } from "./Modal";
 import Form from "./Form";

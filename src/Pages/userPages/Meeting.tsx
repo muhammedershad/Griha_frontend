@@ -11,19 +11,20 @@ import { useNavigate } from "react-router-dom";
 import { useSocket } from "../../Services/context/SocketProvider";
 import messageApi from "../../Services/apis/messageApi";
 import Swal from "sweetalert2";
+import { MeetingPopulated } from "../../interfaces/meeting";
 
 const Meeting = () => {
     const [selectedService, setSelectedService] = useState("Construction");
     const [selectedDate, setSelectedDate] = useState(
         new Date().toISOString().split("T")[0]
     );
-    const [timeSlots, setTimeSlots] = useState();
-    const [selectedMeetingId, setSelectedMeetingId] = useState(null);
+    const [timeSlots, setTimeSlots] = useState<MeetingPopulated[]>([]);
+    const [selectedMeetingId, setSelectedMeetingId] = useState<string | null>(null);
     const [minDate, setMinDate] = useState("");
     const [maxDate, setMaxDate] = useState("");
-    const [selectedTime, setSelectedTime] = useState(null);
-    const [meetings, setMeetings] = useState([]);
-    const userData: User = useAppSelector((state) => state.user.user);
+    const [selectedTime, setSelectedTime] = useState<Date | null>();
+    const [meetings, setMeetings] = useState<MeetingPopulated[]>([]);
+    const userData: User | null = useAppSelector((state) => state.user.user);
     const services = [
         "Construction",
         "Architecture",
@@ -62,13 +63,13 @@ const Meeting = () => {
         })();
     }, [selectedDate, selectedService, userData]);
 
-    const handleServiceSelect = (service:any) => {
+    const handleServiceSelect = (service: any) => {
         setSelectedService(service);
     };
-    const handleSelectedDateChange = async (event) => {
+    const handleSelectedDateChange = async (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setSelectedDate(event.target.value);
     };
-    const handleTimeSelect = (time, id) => {
+    const handleTimeSelect = (time: Date, id: string) => {
         setSelectedTime(time);
         setSelectedMeetingId(id);
     };
@@ -89,13 +90,13 @@ const Meeting = () => {
         if (error) return;
 
         const response = await meetingApi.bookMeeting(
-            selectedMeetingId,
-            userData?._id
+            selectedMeetingId!,
+            userData?._id!
         );
         if (response.success) {
             toast.success(response.message);
             setTimeSlots(
-                timeSlots.filter((time) => time._id !== selectedMeetingId)
+                timeSlots?.filter((time) => time._id !== selectedMeetingId)
             );
             setSelectedTime(null);
             setSelectedMeetingId(null);
@@ -104,13 +105,13 @@ const Meeting = () => {
 
     //video call
     const navigate = useNavigate();
-    const socket:any = useSocket();
+    const socket: any = useSocket();
 
     const handleCall = useCallback(
-        (meeting: { employee: any; _id: any; user: { _id: any; }; }) => {
+        (meeting: MeetingPopulated) => {
             console.log(meeting.employee, meeting._id);
             socket.emit("room:join", {
-                email: meeting?.user._id,
+                email: meeting?.user?._id,
                 room: meeting?._id,
             });
         },
@@ -118,20 +119,23 @@ const Meeting = () => {
     );
 
     const handleJoinRoom = useCallback(
-        (data: { email: any; room: any; }) => {
+        (data: { email: any; room: any }) => {
             const { email, room } = data;
             navigate(`/room/${room}`);
         },
         [navigate]
     );
 
-    const handleMessage = async ( employeeId: string) => {
-        const response = await messageApi.createConversation( userData._id, employeeId )
-        console.log(response)
-        if(response.success){
-            navigate('/messages')
+    const handleMessage = async (employeeId: string) => {
+        const response = await messageApi.createConversation(
+            userData?._id!,
+            employeeId
+        );
+        console.log(response);
+        if (response.success) {
+            navigate("/messages");
         }
-    }
+    };
 
     const handleCancelBooking = async (meetingId: string) => {
         console.log(meetingId);
@@ -151,14 +155,17 @@ const Meeting = () => {
                 const response = await meetingApi.cancelTimeSlot(meetingId);
                 // console.log(response);
                 if (response?.success) {
-                    toast.success('Meeting cancelled');
-                    setMeetings(meetings.filter((meeting:{_id:any}) => meeting?._id !== meetingId))
+                    toast.success("Meeting cancelled");
+                    setMeetings(
+                        meetings.filter(
+                            (meeting: MeetingPopulated) =>
+                                meeting?._id !== meetingId
+                        )
+                    );
                 }
             } else return;
         });
-    }
-
-
+    };
 
     useEffect(() => {
         socket?.on("room:join", handleJoinRoom);
@@ -228,13 +235,16 @@ const Meeting = () => {
                                                 onClick={() =>
                                                     handleCall(meeting)
                                                 }
-                                                
                                                 className="text-white disabled:opacity-30 bg-gradient-to-r from-emerald-400 via-emerald-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-3 py-1 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                                             >
                                                 Call
                                             </button>
                                             <button
-                                                onClick={() => handleMessage(meeting?.employee)}
+                                                onClick={() =>
+                                                    handleMessage(
+                                                        meeting?.employee
+                                                    )
+                                                }
                                                 type="button"
                                                 className="text-white bg-gradient-to-r from-emerald-400 via-emerald-500 to-green-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-3 py-1 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                                             >
@@ -242,7 +252,11 @@ const Meeting = () => {
                                             </button>
                                             <button
                                                 type="button"
-                                                onClick={() => handleCancelBooking(meeting?._id)}
+                                                onClick={() =>
+                                                    handleCancelBooking(
+                                                        meeting?._id!
+                                                    )
+                                                }
                                                 className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-3 py-1 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                                             >
                                                 Cancel
@@ -332,7 +346,7 @@ const Meeting = () => {
                                         onClick={() =>
                                             handleTimeSelect(
                                                 timeSlot?.time,
-                                                timeSlot?._id
+                                                timeSlot?._id!
                                             )
                                         }
                                     >

@@ -34,7 +34,8 @@ const AdminUserManagement = () => {
     const currentItems = filteredusers.slice(indexOfFirstItem, indexOfLastItem);
 
     // Change page
-    const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber: React.SetStateAction<number>) =>
+        setCurrentPage(pageNumber);
 
     const handleChangeUserBlock = async (userId: string) => {
         // console.log(userId);
@@ -179,7 +180,9 @@ const AdminUserManagement = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <div className="text-base text-gray-400">
-                                    {new Date(user?.createdAt!).toLocaleDateString()}
+                                        {new Date(
+                                            user?.createdAt!
+                                        ).toLocaleDateString()}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">

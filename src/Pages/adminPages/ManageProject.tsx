@@ -3,7 +3,7 @@ import MainDash from "../../components/common/MainDash";
 import api from "../../Services/api";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { ProjectPopulated, project } from "../../interfaces/project";
+import { ProjectPopulated } from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
 import { Link } from "react-router-dom";
 import SideHeading from "../../components/common/SideHeading";
@@ -26,7 +26,7 @@ const ManagePorject = () => {
 
         fetchAllProjects();
     }, [change]);
-    console.log(projects,'projects')
+    console.log(projects, "projects");
 
     // const filteredProjects = projects.filter((project) =>
     //     project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -40,7 +40,8 @@ const ManagePorject = () => {
     // );
 
     // Change page
-    const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber: SetStateAction<number>) =>
+        setCurrentPage(pageNumber);
 
     const handleChangeUserBlock = async (userId: string) => {
         // console.log(userId);
@@ -173,7 +174,9 @@ const ManagePorject = () => {
                                         <div className="flex-shrink-0 h-10 w-10">
                                             <img
                                                 className="h-10 w-10 object-cover"
-                                                src={"https://saterdesign.com/cdn/shop/articles/SaterDesignCollectionInc-158253-Modern-House-Styles-Blogbanner1_894x.jpg?v=1653493340"}
+                                                src={
+                                                    "https://saterdesign.com/cdn/shop/articles/SaterDesignCollectionInc-158253-Modern-House-Styles-Blogbanner1_894x.jpg?v=1653493340"
+                                                }
                                             />
                                         </div>
                                         <div className="ml-4">
@@ -203,7 +206,7 @@ const ManagePorject = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     <div className="text-base text-gray-400">
-                                        {'3000sq.ft'}
+                                        {"3000sq.ft"}
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">

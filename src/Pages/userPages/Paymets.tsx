@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
+import { useEffect, useState } from "react";
 import UserSideBar from "../../components/user/UserSideBar";
 import paymentApi from "../../Services/apis/paymentApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import User from "../../interfaces/user";
 import axios from "../../Services/axios";
 import toast from "react-hot-toast";
+import { PaymentPopulated } from "../../interfaces/payment";
 
 const Paymets = () => {
-    const userData: User = useAppSelector((state) => state.user.user);
-    const [payments, setPayments] = useState([]);
+    const userData: User | null = useAppSelector((state) => state.user.user);
+    const [payments, setPayments] = useState<PaymentPopulated[]>([]);
     useEffect(() => {
         if (userData) {
             (async () => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import { useParams } from "react-router-dom";
 import projectApi from "../../Services/apis/projectApi";
-import { ProjectPopulated, project } from "../../interfaces/project";
+import { ProjectPopulated } from "../../interfaces/project";
 import ProjectHeader from "../../components/common/ProjectHeader";
 import ProjectBody from "../../components/common/ProjectBody";
 import ProjectProgress from "../../components/employee/ProjectProgress";
@@ -25,9 +25,16 @@ const ProjectDetails = () => {
     return (
         <>
             <EmployeeSideBar>
-                <ProjectHeader project={projectDetails!} setProject={setProjectDetails} />
+                <ProjectHeader
+                    project={projectDetails!}
+                    setProject={setProjectDetails}
+                />
                 <ProjectBody project={projectDetails!} />
-                <ProjectProgress project={projectDetails!} setProject={setProjectDetails} />
+                <ProjectProgress
+                    project={projectDetails!}
+                    setProject={setProjectDetails}
+                    user={false}
+                />
             </EmployeeSideBar>
         </>
     );

@@ -127,11 +127,12 @@ function UserMessenger() {
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
-            setArrivalMessage({
+            const datas: IMessage ={
                 sender: data?.senderId,
                 text: data.text,
                 createdAt: Date.now(),
-            });
+            }
+            setArrivalMessage(datas);
         });
     }, []);
 

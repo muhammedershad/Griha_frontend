@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import UserSideBar from '../../components/user/UserSideBar'
-import ProjectHeader from '../../components/common/ProjectHeader'
-import { project } from '../../interfaces/project'
-import { useParams } from 'react-router-dom'
-import projectApi from '../../Services/apis/projectApi'
-import ProjectBody from '../../components/common/ProjectBody'
-import ProjectProgress from '../../components/employee/ProjectProgress'
+import React, { useEffect, useState } from "react";
+import UserSideBar from "../../components/user/UserSideBar";
+import ProjectHeader from "../../components/common/ProjectHeader";
+import { Project, ProjectPopulated } from "../../interfaces/project";
+import { useParams } from "react-router-dom";
+import projectApi from "../../Services/apis/projectApi";
+import ProjectBody from "../../components/common/ProjectBody";
+import ProjectProgress from "../../components/employee/ProjectProgress";
 
 const ProjectDetails = () => {
-    const [projectDetails, setProjectDetails] = useState<project | null>(null);
+    const [projectDetails, setProjectDetails] = useState<ProjectPopulated>();
     const { id } = useParams<{ id: string }>();
     useEffect(() => {
         (async () => {
@@ -21,15 +21,22 @@ const ProjectDetails = () => {
             }
         })();
     }, []);
-  return (
-    <>
-        <UserSideBar>
-            <ProjectHeader project={projectDetails} setProject={undefined } />
-            <ProjectBody project={projectDetails} />
-            <ProjectProgress project={projectDetails} setProject={undefined } user={true} />
-        </UserSideBar>
-    </>
-  )
-}
+    return (
+        <>
+            <UserSideBar>
+                <ProjectHeader
+                    project={projectDetails!}
+                    setProject={setProjectDetails}
+                />
+                <ProjectBody project={projectDetails!} />
+                <ProjectProgress
+                    project={projectDetails!}
+                    setProject={setProjectDetails}
+                    user={true}
+                />
+            </UserSideBar>
+        </>
+    );
+};
 
-export default ProjectDetails
+export default ProjectDetails;

@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import Task from "../../components/common/Task";
 import { useAppSelector } from "../../Services/redux/hooks";
 import tasksApi from "../../Services/apis/tasks.api";
-import { Tasks } from "../../interfaces/taks";
+import { TaskPopulated, Tasks } from "../../interfaces/taks";
 
 function TaskManagement() {
     const employeeData = useAppSelector((state) => state.employee.employee);
     const [tasks, setTasks] = useState<Tasks>();
-    const [activeTasks, setActiveTasks] = useState<Tasks[]>([])
-    const [needToReviewTasks, setNeedToReviewTasks] = useState<Tasks[]>([])
-    const [completedTasks, setCompletedTasks] = useState<Tasks[]>([])
+    const [activeTasks, setActiveTasks] = useState<TaskPopulated[]>([]);
+    const [needToReviewTasks, setNeedToReviewTasks] = useState<TaskPopulated[]>([]);
+    const [completedTasks, setCompletedTasks] = useState<TaskPopulated[]>([]);
     useEffect(() => {
         (async () => {
             if (employeeData?._id) {
@@ -22,22 +22,25 @@ function TaskManagement() {
                 console.log(response);
                 if (response.success) {
                     setTasks(response.tasks);
-                    const active = []
-                    const review = []
-                    const completed = []
-                    for (let i = 0; i < response?.tasks.length; i++ ) {
-                        if(response.tasks[i].status === 'active') active.push(response.tasks[i])
-                        else if(response.tasks[i].status === 'needToReview') review.push(response.tasks[i])
-                        else if(response.tasks[i].status === 'completed') completed.push(response.tasks[i])
+                    const active = [];
+                    const review = [];
+                    const completed = [];
+                    for (let i = 0; i < response?.tasks.length; i++) {
+                        if (response.tasks[i].status === "active")
+                            active.push(response.tasks[i]);
+                        else if (response.tasks[i].status === "needToReview")
+                            review.push(response.tasks[i]);
+                        else if (response.tasks[i].status === "completed")
+                            completed.push(response.tasks[i]);
                     }
-                    setActiveTasks(active)
-                    setNeedToReviewTasks(review)
-                    setCompletedTasks(completed)
+                    setActiveTasks(active);
+                    setNeedToReviewTasks(review);
+                    setCompletedTasks(completed);
                 }
             }
         })();
     }, [employeeData]);
-    console.log(activeTasks, needToReviewTasks, completedTasks)
+    console.log(activeTasks, needToReviewTasks, completedTasks);
     return (
         <>
             <EmployeeSideBar>
@@ -53,21 +56,21 @@ function TaskManagement() {
                     <div className="flex flex-col md:flex-row justify-between gap-3 my-3">
                         <div className="md:w-1/3">
                             <h3 className="text-gray-300">In Progress</h3>
-                            {
-                                activeTasks?.map((task) => <Task key={task?._id} task={task} /> )
-                            }
+                            {activeTasks?.map((task) => (
+                                <Task key={task?._id} task={task} />
+                            ))}
                         </div>
                         <div className="md:w-1/3">
                             <h3 className="text-gray-300">Needs Review</h3>
-                            {
-                                needToReviewTasks?.map((task) => <Task key={task?._id} task={task} /> )
-                            }
+                            {needToReviewTasks?.map((task: TaskPopulated) => (
+                                <Task key={task?._id} task={task} />
+                            ))}
                         </div>
                         <div className="md:w-1/3 ">
                             <h3 className="text-gray-300">Completed</h3>
-                            {
-                                completedTasks?.map((task) => <Task key={task?._id} task={task} /> )
-                            }
+                            {completedTasks?.map((task) => (
+                                <Task key={task?._id} task={task} />
+                            ))}
                         </div>
                     </div>
                 </div>

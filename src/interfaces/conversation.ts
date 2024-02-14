@@ -4,9 +4,9 @@ export interface Conversation extends Document {
 }
 
 export interface IMessage {
-    _id: string;
-    conversationId: string;
+    _id?: string;
+    conversationId?: string;
     sender: string;
     text: string;
-    createdAt: Date
+    createdAt: number
 }

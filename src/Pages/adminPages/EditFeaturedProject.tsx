@@ -70,7 +70,7 @@ function EditFeaturedProject() {
         }
         if (error) return;
 
-        let imageUrls = [];
+        let imageUrls: string[] = [];
         if (files.length > 0) {
             imageUrls = await uploadImageToFirebase(
                 files,
