@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
 import { featuredProjects } from "../../interfaces/featuredProject";
 import { useParams } from "react-router-dom";

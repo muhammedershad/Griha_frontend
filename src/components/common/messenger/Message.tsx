@@ -1,9 +1,9 @@
 import { format } from "timeago.js";
-import { IMessage } from "../../../interfaces/message";
+import { IMessage } from "../../../interfaces/conversation";
 
 interface Props {
-    message: IMessage
-    own: boolean
+    message: IMessage;
+    own: boolean;
 }
 
 function Message({ message, own = false }: Props) {

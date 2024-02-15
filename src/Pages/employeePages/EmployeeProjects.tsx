@@ -1,17 +1,14 @@
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
-import CreateProject from "../../components/employee/CreateProject";
 import { useEffect, useState } from "react";
 import projectApi from "../../Services/apis/projectApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import { Project } from "../../interfaces/project";
-import { Employees } from "../../interfaces/employee";
 import Spinner from "../../components/common/Spinner";
 import { Link } from "react-router-dom";
 
 const EmployeeProjects = () => {
     const [projects, setProjects] = useState<Project[]>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [employee, setEmployee] = useState<Employees | null>(null); // Initialize with null
     const employeeData = useAppSelector((state) => state.employee.employee);
 
     useEffect(() => {
@@ -30,7 +27,6 @@ const EmployeeProjects = () => {
         };
 
         if (employeeData) {
-            setEmployee(employeeData);
             fetchData();
         }
     }, [employeeData]); // Added employeeData to the dependency array

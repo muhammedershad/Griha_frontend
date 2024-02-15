@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UserSideBar from "../../components/user/UserSideBar";
 import ProjectHeader from "../../components/common/ProjectHeader";
-import { Project, ProjectPopulated } from "../../interfaces/project";
+import { ProjectPopulated } from "../../interfaces/project";
 import { useParams } from "react-router-dom";
 import projectApi from "../../Services/apis/projectApi";
 import ProjectBody from "../../components/common/ProjectBody";

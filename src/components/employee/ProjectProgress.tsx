@@ -1,10 +1,7 @@
 import React from "react";
 import ProjectProgressCard from "../common/ProjectProgressCard";
 import ProjectProgressHeader from "./ProjectProgressHeader";
-import {
-    ProjectPopulated,
-    Project,
-} from "../../interfaces/project";
+import { ProjectPopulated, Project } from "../../interfaces/project";
 
 interface Props {
     project: Project;

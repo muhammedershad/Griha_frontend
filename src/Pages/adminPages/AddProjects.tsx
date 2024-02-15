@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
 import Form, { FormField } from "../../components/common/Form";
 import DragAndDrop from "../../components/common/DragAndDrop";
@@ -14,7 +14,7 @@ function AddProjects() {
     const [details, setDetails] = useState<string>("");
     const [category, setCategory] = useState<string>("Residential");
     const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     // const [imageUrls, setImageUrls] = useState<string[]>([])
 
     useEffect(() => {
@@ -66,9 +66,9 @@ function AddProjects() {
             images: imageUrls,
         };
         const response = await projectApi.addFeatruedProjects(data);
-        if (response.success){
+        if (response.success) {
             toast.success("Project addition completed successfully.");
-            navigate('/admin/featured-projects')
+            navigate("/admin/featured-projects");
         }
     };
 

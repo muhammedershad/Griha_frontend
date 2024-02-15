@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Sidebar from "../../components/Home/SideBar";
 import UserSideBar from "../../components/user/UserSideBar";
 import meetingApi from "../../Services/apis/meetingApi";
 import toast from "react-hot-toast";
@@ -19,7 +18,9 @@ const Meeting = () => {
         new Date().toISOString().split("T")[0]
     );
     const [timeSlots, setTimeSlots] = useState<MeetingPopulated[]>([]);
-    const [selectedMeetingId, setSelectedMeetingId] = useState<string | null>(null);
+    const [selectedMeetingId, setSelectedMeetingId] = useState<string | null>(
+        null
+    );
     const [minDate, setMinDate] = useState("");
     const [maxDate, setMaxDate] = useState("");
     const [selectedTime, setSelectedTime] = useState<Date | null>();
@@ -66,7 +67,9 @@ const Meeting = () => {
     const handleServiceSelect = (service: any) => {
         setSelectedService(service);
     };
-    const handleSelectedDateChange = async (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    const handleSelectedDateChange = async (event: {
+        target: { value: React.SetStateAction<string> };
+    }) => {
         setSelectedDate(event.target.value);
     };
     const handleTimeSelect = (time: Date, id: string) => {
@@ -120,7 +123,7 @@ const Meeting = () => {
 
     const handleJoinRoom = useCallback(
         (data: { email: any; room: any }) => {
-            const { email, room } = data;
+            const { room } = data;
             navigate(`/room/${room}`);
         },
         [navigate]

@@ -74,7 +74,7 @@ function Room() {
     }, [myStream, peer]);
 
     const handleCallAccepted = useCallback(
-        ({ from, ans }: { from: string; ans: WebRTCAnswer }) => {
+        ({ ans }: { from: string; ans: WebRTCAnswer }) => {
             peer.setLocalDescription(ans);
             console.log("Call Accepted!");
             sendStreams();

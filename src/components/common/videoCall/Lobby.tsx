@@ -18,7 +18,7 @@ const Lobby: React.FC = () => {
     );
 
     const handleJoinRoom = useCallback((data: { email: any; room: any }) => {
-        const { email, room } = data;
+        const { room } = data;
         navigate(`/room/${room}`);
     }, []);
 

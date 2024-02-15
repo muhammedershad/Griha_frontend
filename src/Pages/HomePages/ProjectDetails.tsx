@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Home/Navbar";
 import { useParams } from "react-router-dom";
 import projectApi from "../../Services/apis/projectApi";
@@ -14,7 +14,9 @@ const UserProjectDetails = () => {
     const [imageIndex, setImageIndex] = useState<number>(0);
     useEffect(() => {
         (async () => {
-            const response = await projectApi.featuredProjectDetails(projectId);
+            const response = await projectApi.featuredProjectDetails(
+                projectId!
+            );
             console.log(response?.data?.success);
 
             if (response?.data?.success) {
@@ -29,12 +31,12 @@ const UserProjectDetails = () => {
     }, []);
 
     const handlePrevClick = () => {
-        if (imageIndex === 0) setImageIndex(project?.images?.length - 1);
+        if (imageIndex === 0) setImageIndex(project?.images?.length! - 1);
         else setImageIndex(imageIndex - 1);
     };
 
     const handleNextClick = () => {
-        if (imageIndex === project?.images?.length - 1) setImageIndex(0);
+        if (imageIndex === project?.images?.length! - 1) setImageIndex(0);
         else setImageIndex(imageIndex + 1);
     };
     return (
@@ -69,17 +71,17 @@ const UserProjectDetails = () => {
                         {video ? (
                             <div className="">
                                 <ReactPlayer
-                                url={project?.youtubeLink}
-                                controls={true}
-                                pip={true}
-                            />
+                                    url={project?.youtubeLink}
+                                    controls={true}
+                                    pip={true}
+                                />
                             </div>
                         ) : (
                             <div>
                                 {/* Image Display */}
                                 <img
                                     className=" object-contain"
-                                    src={project.images[imageIndex]}
+                                    src={project?.images[imageIndex]}
                                     alt=""
                                 />
 

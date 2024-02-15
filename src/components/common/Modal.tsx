@@ -9,21 +9,10 @@ interface DarkThemedModalProps {
 
 export const Modal: React.FC<DarkThemedModalProps> = ({
     isOpen,
-    onClose,
     mainHeading,
     children,
 }) => {
-    const handleDeactivate = () => {
-        // Handle the deactivate logic
-        console.log("Deactivating account...");
-        onClose(); // Close the modal
-    };
 
-    const handleCancel = () => {
-        // Handle the cancel logic
-        console.log("Cancelled deactivation");
-        onClose(); // Close the modal
-    };
 
     return (
         <div>
@@ -31,7 +20,7 @@ export const Modal: React.FC<DarkThemedModalProps> = ({
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 transition-opacity">
                     <div className="fixed inset-0 w-screen overflow-y-auto">
                         <div className="flex min-h-full y-overflow-hidden y-overflow-y-scroll items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                            <div className="relative transform max-h-96 overflow-hidden overflow-scroll rounded-lg bg-gray-900 text-left shadow-xl transition-all sm:my-2 sm:w-full sm:max-w-lg">
+                            <div className="relative transform max-h-96 overflow-scroll rounded-lg bg-gray-900 text-left shadow-xl transition-all sm:my-2 sm:w-full sm:max-w-lg">
                                 <div className="bg-gray-900 p-5">
                                     <div className="">
                                         {/* <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">

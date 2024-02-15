@@ -1,8 +1,5 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MainDash from "../../components/common/MainDash";
-import api from "../../Services/api";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
 import { ProjectPopulated } from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
 import { Link } from "react-router-dom";
@@ -10,10 +7,7 @@ import SideHeading from "../../components/common/SideHeading";
 
 const ManagePorject = () => {
     const [projects, setProjects] = useState<ProjectPopulated[]>([]);
-    const [change, setChange] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
     useEffect(() => {
         const fetchAllProjects = async () => {
             try {
@@ -25,8 +19,8 @@ const ManagePorject = () => {
         };
 
         fetchAllProjects();
-    }, [change]);
-    console.log(projects, "projects");
+    }, [onchange]);
+    // console.log(projects, "projects");
 
     // const filteredProjects = projects.filter((project) =>
     //     project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -40,61 +34,8 @@ const ManagePorject = () => {
     // );
 
     // Change page
-    const paginate = (pageNumber: SetStateAction<number>) =>
-        setCurrentPage(pageNumber);
 
-    const handleChangeUserBlock = async (userId: string) => {
-        // console.log(userId);
-        Swal.fire({
-            title: "Are you sure?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes",
-            background: "rgb(44,48,58)",
-            customClass: {
-                title: "swal-text-white", // Add this class to style the title
-            },
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const response = await api.blockUser(userId);
-                // console.log(response);
-                if (response?.success) {
-                    toast.success(response.message);
-                    setChange(!change);
-                } else {
-                    toast.error("Error in user role change");
-                }
-            } else return;
-        });
-    };
 
-    const handleChangeUserRole = (userId: string) => {
-        Swal.fire({
-            title: "Are you sure?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes",
-            background: "rgb(44,48,58)",
-            customClass: {
-                title: "swal-text-white", // Add this class to style the title
-            },
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const response = await api.userRoleChange(userId);
-                console.log(response);
-                if (response?.success) {
-                    toast.success("User role changed");
-                    setChange(!change);
-                } else {
-                    toast.error("Error in user role change");
-                }
-            } else return;
-        });
-    };
 
     return (
         <>
@@ -105,7 +46,7 @@ const ManagePorject = () => {
                         type="text"
                         onChange={(e) => setSearchQuery(e.target.value)}
                         value={searchQuery}
-                        className="bg-gray-50 border w-2/6 h-10 border-gray-300 text-gray-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border w-2/6 h-10 border-gray-300 text-gray-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Search by name..."
                         required
                     />

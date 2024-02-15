@@ -16,12 +16,6 @@ import { useSocket } from "../../Services/context/SocketProvider";
 import User from "../../interfaces/user";
 import { Conversation, IMessage } from "../../interfaces/conversation";
 
-interface arrivalMessageInter {
-    sender: string;
-    text: string;
-    createdAt: Date;
-}
-
 function UserMessenger() {
     const [conversations, setConversation] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -127,11 +121,11 @@ function UserMessenger() {
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
-            const datas: IMessage ={
+            const datas: IMessage = {
                 sender: data?.senderId,
                 text: data.text,
                 createdAt: Date.now(),
-            }
+            };
             setArrivalMessage(datas);
         });
     }, []);

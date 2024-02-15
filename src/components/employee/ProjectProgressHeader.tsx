@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "../common/Modal";
 import Form from "../common/Form";
 import toast from "react-hot-toast";
-import { ProjectPopulated, Project, ProjectProgressInterface } from "../../interfaces/project";
+import {
+    ProjectPopulated,
+    Project,
+    ProjectProgressInterface,
+} from "../../interfaces/project";
 import projectApi from "../../Services/apis/projectApi";
 import { useAppSelector } from "../../Services/redux/hooks";
 import uploadImageToFirebase from "../../Services/firebase/imageUploader";
@@ -31,9 +35,6 @@ const ProjectProgressHeader: React.FC<Props> = ({
     const [images, setImages] = useState<File[]>([]);
     const [videos, setVideos] = useState<File[]>([]);
     const [otherFiles, setOtherFiles] = useState<File[]>([]);
-    const [imageUrl, setImageUrl] = useState<string[]>([]);
-    const [videoUrl, setVideoUrl] = useState<string[]>([]);
-    const [otherFilesUrl, setOtherFilesUrl] = useState<string[]>([]);
     const [error, setError] = useState<boolean>(false);
     const employee = useAppSelector((state) => state.employee.employee);
 
@@ -52,16 +53,14 @@ const ProjectProgressHeader: React.FC<Props> = ({
     useEffect(() => {
         console.log(formData, files, details, "formdata");
         console.log(images, "image", videos, "video", otherFiles);
-        console.log(imageUrl);
-
         handleCreateProgress();
     }, [formData]);
 
     const handleCreateProgress = async () => {
         setError(false);
-        let imageUrls = []
-        let videoUrls: any[] = []
-        let fileUrls: any[] = []
+        let imageUrls = [];
+        let videoUrls: any[] = [];
+        let fileUrls: any[] = [];
         if (formData) {
             if (!formData.shortDiscription.trim()) {
                 toast.error("Enter a valid short discription");
@@ -82,8 +81,8 @@ const ProjectProgressHeader: React.FC<Props> = ({
                     images,
                     "project_progress_images/"
                 );
-                console.log(imageUrls)
-                if (!imageUrls) return toast.error("Error in uploadin images")
+                console.log(imageUrls);
+                if (!imageUrls) return toast.error("Error in uploadin images");
             }
             if (videos.length > 0) {
                 console.log("here video");
@@ -91,8 +90,8 @@ const ProjectProgressHeader: React.FC<Props> = ({
                 videoUrls = await uploadVideosToFirebase(
                     videos,
                     "project_progress_video/"
-                )
-                if (!videoUrls) return toast.error("Error in uploadin images") 
+                );
+                if (!videoUrls) return toast.error("Error in uploadin images");
             }
             if (otherFiles.length > 0) {
                 console.log("here, other files");
@@ -100,15 +99,19 @@ const ProjectProgressHeader: React.FC<Props> = ({
                 fileUrls = await uploadOtherFilesToFirebase(
                     otherFiles,
                     "project_progress_file/"
-                )
-                if (!fileUrls) return toast.error("Error in uploadin images")
+                );
+                if (!fileUrls) return toast.error("Error in uploadin images");
             }
 
             await addPost(imageUrls, videoUrls, fileUrls);
         }
     };
 
-    const addPost = async (imageUrls: any[], videoUrls: any[], fileUrls: any[]) => {
+    const addPost = async (
+        imageUrls: any[],
+        videoUrls: any[],
+        fileUrls: any[]
+    ) => {
         const data: ProjectProgressInterface = {
             title: formData?.title!,
             shortDiscription: formData?.shortDiscription!,

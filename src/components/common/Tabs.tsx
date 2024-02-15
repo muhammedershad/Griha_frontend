@@ -7,11 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
-  activeItem: string | null,
-  setActiveItem: (item: string | null) => void
+    activeItem: string | null;
+    setActiveItem: (item: string | null) => void;
 }
 
-const Tabs = ({ activeItem, setActiveItem } : Props) => {
+const Tabs = ({ activeItem, setActiveItem }: Props) => {
     // const [activeItem, setActiveItem] = useState(null);
 
     const handleItemClick = (itemName: string) => {

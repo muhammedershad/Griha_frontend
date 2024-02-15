@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 
 const AdminEmployeeManagement = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [data, setData] = useState("");
+    // const [data, setData] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, handleSubmit } = useForm<EmployeesForm>();
     const [employees, setEmployees] = useState<Employees[]>([]);
@@ -154,7 +154,7 @@ const AdminEmployeeManagement = () => {
                     <form
                         className="space-y-2 md:space-y-6"
                         onSubmit={handleSubmit((data) => {
-                            setData(JSON.parse(JSON.stringify(data)));
+                            // setData(JSON.parse(JSON.stringify(data)));
                             submitForm(data);
                         })}
                     >
@@ -233,7 +233,7 @@ const AdminEmployeeManagement = () => {
                         type="text"
                         onChange={(e) => setSearchQuery(e.target.value)}
                         value={searchQuery}
-                        className="bg-gray-50 border w-2/6 h-10 border-gray-300 text-gray-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border w-2/6 h-10 border-gray-300 text-gray-500 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Search by name..."
                         required
                     />

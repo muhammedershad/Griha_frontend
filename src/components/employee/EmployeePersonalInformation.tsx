@@ -7,13 +7,15 @@ import PersonalInfomations from "./PersonalInfomations";
 const EmployeePersonalInformation = () => {
     const [employee, setEmployee] = useState<Employees>();
     const [info, setInfo] = useState<string>("info");
-    const employeeData:Employees = useAppSelector((state) => state.employee.employee)!;
+    const employeeData: Employees = useAppSelector(
+        (state) => state.employee.employee
+    )!;
     useEffect(() => {
-        if(employeeData) {
+        if (employeeData) {
             setEmployee(employeeData);
         }
         // console.log(employee)
-    },[employeeData]);
+    }, [employeeData]);
 
     return (
         <>

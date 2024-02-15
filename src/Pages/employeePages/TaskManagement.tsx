@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Home/SideBar";
+import { useEffect, useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import { Link } from "react-router-dom";
 import Task from "../../components/common/Task";
 import { useAppSelector } from "../../Services/redux/hooks";
 import tasksApi from "../../Services/apis/tasks.api";
-import { TaskPopulated, Tasks } from "../../interfaces/taks";
+import { TaskPopulated } from "../../interfaces/taks";
 
 function TaskManagement() {
     const employeeData = useAppSelector((state) => state.employee.employee);
-    const [tasks, setTasks] = useState<Tasks>();
     const [activeTasks, setActiveTasks] = useState<TaskPopulated[]>([]);
-    const [needToReviewTasks, setNeedToReviewTasks] = useState<TaskPopulated[]>([]);
+    const [needToReviewTasks, setNeedToReviewTasks] = useState<TaskPopulated[]>(
+        []
+    );
     const [completedTasks, setCompletedTasks] = useState<TaskPopulated[]>([]);
     useEffect(() => {
         (async () => {
@@ -21,7 +21,7 @@ function TaskManagement() {
                 );
                 console.log(response);
                 if (response.success) {
-                    setTasks(response.tasks);
+                    // setTasks(response.tasks);
                     const active = [];
                     const review = [];
                     const completed = [];
@@ -40,7 +40,7 @@ function TaskManagement() {
             }
         })();
     }, [employeeData]);
-    console.log(activeTasks, needToReviewTasks, completedTasks);
+    // console.log(activeTasks, needToReviewTasks, completedTasks);
     return (
         <>
             <EmployeeSideBar>

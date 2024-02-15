@@ -1,13 +1,11 @@
 import { useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
-import Spinner from "../../components/common/Spinner";
 import Tabs from "../../components/common/Tabs";
 import { Modal } from "../../components/common/Modal";
 import TimeSlots from "../../components/employee/TimeSlots";
 import ScheduledMeeting from "../../components/employee/ScheduledMeeting";
 
 const Meeting = () => {
-    const [meetings, setMeetings] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [activeItem, setActiveItem] = useState<string | null>("Scheduled");
 
@@ -37,29 +35,25 @@ const Meeting = () => {
                 </div>
             </Modal>
             <EmployeeSideBar>
-                {!meetings ? (
-                    <Spinner />
-                ) : (
-                    <div className="p-10">
-                        <div className="flex flex-row justify-between">
-                            <h3 className="text-gray-200 text-xl font-bold">
-                                Meetings
-                            </h3>
-                            <p
-                                onClick={openModal}
-                                className="text-sm p-2 max-w-[100px] text-center rounded-lg border-[1px]"
-                            >
-                                Add Time Slots
-                            </p>
-                        </div>
-                        <Tabs
-                            activeItem={activeItem}
-                            setActiveItem={setActiveItem}
-                        />
-                        {activeItem === "Scheduled" && <ScheduledMeeting />}
-                        {activeItem === "TimeSlot" && <TimeSlots />}
+                <div className="p-10">
+                    <div className="flex flex-row justify-between">
+                        <h3 className="text-gray-200 text-xl font-bold">
+                            Meetings
+                        </h3>
+                        <p
+                            onClick={openModal}
+                            className="text-sm p-2 max-w-[100px] text-center rounded-lg border-[1px]"
+                        >
+                            Add Time Slots
+                        </p>
                     </div>
-                )}
+                    <Tabs
+                        activeItem={activeItem}
+                        setActiveItem={setActiveItem}
+                    />
+                    {activeItem === "Scheduled" && <ScheduledMeeting />}
+                    {activeItem === "TimeSlot" && <TimeSlots />}
+                </div>
             </EmployeeSideBar>
         </>
     );

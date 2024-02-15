@@ -21,7 +21,7 @@ export interface Employees extends Document {
     teamLead?: boolean;
     isBlocked?: boolean;
     isSenior?: boolean;
-    image?: string
+    image?: string;
 }
 
 export interface EmployeesForm {

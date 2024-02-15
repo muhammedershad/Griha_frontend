@@ -1,8 +1,32 @@
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
 
-const uploadOtherFilesToFirebase = async (otherFiles: any[], folderRute: string) => {
+interface CustomToast extends Toast {
+    update: (
+        message: string,
+        opts?:
+            | Partial<
+                  Pick<
+                      Toast,
+                      | "id"
+                      | "icon"
+                      | "duration"
+                      | "ariaProps"
+                      | "className"
+                      | "style"
+                      | "position"
+                      | "iconTheme"
+                  >
+              >
+            | undefined
+    ) => string;
+}
+
+const uploadOtherFilesToFirebase = async (
+    otherFiles: any[],
+    folderRute: string
+) => {
     // const metadata = {
     //     contentType: "image/jpeg",
     // };
@@ -13,16 +37,21 @@ const uploadOtherFilesToFirebase = async (otherFiles: any[], folderRute: string)
                 const storageRef = ref(storage, folderRute + file.name);
                 const uploadTask = uploadBytesResumable(storageRef, file);
 
-                return new Promise<void>((resolve, reject) => {
+                return new Promise<string | void>((resolve, reject) => {
                     const intervalId = setInterval(() => {
                         const progress =
-                            (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100;
-                        console.log(`Upload of ${file.name} is ${progress}% done`);
+                            (uploadTask.snapshot.bytesTransferred /
+                                uploadTask.snapshot.totalBytes) *
+                            100;
+                        console.log(
+                            `Upload of ${file.name} is ${progress}% done`
+                        );
 
                         // Update the dynamic toast with the current progress
-                        toast.success("upload-progress", {
-                            content: `Uploading ${file.name} (${Math.round(progress)}%)`,
-                        });
+                        const customToast = toast as unknown as CustomToast;
+                        customToast.update(
+                            `Uploading ${file.name} (${Math.round(progress)}%)`
+                        );
 
                         // Check if upload is complete
                         if (progress === 100) {
@@ -33,7 +62,7 @@ const uploadOtherFilesToFirebase = async (otherFiles: any[], folderRute: string)
 
                     uploadTask.on(
                         "state_changed",
-                        (snapshot) => {},
+                        () => {},
                         (error) => {
                             clearInterval(intervalId);
                             reject(error);

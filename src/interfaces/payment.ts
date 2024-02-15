@@ -4,7 +4,7 @@ import User from "./user";
 export interface IPayment extends Document {
     _id: string;
     paidBy: string | User;
-    paidTo: string ;
+    paidTo: string;
     purpose: String;
     paymentType: String;
     status: String;
@@ -15,6 +15,6 @@ export interface IPayment extends Document {
 }
 
 export interface PaymentPopulated extends IPayment {
-    paidBy: User,
-    project: Project
+    paidBy: User;
+    project: Project;
 }

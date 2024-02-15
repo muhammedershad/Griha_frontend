@@ -1,6 +1,7 @@
 import { getMetadata, getStorage, ref } from "firebase/storage";
 
-const getMetaData = async (url: string) => { // Make the function asynchronous
+const getMetaData = async (url: string) => {
+    // Make the function asynchronous
     const storage = getStorage();
     const forestRef = ref(storage, url);
 

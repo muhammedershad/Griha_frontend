@@ -12,7 +12,7 @@ const Signup = () => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<FormData>();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [data, setData] = useState("");
+    // const [data, setData] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -162,7 +162,7 @@ const Signup = () => {
                         <form
                             className="space-y-4 md:space-y-6 flex flex-col justify-self-center justify-center justify-items-center"
                             onSubmit={handleSubmit((data) => {
-                                setData(JSON.parse(JSON.stringify(data)));
+                                // setData(JSON.parse(JSON.stringify(data)));
                                 submitted ? verify_otp(data) : formSubmit(data);
                             })}
                         >

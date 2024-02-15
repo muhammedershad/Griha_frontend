@@ -6,7 +6,7 @@ interface FormData {
     phone: string;
     password: string;
     confirmPassword: string;
-    otp?: number
-  }
-  
-  export default FormData;
+    otp?: number;
+}
+
+export default FormData;

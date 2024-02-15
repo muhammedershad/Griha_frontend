@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import { useParams } from "react-router-dom";
 import tasksApi from "../../Services/apis/tasks.api";
-import { Tasks } from "../../interfaces/taks";
+import { TaskPopulated } from "../../interfaces/taks";
 import Comments from "../../components/common/Comments";
 import UsersProfileCard from "../../components/common/UsersProfileCard";
 import Spinner from "../../components/common/Spinner";
-import { getDownloadURL, getMetadata, getStorage, ref } from "firebase/storage";
 import getMetaData from "../../Services/firebase/metaData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload, faPaperclip } from "@fortawesome/free-solid-svg-icons";
@@ -15,20 +14,29 @@ import DragDrop from "../../components/common/DragAndDrop";
 import toast from "react-hot-toast";
 import uploadOtherFilesToFirebase from "../../Services/firebase/otherFiles";
 import { useAppSelector } from "../../Services/redux/hooks";
-import axios from "axios";
+
+interface AttachmentMetaData {
+    name: string;
+    // Define properties based on your metadata structure
+    // Example properties:
+    url: string;
+    size: number;
+    type: string;
+    // ... other properties
+}
 
 function TaskDetails() {
-    const [task, setTask] = useState<Tasks>();
+    const [task, setTask] = useState<TaskPopulated>();
     const { taskId } = useParams<string>();
-    const [metaData, setMetaData] = useState([]);
-    const [files, setFiles] = useState([]);
+    const [metaData, setMetaData] = useState<AttachmentMetaData[]>([]);
+    const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
     const [details, setDetails] = useState<string>("");
     const employeeData = useAppSelector((state) => state.employee.employee);
     const [comment, setComment] = useState<string>("");
 
     useEffect(() => {
         (async () => {
-            const response = await tasksApi.taskDetails(taskId);
+            const response = await tasksApi.taskDetails(taskId!);
             if (response.success) {
                 setTask(response?.task);
                 const arr = response.task.attachments.map(
@@ -54,7 +62,7 @@ function TaskDetails() {
 
     const handleSubmit = async () => {
         if (!details.trim()) return toast.error("Enter details");
-        let fileUrls = [];
+        let fileUrls: any = [];
         if (files.length > 0) {
             fileUrls = await uploadOtherFilesToFirebase(
                 files,
@@ -163,14 +171,8 @@ function TaskDetails() {
                                     <div className=" mb-5">
                                         <UsersProfileCard
                                             user={task?.assignedBy}
-                                            selectedUsers={""}
-                                            onUserSelect={function (
-                                                id: string | undefined
-                                            ): void {
-                                                throw new Error(
-                                                    "Function not implemented."
-                                                );
-                                            }}
+                                            selectedUsers={[]}
+                                            onUserSelect={undefined}
                                             edit={false}
                                         />
                                     </div>
@@ -180,14 +182,8 @@ function TaskDetails() {
                                     <div className=" mb-5">
                                         <UsersProfileCard
                                             user={task?.assignedTo}
-                                            selectedUsers={""}
-                                            onUserSelect={function (
-                                                id: string | undefined
-                                            ): void {
-                                                throw new Error(
-                                                    "Function not implemented."
-                                                );
-                                            }}
+                                            selectedUsers={[]}
+                                            onUserSelect={undefined}
                                             edit={false}
                                         />
                                     </div>
@@ -196,7 +192,7 @@ function TaskDetails() {
                                     <p className="text-lg text-gray-200 mb-3">
                                         Attachments
                                     </p>
-                                    {metaData.map((attachment, ind) => (
+                                    {metaData.map((attachment) => (
                                         <div className="bg-slate-700 flex justify-between text-gray-300 mb-2 p-4 rounded-md">
                                             <div>
                                                 <FontAwesomeIcon
@@ -269,14 +265,8 @@ function TaskDetails() {
                                         <div className=" mb-5">
                                             <UsersProfileCard
                                                 user={task?.assignedTo}
-                                                selectedUsers={""}
-                                                onUserSelect={function (
-                                                    id: string | undefined
-                                                ): void {
-                                                    throw new Error(
-                                                        "Function not implemented."
-                                                    );
-                                                }}
+                                                selectedUsers={[]}
+                                                onUserSelect={undefined}
                                                 edit={false}
                                             />
                                         </div>
@@ -289,7 +279,7 @@ function TaskDetails() {
                                         <p className="text-lg text-gray-200 mb-3">
                                             Attachments
                                         </p>
-                                        {metaData.map((attachment, ind) => (
+                                        {metaData.map((attachment) => (
                                             <div className="bg-slate-800 flex justify-between text-gray-300 mb-2 p-4 rounded-md">
                                                 <div>
                                                     <FontAwesomeIcon
@@ -339,7 +329,7 @@ function TaskDetails() {
                                     Post
                                 </button>
                             </div>
-                            <Comments comments={task.comments} />
+                            <Comments comments={task?.comments} />
                         </div>
                     </div>
                 </div>

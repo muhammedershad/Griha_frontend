@@ -7,7 +7,11 @@ const addTimeSlot = async (data: any) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 
@@ -19,7 +23,11 @@ const getTimeSlotsForEmployee = async (employeeId: string, date: string) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 
@@ -29,7 +37,11 @@ const cancelTimeSlot = async (meetingId: string) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 
@@ -41,7 +53,11 @@ const getTimeSlotsForUser = async (department: string, date: string) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 
@@ -53,7 +69,11 @@ const bookMeeting = async (meetingId: string, userId: string) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 
@@ -63,7 +83,11 @@ const getScheduledMeetingOfUser = async (userId: string) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 
@@ -75,7 +99,11 @@ const getScheduledMeetingOfEmployee = async (employeeId: string) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        toast.error((error as any)?.response?.data?.message || (error as Error)?.message || 'Unknown error')
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
     }
 };
 

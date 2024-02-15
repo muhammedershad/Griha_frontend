@@ -60,10 +60,10 @@ function validateAddress(address: string): boolean {
 function validatePINCode(pinCode: string): boolean {
     // Regular expression for a 6-digit Indian PIN code
     const pinCodeRegex = /^[1-9][0-9]{5}$/;
-  
+
     // Validate against the regular expression
     return pinCodeRegex.test(pinCode);
-  }
+}
 
 export const validations = {
     validateEmail,
@@ -73,5 +73,5 @@ export const validations = {
     validatePassword,
     isValidImageType,
     validateAddress,
-    validatePINCode
+    validatePINCode,
 };

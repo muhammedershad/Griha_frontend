@@ -3,8 +3,25 @@ import { storage } from "../firebase";
 import toast, { Toast } from "react-hot-toast";
 
 interface CustomToast extends Toast {
-    update: (message: string, opts?: Partial<Pick<Toast, "id" | "icon" | "duration" | "ariaProps" | "className" | "style" | "position" | "iconTheme">> | undefined) => string;
-  }
+    update: (
+        message: string,
+        opts?:
+            | Partial<
+                  Pick<
+                      Toast,
+                      | "id"
+                      | "icon"
+                      | "duration"
+                      | "ariaProps"
+                      | "className"
+                      | "style"
+                      | "position"
+                      | "iconTheme"
+                  >
+              >
+            | undefined
+    ) => string;
+}
 
 const uploadImageToFirebase = async (images: any, folderRute: any) => {
     const metadata = {
@@ -21,7 +38,7 @@ const uploadImageToFirebase = async (images: any, folderRute: any) => {
                     metadata
                 );
 
-                return new Promise<void>((resolve, reject) => {
+                return new Promise<string | void>((resolve, reject) => {
                     const intervalId = setInterval(() => {
                         const progress =
                             (uploadTask.snapshot.bytesTransferred /
@@ -33,7 +50,9 @@ const uploadImageToFirebase = async (images: any, folderRute: any) => {
 
                         // Update the dynamic toast with the current progress
                         const customToast = toast as unknown as CustomToast;
-                        customToast.update(`Uploading ${image.name} (${Math.round(progress)}%)`);
+                        customToast.update(
+                            `Uploading ${image.name} (${Math.round(progress)}%)`
+                        );
 
                         // Check if upload is complete
                         if (progress === 100) {
@@ -44,7 +63,7 @@ const uploadImageToFirebase = async (images: any, folderRute: any) => {
 
                     uploadTask.on(
                         "state_changed",
-                        (snapshot) => {},
+                        () => {},
                         (error) => {
                             clearInterval(intervalId);
                             reject(error);

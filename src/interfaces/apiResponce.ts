@@ -1,6 +1,6 @@
 interface response {
-    success: boolean,
-    message: string
+    success: boolean;
+    message: string;
 }
 
-export default response
+export default response;

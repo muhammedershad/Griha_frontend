@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSocket } from "../../../Services/context/SocketProvider";
-import { button } from "@material-tailwind/react";
 import ReactPlayer from "react-player";
 import peer from "../../../Services/videoCall/peer";
 
@@ -82,7 +81,7 @@ function Room() {
     }, [myStream, peer]);
 
     const handleCallAccepted = useCallback(
-        ({ from, ans }: { from: string; ans: WebRTCAnswer }) => {
+        ({ ans }: { from: string; ans: WebRTCAnswer }) => {
             peer.setLocalDescription(ans);
             console.log("Call Accepted!");
             sendStreams();

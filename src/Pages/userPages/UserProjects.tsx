@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import UserSideBar from "../../components/user/UserSideBar";
 import { Project } from "../../interfaces/project";
 import { useAppSelector } from "../../Services/redux/hooks";
-import User from "../../interfaces/user";
 import projectApi from "../../Services/apis/projectApi";
 import Spinner from "../../components/common/Spinner";
 import { Link } from "react-router-dom";
@@ -10,7 +9,6 @@ import { Link } from "react-router-dom";
 const UserProjects = () => {
     const [projects, setProjects] = useState<Project[]>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [user, setUsers] = useState<User | null>(null); // Initialize with null
     const userData = useAppSelector((state) => state.user.user);
     console.log(userData, "user");
 
@@ -28,7 +26,6 @@ const UserProjects = () => {
         };
 
         if (userData) {
-            setUsers(userData);
             fetchData();
         }
     }, [userData]);

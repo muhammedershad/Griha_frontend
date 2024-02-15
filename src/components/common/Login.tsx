@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { validations } from "../../Services/validations";
 import { Toaster, toast } from "react-hot-toast";
 import LoginFormData from "../../interfaces/login";
@@ -14,9 +13,7 @@ import { adminloginSuccess } from "../../Services/redux/slices/adminSlice";
 interface UserLoginProps {
     navigateTo: string;
     title: string;
-    loginFn: (
-        data: LoginFormData
-    ) => Promise<{
+    loginFn: (data: LoginFormData) => Promise<{
         success: boolean;
         message: string;
         token: string;
@@ -28,8 +25,7 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<LoginFormData>();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [data, setData] = useState("");
+    // const [data, setData] = useState("");
 
     const submitForm = async (data: LoginFormData) => {
         if (validations.validateEmail(data?.email)) {
@@ -90,7 +86,7 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
                             <form
                                 className="space-y-4 md:space-y-6"
                                 onSubmit={handleSubmit((data) => {
-                                    setData(JSON.parse(JSON.stringify(data)));
+                                    // setData(JSON.parse(JSON.stringify(data)));
                                     submitForm(data);
                                 })}
                             >

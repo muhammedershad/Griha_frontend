@@ -8,11 +8,7 @@ import ReactPlayer from "react-player";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Comments from "../../components/common/Comments";
-import {
-    Project,
-    ProjectProgressInterface,
-    ProjectProgressPopulated,
-} from "../../interfaces/project";
+import { Project, ProjectProgressPopulated } from "../../interfaces/project";
 
 function UserProjectProgress() {
     const [project, setProject] = useState<Project>();

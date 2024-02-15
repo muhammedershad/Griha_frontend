@@ -10,5 +10,5 @@ export interface Meeting {
 }
 
 export interface MeetingPopulated extends Meeting {
-    user: User
+    user: User;
 }

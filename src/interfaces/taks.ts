@@ -1,14 +1,15 @@
+import { Employees } from "./employee";
 import { Project } from "./project";
 
 export interface Tasks extends Document {
     _id?: string;
     taskName: string;
     shortDescription: string;
-    assignedTo: string;
+    assignedTo: string | Employees;
     status: string;
     dueDate: string;
     assignedDate: Date;
-    assignedBy: string;
+    assignedBy: string | Employees;
     attachments: string[] | null;
     updateDate: Date;
     department: string;
@@ -17,12 +18,13 @@ export interface Tasks extends Document {
     priority: string;
     comments: {
         comment: string;
-        user: string;
+        user: Employees | string;
         time: Date;
+        _id?: string;
     }[];
     response: {
         details: string;
-        user: string;
+        user: Employees | string;
         time: Date;
         attachments: string[];
     }[];
@@ -30,6 +32,14 @@ export interface Tasks extends Document {
 
 export interface TaskPopulated extends Tasks {
     project: Project;
+    assignedTo: Employees;
+    assignedBy: Employees;
+    comments: {
+        comment: string;
+        user: Employees;
+        time: Date;
+        _id?: string;
+    }[];
 }
 
 export interface TaskFormData {

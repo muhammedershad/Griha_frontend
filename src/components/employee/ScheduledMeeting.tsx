@@ -9,13 +9,13 @@ import { Meeting } from "../../interfaces/meeting";
 
 const ScheduledMeeting = () => {
     const [meetings, setMeetings] = useState<Meeting[]>([]);
-    const navigate = useNavigate()
-    const socket = useSocket()
+    const navigate = useNavigate();
+    const socket = useSocket();
     const employeeData = useAppSelector((state) => state.employee.employee);
 
     useEffect(() => {
         (async () => {
-            if(employeeData) {
+            if (employeeData) {
                 const response = await meetingApi.getScheduledMeetingOfEmployee(
                     employeeData?._id
                 );
@@ -26,20 +26,29 @@ const ScheduledMeeting = () => {
         })();
     }, [employeeData]);
 
-    const handleCall = useCallback((meeting: Meeting) => {
-        console.log( meeting.employee, meeting._id);
-        socket?.emit('room:join', { email: meeting?.employee, room: meeting?._id });
-    }, [socket]);
-    
-    const handleJoinRoom = useCallback((data: { email: any; room: any; }) => {
-        const { email, room } = data;
-        navigate(`/employee/room/${room}`);
-    }, [navigate]);
-    
+    const handleCall = useCallback(
+        (meeting: Meeting) => {
+            console.log(meeting.employee, meeting._id);
+            socket?.emit("room:join", {
+                email: meeting?.employee,
+                room: meeting?._id,
+            });
+        },
+        [socket]
+    );
+
+    const handleJoinRoom = useCallback(
+        (data: { email: any; room: any }) => {
+            const { room } = data;
+            navigate(`/employee/room/${room}`);
+        },
+        [navigate]
+    );
+
     useEffect(() => {
-        socket?.on('room:join', handleJoinRoom);
+        socket?.on("room:join", handleJoinRoom);
         return () => {
-            socket?.off('room:join', handleJoinRoom);
+            socket?.off("room:join", handleJoinRoom);
         };
     }, [socket, handleJoinRoom]);
 

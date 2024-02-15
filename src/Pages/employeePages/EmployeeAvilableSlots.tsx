@@ -1,4 +1,3 @@
-import React from "react";
 import EmployeeSideBar from "../../components/employee/EmployeeSideBar";
 import SideHeading from "../../components/common/SideHeading";
 import Date from "../../components/common/Date";

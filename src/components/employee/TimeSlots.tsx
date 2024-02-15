@@ -1,6 +1,6 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import meetingApi from "../../Services/apis/meetingApi";
 import { useAppSelector } from "../../Services/redux/hooks";
@@ -8,12 +8,11 @@ import Swal from "sweetalert2";
 import { Meeting } from "../../interfaces/meeting";
 
 const TimeSlots = () => {
-    const today = new Date().toISOString().split("T")[0];
     const [date, setDate] = useState("");
     const [selectedDate, setSelectedDate] = useState("");
     const [minDate, setMinDate] = useState("");
     const [maxDate, setMaxDate] = useState("");
-    const [selectedButton, setSelectedButton] = useState<string | null>()
+    const [selectedButton, setSelectedButton] = useState<string | null>();
     const [department, setDepartment] = useState("Construction");
     const employeeData = useAppSelector((state) => state.employee.employee);
     const [timeSlots, setTimeSlots] = useState([]);
@@ -32,7 +31,7 @@ const TimeSlots = () => {
 
     useEffect(() => {
         const today = new Date();
-        console.log(today)
+        console.log(today);
         setMinDate(today.toISOString().split("T")[0]);
 
         const maxDateObj = new Date();
@@ -50,7 +49,7 @@ const TimeSlots = () => {
                 if (response.success) {
                     setTimeSlots(response.timeSlots);
                     setSelectedDate(formattedDate);
-                    handleTimeSlotFiltering(response.timeSlots)
+                    handleTimeSlotFiltering(response.timeSlots);
                 }
             })();
         }
@@ -60,7 +59,7 @@ const TimeSlots = () => {
         setSelectedButton(time);
     };
 
-    const handleDateChange = async (event: { target: { value: string }; }) => {
+    const handleDateChange = async (event: { target: { value: string } }) => {
         setDate(event.target.value);
         const response = await meetingApi.getTimeSlotsForEmployee(
             employeeData?._id!,
@@ -71,7 +70,9 @@ const TimeSlots = () => {
         }
     };
 
-    const handleSelectedDateChange = async (e: { target: { value: string }; }) => {
+    const handleSelectedDateChange = async (e: {
+        target: { value: string };
+    }) => {
         setSelectedDate(e.target.value);
         const response = await meetingApi.getTimeSlotsForEmployee(
             employeeData?._id!,
@@ -84,7 +85,6 @@ const TimeSlots = () => {
     };
 
     const handleTimeSlotFiltering = (timeSlots: any[]) => {
-
         const bookedTimes = timeSlots.map((timeSlot) =>
             new Date(timeSlot?.time).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -142,7 +142,11 @@ const TimeSlots = () => {
                 if (response?.success) {
                     toast.success(response.message);
                     console.log(response);
-                    setTimeSlots(timeSlots.filter((timeSlot:Meeting) => timeSlot?._id !== timeSlotId))
+                    setTimeSlots(
+                        timeSlots.filter(
+                            (timeSlot: Meeting) => timeSlot?._id !== timeSlotId
+                        )
+                    );
                 }
             } else return;
         });

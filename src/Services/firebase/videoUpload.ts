@@ -1,6 +1,27 @@
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase";
-import toast from "react-hot-toast";
+import toast, { Toast } from "react-hot-toast";
+
+interface CustomToast extends Toast {
+    update: (
+        message: string,
+        opts?:
+            | Partial<
+                  Pick<
+                      Toast,
+                      | "id"
+                      | "icon"
+                      | "duration"
+                      | "ariaProps"
+                      | "className"
+                      | "style"
+                      | "position"
+                      | "iconTheme"
+                  >
+              >
+            | undefined
+    ) => string;
+}
 
 const uploadVideosToFirebase = async (videos: any[], folderRute: string) => {
     const metadata = {
@@ -17,7 +38,7 @@ const uploadVideosToFirebase = async (videos: any[], folderRute: string) => {
                     metadata
                 );
 
-                return new Promise<void>((resolve, reject) => {
+                return new Promise<string | void>((resolve, reject) => {
                     const intervalId = setInterval(() => {
                         const progress =
                             (uploadTask.snapshot.bytesTransferred /
@@ -28,13 +49,9 @@ const uploadVideosToFirebase = async (videos: any[], folderRute: string) => {
                         );
 
                         // Update the dynamic toast with the current progress
-                        toast?.success(
-                            `Uploading ${video.name} (${Math.round(
-                                progress
-                            )}%)`,
-                            {
-                                id: "upload-progress",
-                            }
+                        const customToast = toast as unknown as CustomToast;
+                        customToast.update(
+                            `Uploading ${video.name} (${Math.round(progress)}%)`
                         );
 
                         // Check if upload is complete
@@ -63,8 +80,6 @@ const uploadVideosToFirebase = async (videos: any[], folderRute: string) => {
                                 });
                         }
                     );
-                    
-                    
                 });
             })
         ),

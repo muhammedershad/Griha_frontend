@@ -90,7 +90,6 @@ export interface ProjectPopulated extends Project {
     };
 }
 
-type PostedByType = string;
 export interface ProjectProgressPopulated extends ProjectProgressInterface {
     postedBy: Employees;
 }

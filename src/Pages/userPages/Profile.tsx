@@ -18,8 +18,8 @@ const Profile = () => {
     const [info, setInfo] = useState<string>("info");
 
     useEffect(() => {
-        if(userData) setUser(userData);
-    },[userData]);
+        if (userData) setUser(userData);
+    }, [userData]);
 
     useEffect(() => {
         handleUpload();
@@ -182,18 +182,18 @@ const Profile = () => {
                                 Contact Information
                             </h4>
                             <div className="flex flex-row justify-between">
-                            <p className="mb-2 text-slate-400">
-                                <span className="font-bold text-slate-400">
-                                    Phone:
-                                </span>{" "}
-                                {user?.phone ?? ""}
-                            </p>
-                            <p className="mb-2 text-slate-400">
-                                <span className="font-bold text-slate-400">
-                                    Email:
-                                </span>{" "}
-                                {user?.email ?? ""}
-                            </p>
+                                <p className="mb-2 text-slate-400">
+                                    <span className="font-bold text-slate-400">
+                                        Phone:
+                                    </span>{" "}
+                                    {user?.phone ?? ""}
+                                </p>
+                                <p className="mb-2 text-slate-400">
+                                    <span className="font-bold text-slate-400">
+                                        Email:
+                                    </span>{" "}
+                                    {user?.email ?? ""}
+                                </p>
                             </div>
                         </div>
                         <div className="lg:w-1/2 px-2">
@@ -216,26 +216,26 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="p-3 max-w-lg mx-auto">
-                {info === "info" ? (
-                    <PersonalInfomations employee={user!} />
-                ) : (
-                    <ChangePassword employee={user} />
-                )}
-                <div className="flex justify-between mt-5">
-                    <span
-                        onClick={() => setInfo("info")}
-                        className="text-stone-300 cursor-pointer"
-                    >
-                        Edit Informations
-                    </span>
-                    <span
-                        onClick={() => setInfo("changePass")}
-                        className="text-stone-300 cursor-pointer"
-                    >
-                        Change Password
-                    </span>
+                    {info === "info" ? (
+                        <PersonalInfomations employee={user!} />
+                    ) : (
+                        <ChangePassword employee={user} />
+                    )}
+                    <div className="flex justify-between mt-5">
+                        <span
+                            onClick={() => setInfo("info")}
+                            className="text-stone-300 cursor-pointer"
+                        >
+                            Edit Informations
+                        </span>
+                        <span
+                            onClick={() => setInfo("changePass")}
+                            className="text-stone-300 cursor-pointer"
+                        >
+                            Change Password
+                        </span>
+                    </div>
                 </div>
-            </div>
             </UserSideBar>
         </>
     );
