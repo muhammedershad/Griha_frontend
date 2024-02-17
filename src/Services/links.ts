@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.PUBLIC_URL;
+const BASE_URL = import.meta.env.VITE_PUBLIC_URL;
 
 export const links = {
     BASE_URL,
