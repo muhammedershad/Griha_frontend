@@ -85,14 +85,14 @@ function UserMessenger() {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const logout = async () => {
-        api.adminLogout();
-        localStorage.removeItem("User_token");
-        dispatch(userlogout());
-        navigate("/login");
-    };
+    // const logout = async () => {
+    //     api.adminLogout();
+    //     localStorage.removeItem("User_token");
+    //     dispatch(userlogout());
+    //     navigate("/login");
+    // };
 
     const handleSendMessage = async () => {
         // console.log(newMessage);
