@@ -113,7 +113,8 @@ const Meeting = () => {
     const handleCall = useCallback(
         (meeting: MeetingPopulated) => {
             console.log(meeting.employee, meeting._id);
-            socket.emit("room:join", {
+            console.log(socket,'socket')
+            socket?.emit("room:join", {
                 email: meeting?.user?._id,
                 room: meeting?._id,
             });

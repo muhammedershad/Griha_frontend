@@ -43,8 +43,23 @@ const allPayamentOfUser = async (userId: string) => {
     }
 };
 
+const pendingPaymentOfUser = async (userId: string) => {
+    try {
+        const response = await axios.get(`/payment/pending/${userId}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+        toast.error(
+            (error as any)?.response?.data?.message ||
+                (error as Error)?.message ||
+                "Unknown error"
+        );
+    }
+}
+
 export default {
     createPaymentRequest,
     allPayamentOfUser,
     allPaymentsOfAdmin,
+    pendingPaymentOfUser
 };

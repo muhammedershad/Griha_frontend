@@ -13,7 +13,7 @@ export const useSocket = (): Socket | null => {
 };
 
 export const SocketProvider: React.FC<SocketProviderProps> = (props) => {
-    const socket = useMemo(() => io(import.meta.env.PUBLIC_URL), []);
+    const socket = useMemo(() => io(import.meta.env.VITE_SOCKET_IO_URL), []);  
 
     return (
         <SocketContext.Provider value={socket}>

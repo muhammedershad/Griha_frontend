@@ -11,14 +11,18 @@ import image from "../../../public/images/Make it rain-bro.png";
 const Paymets = () => {
     const userData: User | null = useAppSelector((state) => state.user.user);
     const [payments, setPayments] = useState<PaymentPopulated[]>([]);
+    const [allPayments, setAllPayments] = useState<PaymentPopulated[]>([]);
     useEffect(() => {
         if (userData) {
             (async () => {
-                const response = await paymentApi.allPayamentOfUser(
+                const response = await paymentApi.pendingPaymentOfUser(
                     userData._id
                 );
-                console.log(response.payments);
+                // console.log(response.payments);
                 if (response.success) setPayments(response.payments);
+
+                const data = await paymentApi.allPayamentOfUser(userData._id);
+                if (data.success) setAllPayments(data.payments);
             })();
         }
     }, [userData]);
@@ -131,6 +135,103 @@ const Paymets = () => {
                         </p>
                     </div>
                 )}
+                <div>
+                    <p className=" text-xl font-bold text-gray-300">
+                        Payment Histroy
+                    </p>
+                </div>
+                <table className="min-w-full mt-4 divide-y mb-8 divide-gray-800 overflow-x-auto rounded-3xl border-collapse">
+                <thead className="bg-gray-900 rounded-lg">
+                    <tr>
+                        <th
+                            scope="col"
+                            className="px-2 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                        >
+                            Client
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-2 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                        >
+                            Project
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-2 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                        >
+                            Purpose
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-2 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                        >
+                            Amount
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-2 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                        >
+                            Status
+                        </th>
+                       
+                    </tr>
+                </thead>
+                {allPayments.map((payment: PaymentPopulated) => (
+                    <tbody
+                        key={payment?._id}
+                        className="bg-gray-800 divide-y divide-gray-200"
+                    >
+                        <tr>
+                            <td className="px-2 py-4 whitespace-nowrap">
+                                <div className="flex items-center">
+                                    <div className="flex-shrink-0 h-10 w-10">
+                                        <img
+                                            className="h-10 w-10 rounded-full"
+                                            src={
+                                                payment?.paidBy?.image ||
+                                                "https://cdn3d.iconscout.com/3d/premium/thumb/man-avatar-6299539-5187871.png"
+                                            }
+                                        />
+                                    </div>
+                                    <div className="ml-4">
+                                        <div className="text-sm font-medium text-gray-200">
+                                            {payment?.paidBy?.firstName +
+                                                " " +
+                                                payment.paidBy?.lastName}
+                                        </div>
+                                        <div className="text-sm text-gray-400">
+                                            {/* {employee.username} */}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="px-2 py-4 whitespace-nowrap">
+                                <div className="text-base text-gray-400">
+                                    {payment.project.projectName}
+                                </div>
+                            </td>
+                            <td className="px-2 py-4 whitespace-nowrap">
+                                <div className="text-base text-gray-400">
+                                    {payment?.purpose}
+                                </div>
+                            </td>
+                            <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-400">
+                                <div className="text-base text-gray-400">
+                                    {payment?.amount}
+                                </div>
+                            </td>
+                            <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-400">
+                                <div className="text-base text-gray-400">
+                                    {payment.status}
+                                </div>
+                            </td>
+                            
+                        </tr>
+
+                        {/* More rows... */}
+                    </tbody>
+                ))}
+            </table>
             </div>
         </UserSideBar>
     );

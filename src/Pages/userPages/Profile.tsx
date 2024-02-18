@@ -12,7 +12,7 @@ import ChangePassword from "../../components/employee/ChangePassword";
 
 const Profile = () => {
     const [image, setImage] = useState<File | null>(null);
-    const [imageUrl, setImageUrl] = useState<string>("");
+    const [imageUrl, setImageUrl] = useState<string>('');
     const [user, setUser] = useState<User>();
     const userData: User | null = useAppSelector((state) => state.user.user);
     const [info, setInfo] = useState<string>("info");
@@ -109,7 +109,7 @@ const Profile = () => {
     return (
         <>
             <UserSideBar>
-                <div className="container mx-auto p-4 bg-slate-950 mb-3 rounded-lg">
+                <div className="container mx-auto p-4 bg-slate-800 mb-3 rounded-lg">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center">
                             <label

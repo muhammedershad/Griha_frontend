@@ -27,7 +27,7 @@ function UserMessenger() {
     const scrollRef = useRef<HTMLDivElement>(null);
     const socket = useSocket();
     const [arrivalMessage, setArrivalMessage] = useState<IMessage>();
-    // console.log(socket);
+    console.log(socket);
 
     useEffect(() => {
         socket?.emit("addUser", user?._id);
