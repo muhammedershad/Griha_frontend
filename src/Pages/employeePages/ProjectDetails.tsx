@@ -34,6 +34,7 @@ const ProjectDetails = () => {
                     project={projectDetails!}
                     setProject={setProjectDetails}
                     user={false}
+                    link={undefined}
                 />
             </EmployeeSideBar>
         </>

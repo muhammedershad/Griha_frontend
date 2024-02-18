@@ -24,7 +24,7 @@ function UserProjectProgress() {
         (async () => {
             if (projectId) {
                 const response = await projectApi.projectDetails(projectId);
-                console.log(response);
+                // console.log(response);
                 if (response) {
                     setProject(response.project);
                     const foundProgress = response.project.progress?.find(
@@ -35,7 +35,8 @@ function UserProjectProgress() {
                 }
             }
         })();
-        console.log(progress, "progress", project);
+        // console.log(progress, "progress", project);
+        console.log("progress", progress?.comments);
     }, [projectId, progressId]);
 
     // console.log(progress.postedBy);

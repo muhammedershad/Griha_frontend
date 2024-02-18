@@ -17,6 +17,7 @@ import Meeting from "../Pages/userPages/Meeting";
 import Payment from "../components/common/payment";
 import PaymentSuccessPage from "../components/common/PaymentSuccessPage";
 import Paymets from "../Pages/userPages/Paymets";
+import UserProjectProgress from "../Pages/userPages/UserProjectProgress";
 
 const UserRoutes = () => {
     return (
@@ -47,6 +48,7 @@ const UserRoutes = () => {
                     <Route path="/meeting" element={<Meeting />} />
                     <Route path="/room/:id" element={<Room />} />
                     <Route path="/payments" element={<Paymets />} />
+                    <Route path="/projects/:projectId/:progressId" element={<UserProjectProgress />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
