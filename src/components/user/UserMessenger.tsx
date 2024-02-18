@@ -62,7 +62,7 @@ function UserMessenger() {
                         }
                     })();
                 } else {
-                    logout();
+                    // logout();
                 }
             };
             updateSlice();
