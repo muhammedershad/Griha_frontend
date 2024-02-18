@@ -7,7 +7,7 @@ const UserDash = () => {
                 <div className="mx-auto p-10 grid max-w-screen-lg px-1 pb-10">
                     <div>
                         <p className=" text-xl mb-5 font-bold text-gray-300">
-                            DashBoard
+                        Dashboard
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-4 gap-4">
                             <div className="bg-blue-500 dark:bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-blue-600 dark:border-gray-600 text-white font-medium group">
