@@ -34,7 +34,7 @@ function UserCard({
                     }
                     alt=""
                 />
-                <div className="">
+                <div className="overflow-hidden">
                     <p className="font-bold text-start text-white text-lg">
                         {friend?.firstName ??
                             friend?.firstName + " " + friend?.lastName ??

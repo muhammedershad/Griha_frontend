@@ -9,9 +9,7 @@ import api from "../../Services/api";
 import {
     userloginSuccess,
     userlogout,
-    // userlogout,
 } from "../../Services/redux/slices/userSlice";
-// import { useNavigate } from "react-router-dom";
 import Message from "../common/messenger/Message";
 import { useSocket } from "../../Services/context/SocketProvider";
 import User from "../../interfaces/user";
@@ -42,7 +40,7 @@ function UserMessenger() {
         if (savedToken && !user) {
             const updateSlice = async () => {
                 const response = await api.UpdateSlice(savedToken);
-                //  console.log(response );
+                 console.log(response );
                 if (response?.success) {
                     setUser(response.user);
                     dispatch(
@@ -56,7 +54,7 @@ function UserMessenger() {
                         const responseData = await messageApi.conversation(
                             response.user?._id
                         );
-                        // console.log(responseData);
+                        console.log(responseData);
                         if (responseData) {
                             setConversation(responseData);
                             setLoading(false);
@@ -75,7 +73,7 @@ function UserMessenger() {
         (async () => {
             const response = await messageApi.chat(currentChat?._id!);
             if (response) {
-                // console.log(response);
+                console.log(response);
                 setMessages(response);
             }
         })();
