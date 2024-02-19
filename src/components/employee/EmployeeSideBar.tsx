@@ -206,7 +206,7 @@ const EmployeeSideBar: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                                 </div>
                             </div>
                         </li> */}
-                        <Link to="/employee/payments">
+                        {/* <Link to="/employee/payments">
                             <li>
                                 <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                     <span className="inline-flex justify-center items-center ml-4">
@@ -230,7 +230,7 @@ const EmployeeSideBar: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                                     </span>
                                 </a>
                             </li>
-                        </Link>
+                        </Link> */}
                         {/* <Link to="/users">
                             <li>
                                 <a className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">

@@ -2,7 +2,7 @@ import SmallSideBar from "../common/SmallSideBar";
 import UserCard from "./UserCard";
 import background from "../../../public/images/1549504.jpg";
 import { Key, useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../../Services/redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../Services/redux/hooks";
 import messageApi from "../../Services/apis/messageApi";
 import { Spinner } from "flowbite-react";
 import api from "../../Services/api";
@@ -27,7 +27,22 @@ function UserMessenger() {
     const scrollRef = useRef<HTMLDivElement>(null);
     const socket = useSocket();
     const [arrivalMessage, setArrivalMessage] = useState<IMessage>();
-    console.log(socket);
+    const userData: User | null = useAppSelector((state) => state.user.user);
+
+    useEffect(() => {
+        (async () => {
+            if(userData) {
+                const responseData = await messageApi.conversation(
+                    userData?._id
+                );
+                if (responseData) {
+                    setConversation(responseData);
+                    setLoading(false);
+                }
+            }
+        })()
+    },[userData])
+    // console.log(socket);
 
     useEffect(() => {
         socket?.emit("addUser", user?._id);
@@ -139,7 +154,9 @@ function UserMessenger() {
     return (
         <>
             {loading ? (
-                <Spinner />
+                <div className="w-full h-full">
+                    <Spinner />
+                </div>
             ) : (
                 <div>
                     <div className="flex w-full h-screen gap-2">

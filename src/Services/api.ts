@@ -21,7 +21,7 @@ const userExistsCheck = async (email: string): Promise<response> => {
 
 const signup = async (data: FormData) => {
     try {
-        console.log("Request Payload:", data);
+        // console.log("Request Payload:", data);
         const response = await axios.post("/user/signup", data);
         return response.data;
     } catch (error) {
@@ -41,7 +41,7 @@ const verify_otp = async (data: FormData) => {
 const login = async (data: LoginFormData) => {
     try {
         const response = await axios.post("/user/login", data);
-        console.log(response, "response");
+        // console.log(response, "response");
         return response.data;
     } catch (error) {
         console.log(error);
@@ -62,7 +62,7 @@ const check_username = async (username: string) => {
         const response = await axios.get(
             `/user/check-username?username=${username}`
         );
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -82,7 +82,7 @@ const resend_OTP = async (email: string) => {
         const response = await axios.post("/user/resend-otp", {
             email: email,
         });
-        console.log(response);
+        // console.log(response);
 
         return response.data;
     } catch (error) {
@@ -93,7 +93,7 @@ const resend_OTP = async (email: string) => {
 const adminLogin = async (data: LoginFormData) => {
     try {
         const response = await axios.post("/admin/login", data);
-        console.log(response, "response");
+        // console.log(response, "response");
         return response.data;
     } catch (error) {
         console.log(error);
@@ -103,7 +103,7 @@ const adminLogin = async (data: LoginFormData) => {
 const employeeLogin = async (data: LoginFormData) => {
     try {
         const response = await axios.post("/employee/login", data);
-        console.log(response, "response");
+        // console.log(response, "response");
         return response.data;
     } catch (error) {
         console.log(error);

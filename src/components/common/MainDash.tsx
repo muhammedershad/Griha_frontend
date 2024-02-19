@@ -66,7 +66,7 @@ const MainDash: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                                 </a>
                             </li>
                         </Link>
-                        <Link to="/admin/meetings">
+                        <Link to="/admin/users">
                             <li>
                                 <a className="relative flex flex-row text-gray-100 items-center h-14 focus:outline-none hover:bg-gray-600 hover:text-gray-200 border-l-4 border-transparent hover:border-emerald-600 pr-6">
                                     <span className="inline-flex justify-center items-center ml-4">
@@ -86,7 +86,7 @@ const MainDash: React.FC<ResponsiveLayoutProps> = ({ children }) => {
                                         </svg>
                                     </span>
                                     <span className="ml-2 text-sm tracking-wide truncate">
-                                        Appoinments
+                                        Uesers
                                     </span>
                                 </a>
                             </li>

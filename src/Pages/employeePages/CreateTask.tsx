@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import projectApi from "../../Services/apis/projectApi";
 import ImagePreviewList from "../../components/common/ImagePreview";
 import DragAndDrop from "../../components/common/DragAndDrop";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MembersList from "../../components/common/MembersList";
 import { Employees } from "../../interfaces/employee";
 import Spinner from "../../components/common/Spinner";
@@ -29,6 +29,7 @@ function CreateTask() {
     const [project, setProject] = useState<Project>();
     const today = new Date().toISOString().split("T")[0];
     const employeeData = useAppSelector((state) => state.employee.employee);
+    const navigate = useNavigate()
 
     useEffect(() => {
         (async () => {
@@ -126,7 +127,10 @@ function CreateTask() {
             priority,
         };
         const response = await tasksApi.addTask(data);
-        if (response.success) toast.success("Task added successfully");
+        if (response.success) {
+            toast.success("Task added successfully");
+            navigate('/employee/tasks')
+        }
     };
 
     const formFields: FormField[] = [
