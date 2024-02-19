@@ -8,6 +8,7 @@ import { Spinner } from "flowbite-react";
 import api from "../../Services/api";
 import {
     userloginSuccess,
+    userlogout,
     // userlogout,
 } from "../../Services/redux/slices/userSlice";
 // import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ import Message from "../common/messenger/Message";
 import { useSocket } from "../../Services/context/SocketProvider";
 import User from "../../interfaces/user";
 import { Conversation, IMessage } from "../../interfaces/conversation";
+import { useNavigate } from "react-router-dom";
 
 function UserMessenger() {
     const [conversations, setConversation] = useState([]);
@@ -27,22 +29,6 @@ function UserMessenger() {
     const scrollRef = useRef<HTMLDivElement>(null);
     const socket = useSocket();
     const [arrivalMessage, setArrivalMessage] = useState<IMessage>();
-    const userData: User | null = useAppSelector((state) => state.user.user);
-
-    useEffect(() => {
-        (async () => {
-            if(userData) {
-                const responseData = await messageApi.conversation(
-                    userData?._id
-                );
-                if (responseData) {
-                    setConversation(responseData);
-                    setLoading(false);
-                }
-            }
-        })()
-    },[userData])
-    // console.log(socket);
 
     useEffect(() => {
         socket?.emit("addUser", user?._id);
@@ -77,7 +63,7 @@ function UserMessenger() {
                         }
                     })();
                 } else {
-                    // logout();
+                    logout();
                 }
             };
             updateSlice();
@@ -93,21 +79,21 @@ function UserMessenger() {
                 setMessages(response);
             }
         })();
-        // console.log(currentChat);
+        console.log(currentChat);
     }, [currentChat]);
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // const logout = async () => {
-    //     api.adminLogout();
-    //     localStorage.removeItem("User_token");
-    //     dispatch(userlogout());
-    //     navigate("/login");
-    // };
+    const logout = async () => {
+        api.adminLogout();
+        localStorage.removeItem("User_token");
+        dispatch(userlogout());
+        navigate("/login");
+    };
 
     const handleSendMessage = async () => {
         // console.log(newMessage);
@@ -136,25 +122,24 @@ function UserMessenger() {
 
     useEffect(() => {
         socket?.on("getMessage", (data) => {
-            const datas: IMessage = {
-                sender: data?.senderId,
+            setArrivalMessage({
+                sender: data.senderId,
                 text: data.text,
                 createdAt: Date.now(),
-            };
-            setArrivalMessage(datas);
+            });
         });
     }, []);
 
     useEffect(() => {
         arrivalMessage &&
-            currentChat?.members.includes(arrivalMessage?.sender) &&
+            currentChat?.members.includes(arrivalMessage.sender) &&
             setMessages((prev) => [...prev, arrivalMessage]);
     }, [arrivalMessage, currentChat]);
 
     return (
         <>
             {loading ? (
-                <div className="w-full h-full">
+                <div className="w-screen h-screen">
                     <Spinner />
                 </div>
             ) : (

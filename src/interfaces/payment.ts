@@ -12,6 +12,8 @@ export interface IPayment extends Document {
     bonus: number;
     project: string | Project;
     progress: string;
+    initiatedDate: string
+    paidDate: string
 }
 
 export interface PaymentPopulated extends IPayment {

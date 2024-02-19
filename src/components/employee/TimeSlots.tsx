@@ -15,7 +15,7 @@ const TimeSlots = () => {
     const [selectedButton, setSelectedButton] = useState<string | null>();
     const [department, setDepartment] = useState("Construction");
     const employeeData = useAppSelector((state) => state.employee.employee);
-    const [timeSlots, setTimeSlots] = useState([]);
+    const [timeSlots, setTimeSlots] = useState<any>([]);
     const [timeArray, setTimeArray] = useState([
         "9:00",
         "10:00",
@@ -45,7 +45,7 @@ const TimeSlots = () => {
                     employeeData?._id,
                     formattedDate
                 );
-                console.log(response);
+                console.log(response.timeSlots);
                 if (response.success) {
                     setTimeSlots(response.timeSlots);
                     setSelectedDate(formattedDate);
@@ -83,6 +83,10 @@ const TimeSlots = () => {
             handleTimeSlotFiltering(response.timeSlots);
         }
     };
+
+    useEffect(() => {
+        handleTimeSlotFiltering(timeSlots)
+    },[timeSlots])
 
     const handleTimeSlotFiltering = (timeSlots: any[]) => {
         const bookedTimes = timeSlots.map((timeSlot) =>
@@ -173,9 +177,11 @@ const TimeSlots = () => {
             employee: employeeData?._id,
             department,
         };
-        const response = await meetingApi.addTimeSlot(data);
+        const response: any = await meetingApi.addTimeSlot(data);
+        console.log(response.timeSlot)
         if (response.success) {
             toast.success(response.message);
+            setTimeSlots([...timeSlots,response.timeSlot])
             setDepartment("Construction");
             setSelectedButton(null);
             setSelectedDate("");

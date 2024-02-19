@@ -14,13 +14,14 @@ import { useAppSelector } from "../../Services/redux/hooks";
 import EmployeeSideBar from "./EmployeeSideBar";
 import SideHeading from "../common/SideHeading";
 import Spinner from "../common/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const CreateProject = () => {
     const [formData, setFormData] = useState<ProjectForm>();
     const [allEmployees, setAllEmployees] = useState<Employees[]>();
     const [clients, setClients] = useState<User[]>([]);
     const employee = useAppSelector((state) => state.employee.employee);
-    console.log("object");
+    const navigate = useNavigate()
 
     useEffect(() => {
         console.log("here");
@@ -128,7 +129,7 @@ const CreateProject = () => {
             const response = await projectApi.createProject(data);
             if (response.success) {
                 toast.success("Project created");
-                // closeModal()
+                navigate('/employee/projects')
             }
         }
     };
