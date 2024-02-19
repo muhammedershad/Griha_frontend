@@ -2,7 +2,7 @@ import SmallSideBar from "../common/SmallSideBar";
 import UserCard from "./UserCard";
 import background from "../../../public/images/1549504.jpg";
 import { Key, useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../Services/redux/hooks";
+import { useAppDispatch } from "../../Services/redux/hooks";
 import messageApi from "../../Services/apis/messageApi";
 import { Spinner } from "flowbite-react";
 import api from "../../Services/api";
