@@ -1,3 +1,4 @@
+import AreaChartFor from "../../components/common/Chart";
 import UserSideBar from "../../components/user/UserSideBar";
 
 const UserDash = () => {
@@ -257,6 +258,14 @@ const UserDash = () => {
                                             Today's Appointments
                                         </p>
                                     </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p className=" text-sm font-bold text-gray-300">
+                                    Project Status
+                                </p>
+                                <div className="items-center w-full flex">
+                                <AreaChartFor />
                                 </div>
                             </div>
                         </div>
