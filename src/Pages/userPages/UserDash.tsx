@@ -260,8 +260,8 @@ const UserDash = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <p className=" text-sm font-bold text-gray-300">
+                            <div className="text-center">
+                                <p className=" text-sm text-center font-bold text-gray-300">
                                     Project Status
                                 </p>
                                 <div className="items-center w-full flex">
