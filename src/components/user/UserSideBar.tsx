@@ -52,7 +52,7 @@ const UserSideBar: React.FC<Props> = ({ children }) => {
                 <Toaster />
             </div>
             {/* Sidebar (hidden on medium screens and below) */}
-            <div className="hidden md:flex md:w-1/5 w- m-5 rounded-lg bg-[#2c303a] text-white p-2 pr-0">
+            <div className="hidden md:flex md:w-1/5 m-5 rounded-lg bg-[#2c303a] text-white p-2 pr-0">
                 {/* Sidebar content goes here */}
 
                 <div className="overflow-y-auto overflow-x-hidden flex-grow">

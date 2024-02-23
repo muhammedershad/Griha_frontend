@@ -18,6 +18,7 @@ import Payment from "../components/common/payment";
 import PaymentSuccessPage from "../components/common/PaymentSuccessPage";
 import Paymets from "../Pages/userPages/Paymets";
 import UserProjectProgress from "../Pages/userPages/UserProjectProgress";
+import Learning from "../Pages/HomePages/Learning";
 
 const UserRoutes = () => {
     return (
@@ -34,6 +35,7 @@ const UserRoutes = () => {
                     />
                     <Route path="/videoCall" element={<VideoCall />} />
                     <Route path="/payment" element={<Payment />} />
+                    <Route path="/learn" element={<Learning />} />
                     <Route
                         path="/checkout-success"
                         element={<PaymentSuccessPage />}
