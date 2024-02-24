@@ -11,7 +11,7 @@ const NotFound = () => {
                     </h2>
                 </div>
                 <a
-                    href="#"
+                    href="/"
                     className="font-montserrat inline-block uppercase text-purple-900 hover:text-purple-600 border-2 border-purple-900 bg-transparent px-6 py-3 text-sm font-semibold transition-all duration-200"
                 >
                     Homepage
