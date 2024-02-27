@@ -10,10 +10,10 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ close, setClose }) => {
     return (
         <>
-            <div>
+            <div className="transition-opacity duration-300 ease-out">
                 <aside
                     id="default-sidebar"
-                    className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 ${
+                    className={`fixed top-0 left-0 z-40 w-64 h-screen transition-opacity duration-300 ease-out sm:translate-x-0 ${
                         close ? "hidden" : "block"
                     }`}
                     aria-label="Sidebar"

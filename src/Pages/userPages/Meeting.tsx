@@ -189,7 +189,7 @@ const Meeting = () => {
                         Get an appointment with our experienced architects and
                         engineers{" "}
                     </p>
-                    <img
+                    <img 
                         className="absolute top-0 left-0 opacity-50 -z-10 h-full w-full object-cover"
                         src="https://www.stirworld.com/images/article_gallery/the-skew-house-kerala-thought-parallels-stirworld-190928062012.jpg"
                     />

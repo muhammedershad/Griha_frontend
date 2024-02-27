@@ -3,6 +3,11 @@ import Navbar from "../../components/Home/Navbar";
 import Carousel1 from "../../components/Home/Carousel1";
 import house_top_cut from "../../../public/images/house_top_cut-removebg-preview.png";
 import { Link } from "react-router-dom";
+import image1 from "../../../public/images/r-architecture-0tKCSyLXqQM-unsplash.jpg";
+import image2 from "../../../public/images/armchair-green-living-room-with-copy-space.jpg";
+import img3 from "../../../public/images/img3.jpg";
+import img4 from "../../../public/images/img4.jpg";
+import img5 from "../../../public/images/img-5.jpg";
 
 const Home = () => {
     return (
@@ -11,23 +16,7 @@ const Home = () => {
             <div className="absolute inset-0 flex justify-center">
                 <Navbar />
                 <div className="md:mx-28 mt-20">
-                    {/* <Carousel
-            slides={[
-              'https://i.pinimg.com/736x/ec/a6/9b/eca69bd2d24dd4c1d9d296b365c14de2.jpg',
-              'https://i.pinimg.com/736x/bf/2a/e9/bf2ae9181bc7a073b11d15da607208c8.jpg',
-              'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyamin-mellish-106399.jpg&fm=jpg',
-              'https://i.pinimg.com/736x/08/21/1e/08211ec43a3988ff31f704a872d60447.jpg'
-            ]}
-          /> */}
-                    <Carousel1
-                        images={[
-                            "https://i.pinimg.com/736x/ec/a6/9b/eca69bd2d24dd4c1d9d296b365c14de2.jpg",
-                            "https://i.pinimg.com/736x/bf/2a/e9/bf2ae9181bc7a073b11d15da607208c8.jpg",
-                            "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?cs=srgb&dl=pexels-binyamin-mellish-106399.jpg&fm=jpg",
-                            "https://i.pinimg.com/736x/08/21/1e/08211ec43a3988ff31f704a872d60447.jpg",
-                            "https://i.pinimg.com/736x/55/f8/f4/55f8f41f8e8161e7384372f14ca2f906.jpg",
-                        ]}
-                    />
+                    <Carousel1 images={[img3, image2, image1, img4, img5]} />
 
                     <div className="flex flex-col md:flex-row">
                         <div className="col-span-12 md:col-span-6 w-full">
@@ -57,8 +46,253 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div></div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 px-3 items-center justify-items-center justify-center">
+                        <div className="relative h-full flex w-full max-w-[26rem] border-[1px] border-gray-700 p-5 text-gray-200 flex-col rounded-xl bg-transparent bg-clip-borde shadow-none">
+                            <div className="relative flex items-center gap-4 pt-0 pb-2 mx-0 mt-1 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+                                <img
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                                    alt="Tania Andrew"
+                                    className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
+                                />
+                                <div className="flex w-full flex-col items-end gap-0.5">
+                                    <div className="flex items-center justify-between">
+                                        
+                                        <div className="flex items-center gap-0 5">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div className="p-0 mb-1">
+                                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                                    "Choosing Griha was the best decision for our project. Their innovative designs and attention to detail exceeded our expectations. A talented team that turns concepts into stunning realities. Exceptional architects, exceptional results."
+                                </p>
+                            </div>
+                        </div>
+                        <div className="relative h-full flex w-full max-w-[26rem] border-[1px] border-gray-700 p-5 text-gray-200 flex-col rounded-xl bg-transparent bg-clip-borde shadow-none">
+                            <div className="relative flex items-center gap-4 pt-0 pb-2 mx-0 mt-1 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+                                <img
+                                    src="https://hackspirit.com/wp-content/uploads/2021/06/Copy-of-Rustic-Female-Teen-Magazine-Cover.jpg"
+                                    alt="Tania Andrew"
+                                    className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
+                                />
+                                <div className="flex w-full flex-col items-end gap-0.5">
+                                    <div className="flex items-center justify-between">
+                                        
+                                        <div className="flex items-center gap-0 5">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-gray-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div className="p-0 mb-1">
+                                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                                    "Griha exceeded our expectations, turning our ideas into architectural marvels. Their creativity, attention to detail, and dedication to excellence make them the go-to firm for transformative design. Highly recommended!"
+                                </p>
+                            </div>
+                        </div>
+                        <div className="relative h-full flex w-full max-w-[26rem] border-[1px] border-gray-700 p-5 text-gray-200 flex-col rounded-xl bg-transparent bg-clip-borde shadow-none">
+                            <div className="relative flex items-center gap-4 pt-0 pb-2 mx-0 mt-1 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
+                                <img
+                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                                    alt="Tania Andrew"
+                                    className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
+                                />
+                                <div className="flex w-full flex-col items-end gap-0.5">
+                                    <div className="flex items-center justify-between">
+                                        
+                                        <div className="flex items-center gap-0 5">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="w-5 h-5 text-yellow-700"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div className="p-0 mb-1">
+                                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                                    "Griha turns dreams into architectural wonders. Their creativity, precision, and commitment to excellence shine through in every project. A trusted partner for those seeking transformative and timeless design."
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

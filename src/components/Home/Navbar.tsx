@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.png";
+import logo from "../../../public/images/griha logo white croped.png";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Sidebar from "../Home/SideBar";
@@ -43,7 +43,7 @@ function Navbar() {
                 >
                     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                         <a className="flex items-center space-x-3 rtl:space-x-reverse">
-                            <img src={logo} className="h-8" alt="Griha Logo" />
+                            <img src={logo} className="h-10" alt="Griha Logo" />
                         </a>
                         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                             <Link to="/login">
@@ -88,7 +88,7 @@ function Navbar() {
                                 <li>
                                     <Link to="/">
                                         <a
-                                            className="flex flex-row align-middle items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                                            className="flex flex-row align-middle items-center py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:p-0 "
                                             aria-current="page"
                                         >
                                             <Line />
