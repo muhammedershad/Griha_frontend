@@ -41,7 +41,7 @@ function Contact() {
                                 <p className="text-lg text-gray-300 mb-4">
                                     <strong>Email:</strong>
                                     <br />
-                                    info@example.com
+                                    griha.architecture@gmail.com
                                 </p>
                             </div>
                         </div>
