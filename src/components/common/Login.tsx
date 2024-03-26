@@ -138,24 +138,24 @@ const Login: React.FC<UserLoginProps> = ({ title, loginFn, navigateTo }) => {
                                     </Link>
                                 </p>
                                 {
-                                    title === 'Employee' ? <>
+                                    title === 'Employee' && <>
                                     <hr className=" border-gray-600" />
                                     <div className="text-gray-400 text-center">
                                         <p>Demo User</p>
                                         <p>Email: muhammedershadp@gmail.com</p>
                                         <p>password: 123456</p>
                                     </div>
-                                </> : ''
+                                </>
                                 }
                                 {
-                                    title === 'Admin' ? <>
+                                    title === 'Admin' && <>
                                     <hr className=" border-gray-600" />
                                     <div className="text-gray-400 text-center">
                                         <p>Demo User</p>
                                         <p>Email: admin@example.com</p>
                                         <p>password: 123456</p>
                                     </div>
-                                </> : ''
+                                </>
                                 }
                                 
                             </form>

@@ -8,13 +8,14 @@ import image2 from "../../../public/images/armchair-green-living-room-with-copy-
 import img3 from "../../../public/images/img3.jpg";
 import img4 from "../../../public/images/img4.jpg";
 import img5 from "../../../public/images/img-5.jpg";
-// import { useEffect } from "react";
-// import api from "../../Services/api";
+import { useEffect } from "react";
 
 const Home = () => {
-    // useEffect(() => {
-    //     const response = api.test()
-    // })
+    useEffect(() => {
+        (async () => {
+            await fetch(import.meta.env.VITE_SOCKET_IO_URL);
+        })();
+    }, []);
     return (
         <>
             <Body />
@@ -61,7 +62,6 @@ const Home = () => {
                                 />
                                 <div className="flex w-full flex-col items-end gap-0.5">
                                     <div className="flex items-center justify-between">
-                                        
                                         <div className="flex items-center gap-0 5">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -125,12 +125,17 @@ const Home = () => {
                                             </svg>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div className="p-0 mb-1">
                                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                                    "Choosing Griha was the best decision for our project. Their innovative designs and attention to detail exceeded our expectations. A talented team that turns concepts into stunning realities. Exceptional architects, exceptional results."
+                                    "Choosing Griha was the best decision for
+                                    our project. Their innovative designs and
+                                    attention to detail exceeded our
+                                    expectations. A talented team that turns
+                                    concepts into stunning realities.
+                                    Exceptional architects, exceptional
+                                    results."
                                 </p>
                             </div>
                         </div>
@@ -143,7 +148,6 @@ const Home = () => {
                                 />
                                 <div className="flex w-full flex-col items-end gap-0.5">
                                     <div className="flex items-center justify-between">
-                                        
                                         <div className="flex items-center gap-0 5">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -207,12 +211,16 @@ const Home = () => {
                                             </svg>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div className="p-0 mb-1">
                                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                                    "Griha exceeded our expectations, turning our ideas into architectural marvels. Their creativity, attention to detail, and dedication to excellence make them the go-to firm for transformative design. Highly recommended!"
+                                    "Griha exceeded our expectations, turning
+                                    our ideas into architectural marvels. Their
+                                    creativity, attention to detail, and
+                                    dedication to excellence make them the go-to
+                                    firm for transformative design. Highly
+                                    recommended!"
                                 </p>
                             </div>
                         </div>
@@ -225,7 +233,6 @@ const Home = () => {
                                 />
                                 <div className="flex w-full flex-col items-end gap-0.5">
                                     <div className="flex items-center justify-between">
-                                        
                                         <div className="flex items-center gap-0 5">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -289,12 +296,15 @@ const Home = () => {
                                             </svg>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                             <div className="p-0 mb-1">
                                 <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                                    "Griha turns dreams into architectural wonders. Their creativity, precision, and commitment to excellence shine through in every project. A trusted partner for those seeking transformative and timeless design."
+                                    "Griha turns dreams into architectural
+                                    wonders. Their creativity, precision, and
+                                    commitment to excellence shine through in
+                                    every project. A trusted partner for those
+                                    seeking transformative and timeless design."
                                 </p>
                             </div>
                         </div>
