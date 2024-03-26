@@ -19,6 +19,8 @@ import PaymentSuccessPage from "../components/common/PaymentSuccessPage";
 import Paymets from "../Pages/userPages/Paymets";
 import UserProjectProgress from "../Pages/userPages/UserProjectProgress";
 import Learning from "../Pages/HomePages/Learning";
+import About from "../Pages/HomePages/About";
+import Contact from "../Pages/HomePages/Contact";
 
 const UserRoutes = () => {
     return (
@@ -29,6 +31,8 @@ const UserRoutes = () => {
                     <Route path="/login" element={<UserLogin />} />
                     <Route path="/signup" element={<UserSignup />} />
                     <Route path="/project" element={<Projects />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route
                         path="/project/:projectId"
                         element={<UserProjectDetails />}

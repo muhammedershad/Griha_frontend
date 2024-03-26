@@ -30,8 +30,8 @@ const Projects = () => {
                 <Spinner />
             ) : (
                 <div>
-                    <div className="md:mx-28 mt-28 text-white">
-                        <div className="w-full flex flex-row justify-between">
+                    <div className="md:mx-28 mt-28 mx-4 text-gray-300">
+                        <div className="w-full flex flex-wrap justify-between">
                             <p
                                 onClick={() => setCategory("all")}
                                 className="mx-2"
@@ -69,13 +69,13 @@ const Projects = () => {
                                 Interior Design
                             </p>
                         </div>
-                        <hr className="border-t-2 border-slate-500" />
+                        <hr className="border-t-2 my-1 border-slate-500" />
                     </div>
                     <div className="p-5 md:mx-24 flex flex-wrap">
                         {allProjects.map((project: featuredProjects) => (
                             <article
                                 key={project?._id}
-                                className="relative drop-shadow-md shadow-slate-200 isolate flex flex-col w-96 justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto mt-5"
+                                className="relative drop-shadow-md shadow-slate-300 isolate flex flex-col w-96 justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto mt-5"
                             >
                                 <Link to={`/project/${project._id}`}>
                                     <img
@@ -84,11 +84,11 @@ const Projects = () => {
                                         className="absolute inset-0 h-full w-full object-cover"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70" />
-                                    <h3 className="z-10 relative mt-3 text-xl font-bold text-white">
+                                    <h3 className="z-10 relative mt-3 text-xl font-bold text-gray-300">
                                         {project.projectName}{" "}
                                         {/* Display the project title */}
                                     </h3>
-                                    <div className="z-10 relative gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
+                                    <div className="z-10 relative gap-y-1 overflow-hidden text-sm leading-6 text-gray-400">
                                         {project.category}
                                         {/* Display the project description */}
                                     </div>

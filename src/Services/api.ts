@@ -5,6 +5,15 @@ import LoginFormData from "../interfaces/login";
 import { EmployeesForm } from "../interfaces/employee";
 import toast from "react-hot-toast";
 
+const test = async () => {
+    try {
+        const response = await axios.get(`/`);
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const userExistsCheck = async (email: string): Promise<response> => {
     try {
         const response = await axios.get(
@@ -247,6 +256,7 @@ const userDetails = async (userId: string) => {
 };
 
 export default {
+    test,
     userExistsCheck,
     signup,
     verify_otp,

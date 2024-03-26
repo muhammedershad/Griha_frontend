@@ -10,6 +10,7 @@ const Line = () => (
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [close, setClose] = useState(true);
+    const [login, setLogin] = useState(false);
 
     useEffect(() => {
         // Function to handle scroll event
@@ -46,14 +47,43 @@ function Navbar() {
                             <img src={logo} className="h-10" alt="Griha Logo" />
                         </a>
                         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                            <Link to="/login">
-                                <button
-                                    type="button"
-                                    className="text-white bg-transparent  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center   dark:focus:ring-blue-800"
+                            {/* <Link to="/login"> */}
+                            <button
+                                onClick={() => setLogin((pre) => !pre)}
+                                type="button"
+                                className="text-white bg-transparent  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center   dark:focus:ring-blue-800"
+                            >
+                                Login
+                            </button>
+                            <div className={`${login ? "block" : "hidden"}`}>
+                                <ul
+                                    className="py-2 text-sm absolute bg-slate-800 rounded-md text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownDefaultButton"
                                 >
-                                    Login
-                                </button>
-                            </Link>
+                                    <li>
+                                        <Link to={"/login"}>
+                                            <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                User
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={"/employee/login"}>
+                                            <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                Employee
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={"/admin/login"}>
+                                            <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                Admin
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                            {/* </Link> */}
                             <button
                                 data-collapse-toggle="navbar-sticky"
                                 type="button"

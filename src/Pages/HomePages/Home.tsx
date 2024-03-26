@@ -8,8 +8,13 @@ import image2 from "../../../public/images/armchair-green-living-room-with-copy-
 import img3 from "../../../public/images/img3.jpg";
 import img4 from "../../../public/images/img4.jpg";
 import img5 from "../../../public/images/img-5.jpg";
+import { useEffect } from "react";
+import api from "../../Services/api";
 
 const Home = () => {
+    useEffect(() => {
+        const response = api.test()
+    })
     return (
         <>
             <Body />
@@ -214,7 +219,7 @@ const Home = () => {
                         <div className="relative h-full flex w-full max-w-[26rem] border-[1px] border-gray-700 p-5 text-gray-200 flex-col rounded-xl bg-transparent bg-clip-borde shadow-none">
                             <div className="relative flex items-center gap-4 pt-0 pb-2 mx-0 mt-1 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
                                 <img
-                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                                    src="https://image.cnbcfm.com/api/v1/image/107192893-1676056282124-happy-black-man-freelancer-working-from-home-2022-12-16-08-24-33-utc.jpg?v=1676307091"
                                     alt="Tania Andrew"
                                     className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
                                 />
