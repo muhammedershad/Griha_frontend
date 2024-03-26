@@ -8,13 +8,13 @@ import image2 from "../../../public/images/armchair-green-living-room-with-copy-
 import img3 from "../../../public/images/img3.jpg";
 import img4 from "../../../public/images/img4.jpg";
 import img5 from "../../../public/images/img-5.jpg";
-import { useEffect } from "react";
-import api from "../../Services/api";
+// import { useEffect } from "react";
+// import api from "../../Services/api";
 
 const Home = () => {
-    useEffect(() => {
-        const response = api.test()
-    })
+    // useEffect(() => {
+    //     const response = api.test()
+    // })
     return (
         <>
             <Body />
