@@ -1,4 +1,4 @@
-# Griha – Architecture Firm Website 🏢
+# Griha – Architecture Firm Website
 
 Griha is an elaborate in-house architecture and construction website built using the MERN stack. This platform seamlessly integrates project progress tracking, employee task management, user consultation slot booking, and administrative functionalities, ensuring a highly efficient and functional experience for both clients and team members. 🚀
 
