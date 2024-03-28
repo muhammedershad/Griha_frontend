@@ -18,7 +18,7 @@ const Sidebar: React.FC<Props> = ({ close, setClose }) => {
                     }`}
                     aria-label="Sidebar"
                 >
-                    <div className="h-full px-3 py-4 overflow-y-auto block bg-gray-50 dark:bg-gray-800">
+                    <div className="h-full px-3 py-4 overflow-y-auto block dark:bg-gray-800">
                         <div className="flex h-fit justify-end w-full">
                             <button
                                 className="top-3 right-3 p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
